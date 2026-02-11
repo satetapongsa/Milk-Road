@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ใบเสร็จรับเงิน | Enterprise Shop</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .receipt-page-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .actions-bar {
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .receipt-page-container {
+                box-shadow: none;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .actions-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="receipt-page-container">
+        <div class="receipt-paper" id="invoice" style="flex-grow: 1;">
+            <div class="receipt-header">
+                <div class="receipt-logo">
+                    <i class="ri-store-3-fill"></i> Shopii<span class="logo-dot">.</span>Enterprise
+                </div>
+                <div class="receipt-title">ใบเสร็จรับเงิน / ใบกำกับภาษี</div>
+            </div>
+
+            <div class="receipt-info-grid">
+                <div class="info-group from">
+                    <strong>ผู้ขาย:</strong><br>
+                    บริษัท ช้อปปี้ เอ็นเตอร์ไพรส์ จำกัด<br>
+                    123 อาคารทาวเวอร์ ชั้น 15 ถนนสุขุมวิท<br>
+                    กรุงเทพฯ 10110<br>
+                    เลขประจำตัวผู้เสียภาษี: 0105551234567
+                </div>
+                <div class="info-group meta">
+                    <div class="meta-row">
+                        <span>เลขที่ใบเสร็จ:</span>
+                        <strong id="receipt-id">INV-XXXX</strong>
+                    </div>
+                    <div class="meta-row">
+                        <span>วันที่:</span>
+                        <strong id="receipt-date">--/--/----</strong>
+                    </div>
+                    <div class="meta-row">
+                        <span>ผู้ซื้อ:</span>
+                        <span id="receipt-customer">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <table class="receipt-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">รายการสินค้า</th>
+                        <th style="text-align: center; width: 60px;">จำนวน</th>
+                        <th style="text-align: right; width: 100px;">ราคา/หน่วย</th>
+                        <th style="text-align: right; width: 100px;">รวม</th>
+                    </tr>
+                </thead>
+                <tbody id="receipt-items">
+                    <!-- Items injected via JS -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right;">รวมเป็นเงิน</td>
+                        <td style="text-align: right;" id="receipt-subtotal">฿0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: right;">ภาษีมูลค่าเพิ่ม (7%)</td>
+                        <td style="text-align: right;" id="receipt-vat">฿0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: right;">ค่าจัดส่ง</td>
+                        <td style="text-align: right;">฿50.00</td>
+                    </tr>
+                    <tr class="grand-total-row">
+                        <td colspan="3" style="text-align: right;"><strong>ยอดสุทธิ</strong></td>
+                        <td style="text-align: right;"><strong id="receipt-total">฿0.00</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="receipt-footer">
+                <p>ขอบคุณที่ใช้บริการ Shopii Enterprise</p>
+                <div class="receipt-signature">
+                    <span>ผู้รับเงิน</span>
+                    <div class="sign-line"></div>
+                    <span>( เจ้าหน้าที่การเงิน )</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-bar">
+            <a href="index.html" class="btn btn-outline">กลับหน้าหลัก</a>
+            <button class="btn btn-primary" onclick="window.print()"><i class="ri-printer-line"></i>
+                พิมพ์ใบเสร็จ</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReceiptData();
+        });
+    </script>
+</body>
+
+</html>

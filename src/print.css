@@ -1,0 +1,77 @@
+@media print {
+
+    /* Hide non-printable elements */
+    .no-print,
+    .header,
+    .footer,
+    .cart-sidebar,
+    .cart-overlay,
+    .cart-btn,
+    header,
+    footer {
+        display: none !important;
+    }
+
+    /* Reset body styles for print */
+    body {
+        background: white;
+        color: black;
+        margin: 0;
+        padding: 0;
+        font-size: 12pt;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    /* Receipt Specifics */
+    .receipt-page-container {
+        margin: 0;
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .receipt-paper {
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+    }
+
+    /* Ensure text colors are black for better printing */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    div {
+        color: black !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Table styling for print */
+    .receipt-table th {
+        border-bottom: 2px solid black;
+    }
+
+    .receipt-table td {
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Layout adjustments */
+    .receipt-header {
+        flex-direction: row !important;
+        /* Force row layout even if mobile view */
+        justify-content: space-between;
+    }
+}

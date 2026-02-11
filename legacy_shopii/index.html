@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Shop - ระบบขายของออนไลน์ครบวงจร</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span class="logo-icon"><i class="ri-store-3-fill"></i></span>
+                Shopii<span class="logo-dot">.</span>Enterprise
+            </a>
+
+            <div class="search-bar">
+                <i class="ri-search-line"></i>
+                <input type="text" placeholder="ค้นหาสนค้า...">
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active">หน้าแรก</a>
+                <a href="#products" class="nav-link">สินค้า</a>
+                <a href="#" class="nav-link">รายการสั่งซื้อ</a>
+                <a href="#" class="nav-link">บัญชีผู้ใช้</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn" id="cart-btn">
+                    <i class="ri-shopping-cart-2-line"></i>
+                    <span class="badge" id="cart-count">0</span>
+                </button>
+                <button class="icon-btn">
+                    <i class="ri-user-3-line"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>ยกระดับประสบการณ์<br>การช้อปปิ้งออนไลน์</h1>
+            <p>ระบบจัดการร้านค้ามาตรฐานสากล ตอบโจทย์ทุกความต้องการของธุรกิจคุณ ด้วยดีไซน์ที่ทันสมัยและใช้งานง่าย</p>
+            <a href="#products" class="btn btn-primary">ช้อปเลย <i class="ri-arrow-right-line"></i></a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>สินค้าแนะนำ</h2>
+                <a href="#" class="view-all">ดูทั้งหมด <i class="ri-arrow-right-line"></i></a>
+            </div>
+
+            <div class="products-grid" id="products-container">
+                <!-- Products will be injected here by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar (Hidden by default) -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>ตะกร้าสินค้า (<span id="cart-total-count">0</span>)</h3>
+            <button class="close-btn" id="close-cart"><i class="ri-close-line"></i></button>
+        </div>
+
+        <div class="cart-items" id="cart-items-container">
+            <!-- Cart items will be injected here -->
+            <div class="empty-cart-message">
+                <i class="ri-shopping-basket-line"></i>
+                <p>ยังไม่มีสินค้าในตะกร้า</p>
+                <button class="btn btn-outline" onclick="closeCart()">เลือกซื้อสินค้า</button>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>ยอดรวม</span>
+                    <span id="cart-subtotal">฿0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>ยอดสุทธิ</span>
+                    <span id="cart-total">฿0.00</span>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block checkout-btn" onclick="checkout()">
+                ชำระเงิน <i class="ri-secure-payment-line"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h3>Shopii<span class="logo-dot">.</span></h3>
+                <p>Platform E-commerce ระดับ Enterprise ที่ช่วยให้ธุรกิจของคุณเติบโตอย่างก้าวกระโดด</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-group">
+                    <h4>เกี่ยวกับเรา</h4>
+                    <a href="#">บริษัท</a>
+                    <a href="#">ทีมงาน</a>
+                    <a href="#">ร่วมงานกับเรา</a>
+                </div>
+                <div class="link-group">
+                    <h4>ช่วยเหลือ</h4>
+                    <a href="#">ศูนย์ช่วยเหลือ</a>
+                    <a href="#">การจัดส่ง</a>
+                    <a href="#">การคืนสินค้า</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Shopii Enterprise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
