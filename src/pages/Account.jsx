@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 export default function Account() {
     const [isEditing, setIsEditing] = useState(false);
     const [user, setUser] = useState({
-        name: 'สมชาย ใจดี',
-        email: 'somchai.j@example.com',
-        phone: '081-234-5678',
+        name: 'เวฟหน้าปิ้',
+        email: 'satetapongs@example.com',
+        phone: '0815018272',
         address: '123 Cyber Tower, Digital District\nBangkok, 10110',
         memberSince: 'มกราคม 2024',
         tier: 'Gold Member'
