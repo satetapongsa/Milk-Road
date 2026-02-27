@@ -9,10 +9,13 @@ export default function Home() {
 
     // Search Filtering
     const searchTerm = searchParams.get('q')?.toLowerCase() || '';
-    const filteredProducts = products.filter(p =>
-        p.name.toLowerCase().includes(searchTerm) ||
-        p.category.toLowerCase().includes(searchTerm)
-    );
+    const categoryParam = searchParams.get('category') || '';
+
+    const filteredProducts = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.category.toLowerCase().includes(searchTerm);
+        const matchesCategory = categoryParam ? p.category === categoryParam : true;
+        return matchesSearch && matchesCategory;
+    });
 
     return (
         <>
@@ -28,7 +31,7 @@ export default function Home() {
                 <div className="container">
                     <div className="section-header">
                         <h2>สินค้าแนะนำ</h2>
-                        <a href="#" className="view-all">ดูทั้งหมด <ArrowRight size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /></a>
+                        <Link to="/" className="view-all">ดูทั้งหมด <ArrowRight size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /></Link>
                     </div>
 
                     <div className="products-grid" id="products-container">

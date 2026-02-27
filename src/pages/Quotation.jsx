@@ -45,8 +45,8 @@ export default function Quotation() {
                 <div className="receipt-paper" id="quotation-doc">
                     <div className="receipt-header">
                         <div>
-                            <div className="receipt-title" style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}>ใบเสนอราคา / Quotation</div>
-                            <h2 style={{ marginTop: 16, marginBottom: 4, color: 'var(--primary)' }}>Milk Road</h2>
+                            <div className="receipt-title" style={{ borderColor: 'var(--primary)', color: 'var(--primary)', marginBottom: 16 }}>ใบเสนอราคา / Quotation</div>
+                            <img src="/images/logo.png" alt="Milk Road" style={{ height: '50px', marginBottom: '16px' }} />
                             <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)' }}>
                                 123 Cyber Tower, Digital District<br />
                                 Bangkok, 10110<br />

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useSearchParams, useNavigate } from 'react-router-dom';
-import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight } from 'lucide-react';
+import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight, Filter, ChevronDown } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { products } from '../data/products';
 
@@ -34,11 +34,11 @@ export default function Header({ onOpenCart }) {
         setSearchTerm(val);
 
         // Update URL immediately for live search filtering on Home page
-        if (val) {
-            setSearchParams({ q: val });
-        } else {
-            setSearchParams({});
-        }
+        setSearchParams(prev => {
+            if (val) prev.set('q', val);
+            else prev.delete('q');
+            return prev;
+        });
 
         // Generate suggestions algorithm
         if (val.length > 0) {
@@ -59,29 +59,59 @@ export default function Header({ onOpenCart }) {
 
     const handleSuggestionClick = (productName) => {
         setSearchTerm(productName);
-        setSearchParams({ q: productName });
+        setSearchParams(prev => {
+            prev.set('q', productName);
+            return prev;
+        });
         setShowSuggestions(false);
-        navigate('/?q=' + encodeURIComponent(productName));
+        const currentCategory = searchParams.get('category') || '';
+        if (currentCategory) {
+            navigate('/?q=' + encodeURIComponent(productName) + '&category=' + encodeURIComponent(currentCategory));
+        } else {
+            navigate('/?q=' + encodeURIComponent(productName));
+        }
     };
 
     return (
         <header className="header">
             <div className="container header-container">
                 <Link to="/" className="logo" onClick={() => { setSearchParams({}); setSearchTerm(''); }}>
-                    <span className="logo-icon"><Store size={20} /></span>
-                    Milk Road
+                    <img src="/images/logo.png" alt="Milk Road Logo" style={{ height: '40px' }} />
+                    <span style={{ marginLeft: '8px' }}>Milk Road</span>
                 </Link>
 
                 <div className="search-bar" ref={searchRef}>
-                    <Search className="search-icon" size={18} />
-                    <input
-                        type="text"
-                        placeholder="ค้นหาสินค้า..."
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                        onFocus={() => { if (searchTerm) setShowSuggestions(true); }}
-                        autoComplete="off"
-                    />
+                    <div className="search-input-wrap">
+                        <Search className="search-icon" size={18} />
+                        <input
+                            type="text"
+                            placeholder="ค้นหาสินค้า..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                            onFocus={() => { if (searchTerm) setShowSuggestions(true); }}
+                            autoComplete="off"
+                        />
+                    </div>
+                    <div className="search-category-wrap">
+                        <Filter className="filter-icon" />
+                        <select
+                            value={searchParams.get('category') || ''}
+                            onChange={(e) => {
+                                const val = e.target.value;
+                                setSearchParams(prev => {
+                                    if (val) prev.set('category', val);
+                                    else prev.delete('category');
+                                    return prev;
+                                });
+                            }}
+                        >
+                            <option value="">ทุกหมวดหมู่</option>
+                            {Array.from(new Set(products.map(p => p.category))).map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                        </select>
+                        <ChevronDown className="chevron-icon" />
+                    </div>
 
                     {showSuggestions && suggestions.length > 0 && (
                         <div className="search-dropdown">
@@ -110,7 +140,7 @@ export default function Header({ onOpenCart }) {
 
                 <nav className="nav-menu">
                     <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>หน้าแรก</NavLink>
-                    <a href="#products" className="nav-link">สินค้า</a>
+                    <a href="/#products" className="nav-link">สินค้า</a>
                     <NavLink to="/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>รายการสั่งซื้อ</NavLink>
                     <NavLink to="/account" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>บัญชีผู้ใช้</NavLink>
                 </nav>

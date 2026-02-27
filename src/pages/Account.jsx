@@ -43,7 +43,7 @@ export default function Account() {
                     }}>
                         <div style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 24px' }}>
                             <img
-                                src="https://ui-avatars.com/api/?name=Somchai+Jaidee&background=4f46e5&color=fff&size=128"
+                                src="/images/logo.png"
                                 alt="Profile"
                                 style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '4px solid white', boxShadow: '0 8px 16px -4px rgba(0,0,0,0.1)' }}
                             />

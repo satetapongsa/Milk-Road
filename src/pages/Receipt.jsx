@@ -93,8 +93,8 @@ export default function Receipt() {
                     </div>
                     <div className="receipt-header">
                         <div>
-                            <div className="receipt-title">ใบเสร็จรับเงิน / Receipt</div>
-                            <h2 style={{ marginTop: 16, marginBottom: 4, color: 'var(--primary)' }}>Milk Road</h2>
+                            <div className="receipt-title" style={{ marginBottom: 16 }}>ใบเสร็จรับเงิน / Receipt</div>
+                            <img src="/images/logo.png" alt="Milk Road" style={{ height: '50px', marginBottom: '16px' }} />
                             <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)' }}>
                                 123 Cyber Tower, Digital District<br />
                                 Bangkok, 10110<br />
