@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ชำระเงิน | Enterprise Shop</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+
+        .checkout-page-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .page-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="checkout-page-container">
+        <div class="page-header">
+            <a href="index.html" class="back-link"><i class="ri-arrow-left-line"></i> กลับไปเลือกซื้อสินค้า</a>
+            <h2>ชำระเงิน <i class="ri-secure-payment-line"></i></h2>
+        </div>
+
+        <div class="checkout-grid">
+            <!-- Left Column: Shipping & Details -->
+            <div class="checkout-section">
+                <h3><i class="ri-map-pin-line"></i> ที่อยู่จัดส่ง</h3>
+                <form id="shipping-form" class="checkout-form">
+                    <div class="form-group">
+                        <label>ชื่อ-นามสกุล</label>
+                        <input type="text" id="ship-name" placeholder="ระบุชื่อผู้รับสินค้า" required>
+                    </div>
+                    <div class="form-group">
+                        <label>เบอร์โทรศัพท์</label>
+                        <input type="tel" id="ship-phone" placeholder="08x-xxx-xxxx" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>ที่อยู่</label>
+                        <textarea id="ship-addr" rows="3" placeholder="บ้านเลขที่, ถนน, แขวง/เขต, จังหวัด, รหัสไปรษณีย์"
+                            required></textarea>
+                    </div>
+                </form>
+
+                <h3 style="margin-top: 24px;"><i class="ri-bank-card-line"></i> วิธีการชำระเงิน</h3>
+                <div class="payment-methods">
+                    <label class="payment-option selected">
+                        <input type="radio" name="payment" value="credit" checked>
+                        <span class="option-icon"><i class="ri-visa-line"></i></span>
+                        <span>บัตรเครดิต/เดบิต</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="qr">
+                        <span class="option-icon"><i class="ri-qr-code-line"></i></span>
+                        <span>QR PromptPay</span>
+                    </label>
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="cod">
+                        <span class="option-icon"><i class="ri-truck-line"></i></span>
+                        <span>เก็บเงินปลายทาง</span>
+                    </label>
+                </div>
+
+                <div id="credit-card-fields" class="payment-fields">
+                    <div class="form-group full">
+                        <label>หมายเลขบัตร</label>
+                        <div class="input-icon">
+                            <i class="ri-bank-card-2-line"></i>
+                            <input type="text" placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>วันหมดอายุ</label>
+                            <input type="text" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label>CVV</label>
+                            <input type="password" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="checkout-summary">
+                <h3>สรุปรายการสั่งซื้อ</h3>
+                <div class="order-items-list" id="checkout-items">
+                    <!-- Items injected via JS -->
+                </div>
+
+                <div class="summary-breakdown">
+                    <div class="breakdown-row">
+                        <span>ยอดรวมสินค้า</span>
+                        <span id="checkout-subtotal">฿0.00</span>
+                    </div>
+                    <div class="breakdown-row">
+                        <span>ค่าจัดส่ง</span>
+                        <span>฿50.00</span>
+                    </div>
+                    <div class="breakdown-row grand-total">
+                        <span>ยอดชำระทั้งหมด</span>
+                        <span id="checkout-total">฿0.00</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-block confirm-btn" onclick="processPayment()">
+                    ยืนยันการชำระเงิน
+                </button>
+                <div class="secure-badge">
+                    <i class="ri-shield-check-line"></i> ปลอดภัย 100% ด้วยการเข้ารหัส SSL
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Init Checkout Page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCartForCheckout();
+            setupPaymentListeners();
+        });
+    </script>
+</body>
+
+</html>
