@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD
 import { Lock } from 'lucide-react';
+=======
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 
 export default function Footer() {
     return (
@@ -22,6 +25,7 @@ export default function Footer() {
                         <Link to="/">การจัดส่ง</Link>
                         <Link to="/">การคืนสินค้า</Link>
                     </div>
+<<<<<<< HEAD
                     <div className="link-group">
                         <h4>ระบบจัดการ</h4>
                         <Link to="/admin-login" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -29,6 +33,8 @@ export default function Footer() {
                             Admin Area
                         </Link>
                     </div>
+=======
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
                 </div>
             </div>
             <div className="footer-bottom">

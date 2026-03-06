@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatPrice, CONFIG } from '../data/products';
 import { CheckCircle, Printer, ArrowLeft, Download, Truck } from 'lucide-react';
+<<<<<<< HEAD
 import { getOrderById, listOrders } from '../lib/ordersApi';
+=======
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 
 import { useParams } from 'react-router-dom';
 
@@ -12,6 +15,7 @@ export default function Receipt() {
     const [receipt, setReceipt] = useState(null);
 
     useEffect(() => {
+<<<<<<< HEAD
         const loadReceipt = async () => {
             if (id) {
                 try {
@@ -28,10 +32,23 @@ export default function Receipt() {
                 return;
             }
 
+=======
+        if (id) {
+            // Viewing from history
+            const orders = JSON.parse(localStorage.getItem('shopii_orders') || '[]');
+            const foundOrder = orders.find(o => o.id === id);
+            if (foundOrder) {
+                setReceipt(foundOrder);
+            } else {
+                navigate('/orders');
+            }
+        } else {
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
             // Viewing immediately after checkout
             const data = localStorage.getItem('shopii_receipt');
             if (data) {
                 setReceipt(JSON.parse(data));
+<<<<<<< HEAD
                 return;
             }
 
@@ -49,6 +66,12 @@ export default function Receipt() {
         };
 
         loadReceipt();
+=======
+            } else {
+                navigate('/');
+            }
+        }
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
     }, [navigate, id]);
 
     const handleDownloadPDF = async () => {
@@ -66,7 +89,11 @@ export default function Receipt() {
 
     if (!receipt) return null;
 
+<<<<<<< HEAD
     const { id: receiptId, date, customer, items, totals, payment, paymentMethod } = receipt;
+=======
+    const { id: receiptId, date, customer, items, totals, paymentMethod } = receipt;
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 
     return (
         <div className="container">
@@ -153,6 +180,7 @@ export default function Receipt() {
                             </div>
                             <div style={{ fontSize: 14 }}>
                                 <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 60 }}>ชำระโดย:</span>
+<<<<<<< HEAD
                                 <span className="payment-badge">
                                     {payment?.method || paymentMethod}
                                 </span>
@@ -163,6 +191,10 @@ export default function Receipt() {
                                     <span style={{ fontSize: 13, fontFamily: 'monospace' }}>{payment.referenceNo}</span>
                                 </div>
                             )}
+=======
+                                <span className="payment-badge">{paymentMethod}</span>
+                            </div>
+>>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
                         </div>
                     </div>
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import QRCode from 'qrcode.react';
+import QRCode from 'qrcode';
 import { CheckCircle, Clock, Zap } from 'lucide-react';
 import { formatPrice } from '../data/products';
 
@@ -59,6 +59,7 @@ export default function PromptPayPayment({
   const [verificationStep, setVerificationStep] = useState('qr'); // qr, verifying, confirmed
   const [countdown, setCountdown] = useState(0);
   const [referenceNo, setReferenceNo] = useState('');
+  const [qrDataUrl, setQrDataUrl] = useState('');
 
   useEffect(() => {
     if (verificationStep === 'verifying' && countdown === 0) {
@@ -97,6 +98,20 @@ export default function PromptPayPayment({
   };
 
   const qrValue = generatePromptPayQR(phoneNumber, Math.round(total));
+
+  useEffect(() => {
+    let isMounted = true;
+    QRCode.toDataURL(qrValue, { width: 240, margin: 2, errorCorrectionLevel: 'H' })
+      .then((url) => {
+        if (isMounted) setQrDataUrl(url);
+      })
+      .catch((error) => {
+        console.error('Failed to generate QR image:', error);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [qrValue]);
 
   return (
     <div className="promptpay-payment">
@@ -264,13 +279,17 @@ export default function PromptPayPayment({
           <p style={{ marginBottom: 20, fontSize: 14 }}>สแกน QR Code เพื่อชำระเงิน</p>
           
           <div className="qr-container">
-            <QRCode 
-              value={qrValue} 
-              level="H"
-              includeMargin={true}
-              renderAs="canvas"
-              size={240}
-            />
+            {qrDataUrl ? (
+              <img
+                src={qrDataUrl}
+                alt="PromptPay QR"
+                style={{ width: 240, height: 240, display: 'block' }}
+              />
+            ) : (
+              <div style={{ width: 240, height: 240, display: 'grid', placeItems: 'center', color: '#666' }}>
+                กำลังสร้าง QR...
+              </div>
+            )}
           </div>
 
           <div className="payment-info">
