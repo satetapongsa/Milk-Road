@@ -397,6 +397,70 @@ export default function AdminDashboard() {
           </section>
         </div>
 
+        {/* Grid for Top Products and Reviews */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14, marginBottom: 18 }}>
+            <section style={{ ...sectionStyle, alignSelf: 'start' }}>
+              <h3 style={sectionTitleStyle}>สินค้าขายดีสุด (Top 8)</h3>
+            {topProductsData.length === 0 ? (
+              <EmptySection text="ยังไม่มีข้อมูลสินค้า" />
+            ) : (
+              <>
+                <div style={{ width: '100%', height: 240, marginBottom: 8 }}>
+                  <ResponsiveContainer>
+                    <BarChart data={topProductsData} layout="vertical" margin={{ left: 0, right: 20 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis type="number" />
+                      <YAxis dataKey="name" type="category" width={110} tick={{ fontSize: 11 }} />
+                      <Tooltip formatter={(value) => [`${value} ชิ้น`, 'ขายได้']} />
+                      <Bar dataKey="quantity" fill="#4f46e5" radius={[0, 8, 8, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+
+                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 10 }}>
+                  {topProductsData.slice(0, 5).map((product, idx) => (
+                    <div key={product.key} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
+                      <span style={{ fontSize: 12 }}>
+                        {idx + 1}. {product.name}
+                      </span>
+                      <span style={{ fontSize: 12, fontWeight: 700 }}>{product.quantity} ชิ้น</span>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </section>
+
+          {/* รีวิวล่าสุด */}
+          <section style={{ ...sectionStyle, alignSelf: 'start' }}>
+            <h3 style={sectionTitleStyle}>รีวิวจากลูกค้า (ล่าสุด)</h3>
+            {reviews.length === 0 ? (
+              <EmptySection text="ยังไม่มีรีวิวสินค้า" />
+            ) : (
+              <div style={{ maxHeight: 310, overflowY: 'auto', paddingRight: 4 }}>
+                {reviews.slice(0, 10).map((review) => (
+                  <div key={review.id} style={{ borderBottom: '1px solid var(--border)', paddingBottom: 12, marginBottom: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600 }}>{review.product_name || 'ไม่ระบุสินค้า'}</span>
+                      <span style={{ display: 'flex', gap: 2 }}>
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={13} color={i < review.rating ? '#f59e0b' : '#e2e8f0'} fill={i < review.rating ? '#f59e0b' : 'none'} />
+                        ))}
+                      </span>
+                    </div>
+                    {review.comment && (
+                      <p style={{ margin: 0, fontSize: 13, color: 'var(--text-main)', fontStyle: 'italic', background: '#f8fafc', padding: '6px 10px', borderRadius: 6 }}>"{review.comment}"</p>
+                    )}
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 6, textAlign: 'right' }}>
+                      {new Date(review.created_at).toLocaleDateString('th-TH')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        </div>
+
         {/* Order List Section - Full Width */}
         <section style={{ ...sectionStyle, overflowX: 'auto', marginBottom: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap', marginBottom: 12 }}>
@@ -494,70 +558,6 @@ export default function AdminDashboard() {
               </table>
             )}
           </section>
-
-          {/* Grid for Top Products and Reviews */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
-            <section style={{ ...sectionStyle, alignSelf: 'start' }}>
-              <h3 style={sectionTitleStyle}>สินค้าขายดีสุด (Top 8)</h3>
-            {topProductsData.length === 0 ? (
-              <EmptySection text="ยังไม่มีข้อมูลสินค้า" />
-            ) : (
-              <>
-                <div style={{ width: '100%', height: 240, marginBottom: 8 }}>
-                  <ResponsiveContainer>
-                    <BarChart data={topProductsData} layout="vertical" margin={{ left: 0, right: 20 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis type="number" />
-                      <YAxis dataKey="name" type="category" width={110} tick={{ fontSize: 11 }} />
-                      <Tooltip formatter={(value) => [`${value} ชิ้น`, 'ขายได้']} />
-                      <Bar dataKey="quantity" fill="#4f46e5" radius={[0, 8, 8, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div style={{ borderTop: '1px solid var(--border)', paddingTop: 10 }}>
-                  {topProductsData.slice(0, 5).map((product, idx) => (
-                    <div key={product.key} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
-                      <span style={{ fontSize: 12 }}>
-                        {idx + 1}. {product.name}
-                      </span>
-                      <span style={{ fontSize: 12, fontWeight: 700 }}>{product.quantity} ชิ้น</span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-          </section>
-
-          {/* รีวิวล่าสุด */}
-          <section style={{ ...sectionStyle, alignSelf: 'start' }}>
-            <h3 style={sectionTitleStyle}>รีวิวจากลูกค้า (ล่าสุด)</h3>
-            {reviews.length === 0 ? (
-              <EmptySection text="ยังไม่มีรีวิวสินค้า" />
-            ) : (
-              <div style={{ maxHeight: 310, overflowY: 'auto', paddingRight: 4 }}>
-                {reviews.slice(0, 10).map((review) => (
-                  <div key={review.id} style={{ borderBottom: '1px solid var(--border)', paddingBottom: 12, marginBottom: 12 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                      <span style={{ fontSize: 13, fontWeight: 600 }}>{review.product_name || 'ไม่ระบุสินค้า'}</span>
-                      <span style={{ display: 'flex', gap: 2 }}>
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} size={13} color={i < review.rating ? '#f59e0b' : '#e2e8f0'} fill={i < review.rating ? '#f59e0b' : 'none'} />
-                        ))}
-                      </span>
-                    </div>
-                    {review.comment && (
-                      <p style={{ margin: 0, fontSize: 13, color: 'var(--text-main)', fontStyle: 'italic', background: '#f8fafc', padding: '6px 10px', borderRadius: 6 }}>"{review.comment}"</p>
-                    )}
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 6, textAlign: 'right' }}>
-                      {new Date(review.created_at).toLocaleDateString('th-TH')}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </div>
       </div>
 
       {selectedOrder && (
