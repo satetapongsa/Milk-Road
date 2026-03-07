@@ -9,6 +9,7 @@ import OrderHistory from './pages/OrderHistory';
 import Account from './pages/Account';
 import ProductDetail from './pages/ProductDetail';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProducts from './pages/AdminProducts';
 import AdminLogin from './pages/AdminLogin';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
@@ -30,6 +31,7 @@ function App() {
             <Route path="order/:id" element={<Receipt />} />
             <Route path="product/:id" element={<ProductDetail />} />
             <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/products" element={<AdminProducts />} />
           </Route>
           <Route path="admin-login" element={<AdminLogin />} />
         </Routes>

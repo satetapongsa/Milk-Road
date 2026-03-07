@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   BadgeCheck,
   CalendarDays,
@@ -325,8 +325,19 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="container" style={{ paddingTop: 32, paddingBottom: 48 }}>
+    <div className="container" style={{ paddingTop: 20, paddingBottom: 48 }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+        
+        {/* Top Navigation Bar */}
+        <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+            <Link to="/admin" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                 แดชบอร์ดออเดอร์
+            </Link>
+            <Link to="/admin/products" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'white' }}>
+                <Package size={18} /> จัดการสินค้า
+            </Link>
+        </div>
+
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
           <div>
             <h1 style={{ fontSize: 30, marginBottom: 6 }}>Admin Dashboard</h1>
