@@ -397,8 +397,8 @@ export default function AdminDashboard() {
           </section>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
-          <section style={{ ...sectionStyle, overflowX: 'auto' }}>
+        {/* Order List Section - Full Width */}
+        <section style={{ ...sectionStyle, overflowX: 'auto', marginBottom: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, flexWrap: 'wrap', marginBottom: 12 }}>
               <h3 style={{ ...sectionTitleStyle, margin: 0 }}>รายการคำสั่งซื้อจากหน้าเว็บ</h3>
 
@@ -495,8 +495,10 @@ export default function AdminDashboard() {
             )}
           </section>
 
-          <section style={{ ...sectionStyle, alignSelf: 'start' }}>
-            <h3 style={sectionTitleStyle}>สินค้าขายดีสุด (Top 8)</h3>
+          {/* Grid for Top Products and Reviews */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
+            <section style={{ ...sectionStyle, alignSelf: 'start' }}>
+              <h3 style={sectionTitleStyle}>สินค้าขายดีสุด (Top 8)</h3>
             {topProductsData.length === 0 ? (
               <EmptySection text="ยังไม่มีข้อมูลสินค้า" />
             ) : (
@@ -594,13 +596,14 @@ export default function AdminDashboard() {
             <div style={detailSectionStyle}>
               <h4 style={detailTitleStyle}>รายการสินค้า</h4>
               {(selectedOrder.items || []).map((item, index) => (
-                <div key={`${item.id || item.name}-${index}`} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 8, padding: '8px 0', borderBottom: '1px dashed #e2e8f0' }}>
-                  <div style={{ fontSize: 13, minWidth: 0 }}>
+                <div key={`${item.id || item.name}-${index}`} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px dashed #e2e8f0' }}>
+                  <img src={item.image || '/images/placeholder.png'} style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 8, border: '1px solid #e2e8f0', flexShrink: 0 }} alt={item.name} />
+                  <div style={{ flex: 1, fontSize: 13, minWidth: 0 }}>
                     <div style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name || 'ไม่ระบุชื่อสินค้า'}</div>
                     <small style={{ color: 'var(--text-muted)' }}>{formatPrice(item.price || 0)} / ชิ้น</small>
                   </div>
-                  <div style={{ fontSize: 13 }}>x{item.quantity || 0}</div>
-                  <div style={{ fontSize: 13, fontWeight: 700 }}>{formatPrice((item.price || 0) * (item.quantity || 0))}</div>
+                  <div style={{ fontSize: 13, textAlign: 'center' }}>x{item.quantity || 0}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, textAlign: 'right', minWidth: 60 }}>{formatPrice((item.price || 0) * (item.quantity || 0))}</div>
                 </div>
               ))}
             </div>
