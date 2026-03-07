@@ -1,11 +1,13 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { ArrowRight, ShoppingCart } from 'lucide-react';
-import { products, formatPrice } from '../data/products';
+import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
+import { useProducts } from '../context/ProductContext';
 
 export default function Home() {
     const [searchParams] = useSearchParams();
     const { addToCart } = useCart();
+    const { products, isLoading, error } = useProducts();
 
     // Search Filtering
     const searchTerm = searchParams.get('q')?.toLowerCase() || '';
@@ -35,7 +37,11 @@ export default function Home() {
                     </div>
 
                     <div className="products-grid" id="products-container">
-                        {filteredProducts.length === 0 ? (
+                        {isLoading ? (
+                            <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px' }}>⏳ กำลังโหลดสินค้าจากระบบร้านค้า...</p>
+                        ) : error ? (
+                            <p style={{ gridColumn: '1/-1', textAlign: 'center', color: 'red' }}>⚠️ เกิดข้อผิดพลาดในการโหลดสินค้า: {error}</p>
+                        ) : filteredProducts.length === 0 ? (
                             <p style={{ gridColumn: '1/-1', textAlign: 'center' }}>ไม่พบสินค้าที่ค้นหา</p>
                         ) : (
                             filteredProducts.map(product => (

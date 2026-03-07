@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { products, formatPrice } from '../data/products';
+import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
+import { useProducts } from '../context/ProductContext';
 import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
 
 export default function ProductDetail() {
     const { id } = useParams();
-    const product = products.find(p => p.id === parseInt(id));
+    const { getProductById, isLoading, error } = useProducts();
+    const product = getProductById(id);
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
     const [isAdded, setIsAdded] = useState(false);
@@ -21,7 +23,9 @@ export default function ProductDetail() {
         setTimeout(() => setIsAdded(false), 2000);
     };
 
-    if (!product) return <div className="container" style={{ padding: 40, textAlign: 'center' }}>Loading...</div>;
+    if (isLoading) return <div className="container" style={{ padding: 40, textAlign: 'center' }}>กำลังโหลดข้อมูลสินค้า...</div>;
+    if (error) return <div className="container" style={{ padding: 40, textAlign: 'center', color: 'red' }}>⚠️ เกิดข้อผิดพลาดในการโหลดสินค้า</div>;
+    if (!product) return <div className="container" style={{ padding: 40, textAlign: 'center' }}>ไม่พบสินค้านี้ในระบบ</div>;
 
     return (
         <div className="container">

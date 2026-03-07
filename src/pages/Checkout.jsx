@@ -70,6 +70,12 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
 
             const savedOrder = await createOrder(receipt);
             localStorage.setItem('shopii_receipt', JSON.stringify(savedOrder || receipt));
+            
+            // Save order ID to local history so user can see their own orders without login
+            const myOrders = JSON.parse(localStorage.getItem('my_order_ids') || '[]');
+            myOrders.push((savedOrder || receipt).id);
+            localStorage.setItem('my_order_ids', JSON.stringify(myOrders));
+            
             clearCart();
             navigate('/receipt');
         } catch (error) {

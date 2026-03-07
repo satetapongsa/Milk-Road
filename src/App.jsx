@@ -11,11 +11,13 @@ import ProductDetail from './pages/ProductDetail';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
 import { CartProvider } from './context/CartContext';
+import { ProductProvider } from './context/ProductContext';
 
 function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
+    <ProductProvider>
+      <CartProvider>
+        <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -33,6 +35,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </CartProvider>
+    </ProductProvider>
   );
 }
 

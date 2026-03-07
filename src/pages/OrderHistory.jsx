@@ -11,7 +11,18 @@ export default function OrderHistory() {
         const loadOrders = async () => {
             try {
                 const rows = await listOrders();
-                setOrders(rows);
+                
+                // Only show orders that were placed on this device
+                const myOrdersIds = JSON.parse(localStorage.getItem('my_order_ids') || '[]');
+                
+                // Add the latest receipt if it was before the array implementation
+                const lastReceipt = JSON.parse(localStorage.getItem('shopii_receipt') || 'null');
+                if (lastReceipt && lastReceipt.id && !myOrdersIds.includes(lastReceipt.id)) {
+                    myOrdersIds.push(lastReceipt.id);
+                }
+
+                const myFilteredOrders = rows.filter(o => myOrdersIds.includes(o.id));
+                setOrders(myFilteredOrders);
             } catch (error) {
                 console.error('Failed to load order history:', error);
                 setOrders([]);

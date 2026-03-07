@@ -2,10 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useSearchParams, useNavigate } from 'react-router-dom';
 import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight, Filter, ChevronDown } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { products } from '../data/products';
+import { useProducts } from '../context/ProductContext';
 
 export default function Header({ onOpenCart }) {
     const { totalItems } = useCart();
+    const { products } = useProducts();
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
     const [suggestions, setSuggestions] = useState([]);
