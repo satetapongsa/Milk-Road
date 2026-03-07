@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatPrice, CONFIG } from '../data/products';
-import { CheckCircle, Printer, ArrowLeft, Download, Truck } from 'lucide-react';
+import { CheckCircle, Printer, ArrowLeft, Download, Truck, Star, Edit3 } from 'lucide-react';
 import { getOrderById, listOrders } from '../lib/ordersApi';
+import { submitReview } from '../lib/reviewsApi';
 
 import { useParams } from 'react-router-dom';
 
@@ -10,6 +11,11 @@ export default function Receipt() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [receipt, setReceipt] = useState(null);
+    const [reviewedItems, setReviewedItems] = useState({});
+    const [isReviewing, setIsReviewing] = useState(null);
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState('');
+    const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
     useEffect(() => {
         const loadReceipt = async () => {
@@ -61,6 +67,38 @@ export default function Receipt() {
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         html2pdf().set(opt).from(element).save();
+    };
+
+    const handleOpenReview = (item) => {
+        setIsReviewing(item.id);
+        setRating(5);
+        setComment('');
+    };
+
+    const handleSubmitReview = async (item) => {
+        if (!rating || !comment.trim()) {
+            alert('กรุณาให้คะแนนและพิมพ์ความคิดเห็น');
+            return;
+        }
+
+        setIsSubmittingReview(true);
+        try {
+            await submitReview({
+                order_id: receipt._dbId || receipt.id, // Ensure we send the DB UUID if available, fallback to text ID logic won't work cleanly unless db UUID. ordersApi returns _dbId.
+                product_id: item.id,
+                product_name: item.name,
+                rating,
+                comment,
+            });
+
+            setReviewedItems(prev => ({ ...prev, [item.id]: true }));
+            setIsReviewing(null);
+        } catch (error) {
+            console.error(error);
+            alert('บันทึกรีวิวไม่สำเร็จ');
+        } finally {
+            setIsSubmittingReview(false);
+        }
     };
 
     if (!receipt) return null;
@@ -223,6 +261,79 @@ export default function Receipt() {
                     <button className="btn btn-outline" onClick={() => navigate('/')}>
                         <ArrowLeft size={18} /> กลับสู่หน้าหลัก
                     </button>
+                </div>
+
+                {/* --- รีวิวสินค้า (NO PRINT) --- */}
+                <div className="no-print" style={{ marginTop: 60, borderTop: '1px solid var(--border)', paddingTop: 40 }}>
+                    <h3 style={{ textAlign: 'center', marginBottom: 24, fontSize: 24 }}>รีวิวสินค้าที่คุณได้รับ ⭐️</h3>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 600, margin: '0 auto' }}>
+                        {items?.map(item => (
+                            <div key={item.id} style={{ border: '1px solid var(--border)', padding: 16, borderRadius: 12, background: 'white' }}>
+                                <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+                                    <img src={item.image} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }} alt={item.name} />
+                                    <div style={{ flex: 1 }}>
+                                        <div style={{ fontWeight: 600 }}>{item.name}</div>
+                                        <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>จำนวน {item.quantity} ชิ้น</div>
+                                    </div>
+
+                                    {!reviewedItems[item.id] && isReviewing !== item.id && (
+                                        <button 
+                                            className="btn btn-outline" 
+                                            style={{ fontSize: 13, height: 32, padding: '0 12px' }}
+                                            onClick={() => handleOpenReview(item)}
+                                        >
+                                            <Edit3 size={14} style={{ marginRight: 6 }} /> เขียนรีวิว
+                                        </button>
+                                    )}
+                                    {reviewedItems[item.id] && (
+                                        <div style={{ color: '#10b981', fontSize: 13, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+                                            <CheckCircle size={16} /> รีวิวแล้ว
+                                        </div>
+                                    )}
+                                </div>
+
+                                {isReviewing === item.id && (
+                                    <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px dashed var(--border)' }}>
+                                        <div style={{ marginBottom: 12 }}>
+                                            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 8 }}>ให้คะแนนสินค้า (1-5 ดาว)</label>
+                                            <div style={{ display: 'flex', gap: 8 }}>
+                                                {[1, 2, 3, 4, 5].map(star => (
+                                                    <button 
+                                                        key={star}
+                                                        type="button"
+                                                        onClick={() => setRating(star)}
+                                                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                                                    >
+                                                        <Star size={28} color={star <= rating ? '#f59e0b' : '#e2e8f0'} fill={star <= rating ? '#f59e0b' : 'none'} />
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div style={{ marginBottom: 16 }}>
+                                            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 8 }}>ความคิดเห็นของคุณ</label>
+                                            <textarea 
+                                                value={comment}
+                                                onChange={e => setComment(e.target.value)}
+                                                placeholder="บอกให้เรารู้ว่าคุณชอบสินค้านี้อย่างไร..."
+                                                style={{ width: '100%', border: '1px solid var(--border)', borderRadius: 8, padding: 12, resize: 'vertical', minHeight: 80, fontFamily: 'inherit', fontSize: 14 }}
+                                            ></textarea>
+                                        </div>
+                                        <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+                                            <button className="btn btn-outline" style={{ height: 36, fontSize: 14 }} onClick={() => setIsReviewing(null)}>ยกเลิก</button>
+                                            <button 
+                                                className="btn btn-primary" 
+                                                style={{ height: 36, fontSize: 14 }} 
+                                                disabled={isSubmittingReview}
+                                                onClick={() => handleSubmitReview(item)}
+                                            >
+                                                {isSubmittingReview ? 'กำลังบันทึก...' : 'บันทึกรีวิว'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 

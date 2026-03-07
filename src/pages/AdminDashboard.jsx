@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   BadgeCheck,
@@ -14,7 +14,8 @@ import {
   Truck,
   TrendingUp,
   User,
-  X
+  X,
+  Star
 } from 'lucide-react';
 import {
   Bar,
@@ -33,6 +34,7 @@ import {
 } from 'recharts';
 import { formatPrice } from '../data/products';
 import { clearOrders, deleteOrderById, listOrders, updateOrderById } from '../lib/ordersApi';
+import { getAllReviews } from '../lib/reviewsApi';
 
 const ADMIN_SESSION_HOURS = 8;
 
@@ -90,6 +92,7 @@ const formatChartDate = (date) => {
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
@@ -100,8 +103,11 @@ export default function AdminDashboard() {
     try {
       const rows = await listOrders();
       setOrders(rows);
+      
+      const reviewRows = await getAllReviews();
+      setReviews(reviewRows);
     } catch (error) {
-      console.error('Failed to load orders:', error);
+      console.error('Failed to load dashboard data:', error);
     }
   }, []);
 
@@ -518,6 +524,35 @@ export default function AdminDashboard() {
                   ))}
                 </div>
               </>
+            )}
+          </section>
+
+          {/* รีวิวล่าสุด */}
+          <section style={{ ...sectionStyle, alignSelf: 'start' }}>
+            <h3 style={sectionTitleStyle}>รีวิวจากลูกค้า (ล่าสุด)</h3>
+            {reviews.length === 0 ? (
+              <EmptySection text="ยังไม่มีรีวิวสินค้า" />
+            ) : (
+              <div style={{ maxHeight: 310, overflowY: 'auto', paddingRight: 4 }}>
+                {reviews.slice(0, 10).map((review) => (
+                  <div key={review.id} style={{ borderBottom: '1px solid var(--border)', paddingBottom: 12, marginBottom: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600 }}>{review.product_name || 'ไม่ระบุสินค้า'}</span>
+                      <span style={{ display: 'flex', gap: 2 }}>
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} size={13} color={i < review.rating ? '#f59e0b' : '#e2e8f0'} fill={i < review.rating ? '#f59e0b' : 'none'} />
+                        ))}
+                      </span>
+                    </div>
+                    {review.comment && (
+                      <p style={{ margin: 0, fontSize: 13, color: 'var(--text-main)', fontStyle: 'italic', background: '#f8fafc', padding: '6px 10px', borderRadius: 6 }}>"{review.comment}"</p>
+                    )}
+                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 6, textAlign: 'right' }}>
+                      {new Date(review.created_at).toLocaleDateString('th-TH')}
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </section>
         </div>

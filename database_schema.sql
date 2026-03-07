@@ -139,3 +139,14 @@ CREATE POLICY "Enable all for development" ON orders FOR ALL USING (true);
 CREATE POLICY "Enable all for development" ON order_items FOR ALL USING (true);
 CREATE POLICY "Enable all for development" ON payments FOR ALL USING (true);
 */
+
+-- Create Product Reviews Table (สำหรับเก็บรีวิวสินค้า)
+CREATE TABLE product_reviews (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
+  product_id TEXT, -- ปล่อยเป็น TEXT เพื่อความยืดหยุ่นถ้าสินค้าถูกลบ
+  product_name TEXT,
+  rating INTEGER CHECK (rating >= 1 AND rating <= 5) NOT NULL,
+  comment TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
