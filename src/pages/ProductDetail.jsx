@@ -6,14 +6,12 @@ import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, Rotate
 
 export default function ProductDetail() {
     const { id } = useParams();
-    const [product, setProduct] = useState(null);
+    const product = products.find(p => p.id === parseInt(id));
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
     const [isAdded, setIsAdded] = useState(false);
 
     useEffect(() => {
-        const found = products.find(p => p.id === parseInt(id));
-        setProduct(found);
         window.scrollTo(0, 0);
     }, [id]);
 

@@ -3,11 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { formatPrice, CONFIG } from '../data/products';
 import { CreditCard, Truck, Loader } from 'lucide-react';
-<<<<<<< HEAD
 import PromptPayPayment from '../components/PromptPayPayment';
 import { createOrder } from '../lib/ordersApi';
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 
 export default function Checkout() {
     const { cart, subtotal, total, clearCart } = useCart();
@@ -15,10 +12,7 @@ export default function Checkout() {
     const [loading, setLoading] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState('cod');
     const [isSubmitted, setIsSubmitted] = useState(false);
-<<<<<<< HEAD
     const [paymentData, setPaymentData] = useState(null);
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 
     useEffect(() => {
         if (cart.length === 0 && !isSubmitted) {
@@ -26,7 +20,6 @@ export default function Checkout() {
         }
     }, [cart, navigate, isSubmitted]);
 
-<<<<<<< HEAD
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -35,11 +28,6 @@ export default function Checkout() {
             alert('กรุณาชำระเงินผ่าน PromptPay ให้สำเร็จก่อน');
             return;
         }
-
-=======
-    const handleSubmit = (e) => {
-        e.preventDefault();
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
         setLoading(true);
         setIsSubmitted(true);
 
@@ -50,15 +38,10 @@ export default function Checkout() {
 ${formData.get('subdistrict')} ${formData.get('district')}
 ${formData.get('province')} ${formData.get('zipcode')}`;
 
-<<<<<<< HEAD
         await new Promise((resolve) => setTimeout(resolve, 600));
 
         try {
             const timestamp = new Date().toISOString();
-=======
-        // Simulate API call
-        setTimeout(() => {
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
             const receipt = {
                 id: 'INV-' + Date.now().toString().slice(-6),
                 date: new Date().toLocaleDateString('th-TH'),
@@ -74,7 +57,6 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
                     shipping: CONFIG.shippingCost,
                     total: total
                 },
-<<<<<<< HEAD
                 payment: paymentData || {
                     method: paymentMethod === 'cod' ? 'เก็บเงินปลายทาง' : 'บัตรเครดิต/เดบิต',
                     timestamp
@@ -104,22 +86,6 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
             method: 'PromptPay',
             ...data
         });
-=======
-                paymentMethod: paymentMethod === 'cod' ? 'เก็บเงินปลายทาง' : 'บัตรเครดิต/เดบิต',
-                status: 'Completed'
-            };
-
-            // Save to history
-            const existingOrders = JSON.parse(localStorage.getItem('shopii_orders') || '[]');
-            localStorage.setItem('shopii_orders', JSON.stringify([receipt, ...existingOrders]));
-
-            // Save for immediate receipt view
-            localStorage.setItem('shopii_receipt', JSON.stringify(receipt));
-            clearCart();
-            setLoading(false);
-            navigate('/receipt');
-        }, 2000);
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
     };
 
     if (cart.length === 0 && !isSubmitted) return null;
@@ -190,7 +156,6 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
                             <span>เก็บเงินปลายทาง (Cash on Delivery)</span>
                         </label>
 
-<<<<<<< HEAD
                         <label className={`payment-option ${paymentMethod === 'promptpay' ? 'selected' : ''}`}>
                             <input
                                 type="radio"
@@ -201,9 +166,6 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
                             />
                             <span>PromptPay / QR Code</span>
                         </label>
-
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
                         <label className={`payment-option ${paymentMethod === 'credit' ? 'selected' : ''}`}>
                             <input
                                 type="radio"
@@ -215,7 +177,6 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
                             <span>บัตรเครดิต / เดบิต</span>
                         </label>
 
-<<<<<<< HEAD
                         {paymentMethod === 'promptpay' && (
                             <PromptPayPayment 
                                 total={total}
@@ -223,9 +184,6 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
                                 loading={loading}
                             />
                         )}
-
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
                         {paymentMethod === 'credit' && (
                             <div className="payment-fields" id="credit-card-fields">
                                 <div className="form-group">
@@ -279,23 +237,15 @@ ${formData.get('province')} ${formData.get('zipcode')}`;
                         <button
                             type="submit"
                             className="btn btn-primary btn-block confirm-btn"
-<<<<<<< HEAD
                             disabled={loading || (paymentMethod === 'promptpay' && !paymentData)}
                             style={{ marginTop: 24, opacity: loading || (paymentMethod === 'promptpay' && !paymentData) ? 0.5 : 1 }}
-=======
-                            disabled={loading}
-                            style={{ marginTop: 24 }}
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
                         >
                             {loading ? (
                                 <>
                                     <Loader className="spin" size={20} /> กำลังประมวลผล...
                                 </>
-<<<<<<< HEAD
                             ) : paymentMethod === 'promptpay' && !paymentData ? (
                                 'กรุณาชำระเงินผ่าน PromptPay ก่อน'
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
                             ) : (
                                 'ยืนยันการสั่งซื้อ'
                             )}

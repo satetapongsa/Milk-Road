@@ -5,7 +5,7 @@ import { formatPrice, CONFIG } from '../data/products';
 import { FileText, Truck, Loader } from 'lucide-react';
 
 export default function QuotationRequest() {
-    const { cart, subtotal, total, clearCart } = useCart();
+    const { cart, subtotal, total } = useCart();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 

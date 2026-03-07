@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import QRCode from 'qrcode';
 import { CheckCircle, Clock, Zap } from 'lucide-react';
 import { formatPrice } from '../data/products';
@@ -24,7 +24,7 @@ const generatePromptPayQR = (phoneNumber, amount) => {
   return qrString + crc.toString(16).toUpperCase().padStart(4, '0');
 };
 
-const buildQRString = (obj, prefix = '') => {
+const buildQRString = (obj) => {
   let str = '';
   Object.keys(obj).sort().forEach(key => {
     const val = obj[key];
@@ -61,11 +61,24 @@ export default function PromptPayPayment({
   const [referenceNo, setReferenceNo] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState('');
 
+
   useEffect(() => {
     if (verificationStep === 'verifying' && countdown === 0) {
       setCountdown(8);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verificationStep]);
+
+  const completePayment = useCallback(() => {
+    setVerificationStep('confirmed');
+    onPaymentComplete({
+      method: 'promptpay',
+      phoneNumber,
+      referenceNo,
+      timestamp: new Date().toISOString(),
+      amount: total
+    });
+  }, [phoneNumber, referenceNo, total, onPaymentComplete]);
 
   useEffect(() => {
     if (countdown > 0) {
@@ -78,23 +91,12 @@ export default function PromptPayPayment({
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [countdown]);
+  }, [countdown, completePayment]);
 
   const handleScanConfirm = () => {
     setReferenceNo('REF-' + Date.now().toString().slice(-8).toUpperCase());
     setVerificationStep('verifying');
     setCountdown(8);
-  };
-
-  const completePayment = () => {
-    setVerificationStep('confirmed');
-    onPaymentComplete({
-      method: 'promptpay',
-      phoneNumber,
-      referenceNo,
-      timestamp: new Date().toISOString(),
-      amount: total
-    });
   };
 
   const qrValue = generatePromptPayQR(phoneNumber, Math.round(total));

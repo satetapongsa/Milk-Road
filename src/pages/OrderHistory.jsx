@@ -2,16 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, ChevronRight, Package } from 'lucide-react';
 import { formatPrice } from '../data/products';
-<<<<<<< HEAD
 import { listOrders } from '../lib/ordersApi';
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 
 export default function OrderHistory() {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-<<<<<<< HEAD
         const loadOrders = async () => {
             try {
                 const rows = await listOrders();
@@ -23,12 +19,6 @@ export default function OrderHistory() {
         };
 
         loadOrders();
-=======
-        const data = localStorage.getItem('shopii_orders');
-        if (data) {
-            setOrders(JSON.parse(data));
-        }
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
     }, []);
 
     if (orders.length === 0) {

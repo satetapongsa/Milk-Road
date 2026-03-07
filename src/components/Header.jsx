@@ -15,6 +15,7 @@ export default function Header({ onOpenCart }) {
 
     // Sync input with URL params
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSearchTerm(searchParams.get('q') || '');
     }, [searchParams]);
 

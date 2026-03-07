@@ -8,11 +8,8 @@ import Quotation from './pages/Quotation';
 import OrderHistory from './pages/OrderHistory';
 import Account from './pages/Account';
 import ProductDetail from './pages/ProductDetail';
-<<<<<<< HEAD
 import AdminDashboard from './pages/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
-=======
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
 import { CartProvider } from './context/CartContext';
 
 function App() {
@@ -30,13 +27,9 @@ function App() {
             <Route path="orders" element={<OrderHistory />} />
             <Route path="order/:id" element={<Receipt />} />
             <Route path="product/:id" element={<ProductDetail />} />
-<<<<<<< HEAD
             <Route path="admin" element={<AdminDashboard />} />
           </Route>
           <Route path="admin-login" element={<AdminLogin />} />
-=======
-          </Route>
->>>>>>> 3a28ed6cbef5869d993fdb50c1a134daf985d33e
         </Routes>
       </BrowserRouter>
     </CartProvider>
