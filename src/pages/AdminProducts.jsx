@@ -86,9 +86,11 @@ export default function AdminProducts() {
             if (editingProduct) {
                 const updated = await updateProduct(editingProduct.id, formData);
                 setProducts(prev => prev.map(p => p.id === editingProduct.id ? { ...p, ...formData } : p));
+                alert('แก้ไขข้อมูลสำเร็จ');
             } else {
                 const added = await addProduct(formData);
                 setProducts(prev => [added, ...prev]);
+                alert('เพิ่มข้อมูลใหม่สำเร็จ');
             }
             closeDrawer();
         } catch (error) {
@@ -105,6 +107,7 @@ export default function AdminProducts() {
         try {
             await deleteProduct(id);
             setProducts(prev => prev.filter(p => p.id !== id));
+            alert('ลบข้อมูลสำเร็จ');
         } catch (error) {
             console.error('Failed to delete product:', error);
             alert('เกิดข้อผิดพลาด ไม่สามารถลบสินค้าได้ อาจมีออเดอร์ผูกอยู่');
