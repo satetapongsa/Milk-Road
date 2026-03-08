@@ -95,7 +95,7 @@ export default function AdminProducts() {
             closeDrawer();
         } catch (error) {
             console.error('Failed to save product:', error);
-            alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+            alert(`เกิดข้อผิดพลาดในการบันทึกข้อมูล: ${error.message || error}`);
         } finally {
             setIsSaving(false);
         }
