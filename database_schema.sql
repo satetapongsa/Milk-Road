@@ -134,7 +134,8 @@ ALTER TABLE payments ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Enable all for development" ON customers FOR ALL USING (true);
 CREATE POLICY "Enable all for development" ON addresses FOR ALL USING (true);
-CREATE POLICY "Enable all for development" ON products FOR ALL USING (true);
+-- Products uses a full read/write policy so admin can manage them
+CREATE POLICY "Enable ALL operations for products" ON products FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Enable all for development" ON orders FOR ALL USING (true);
 CREATE POLICY "Enable all for development" ON order_items FOR ALL USING (true);
 CREATE POLICY "Enable all for development" ON payments FOR ALL USING (true);
