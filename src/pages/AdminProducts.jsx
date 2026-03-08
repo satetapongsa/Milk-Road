@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Package, Plus, Trash2, Edit3, X, Image as ImageIcon, Search, LayoutDashboard, ShoppingBag } from 'lucide-react';
-import { useProducts } from '../context/ProductContext';
+import { supabase } from '../lib/supabaseClient';
 import { formatPrice } from '../data/products';
 import { addProduct, updateProduct, deleteProduct } from '../lib/productsApi';
 
@@ -9,9 +9,28 @@ const ADMIN_SESSION_HOURS = 8;
 
 export default function AdminProducts() {
     const navigate = useNavigate();
-    const { products, isLoading, setProducts } = useProducts();
+    const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('All');
+
+    useEffect(() => {
+        const fetchAdminProducts = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('products')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                if (error) throw error;
+                setProducts(data.map(p => ({ ...p, price: Number(p.price) })));
+            } catch (err) {
+                console.error("Error fetching admin products:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchAdminProducts();
+    }, []);
     
     // Auth Check
     useEffect(() => {
