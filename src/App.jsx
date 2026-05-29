@@ -12,6 +12,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminProducts from './pages/AdminProducts';
 import AdminLogin from './pages/AdminLogin';
 import About from './pages/About';
+import Team from './pages/Team';
+import JoinUs from './pages/JoinUs';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
 
@@ -34,6 +36,8 @@ function App() {
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="admin/products" element={<AdminProducts />} />
             <Route path="about" element={<About />} />
+            <Route path="team" element={<Team />} />
+            <Route path="join-us" element={<JoinUs />} />
           </Route>
           <Route path="admin-login" element={<AdminLogin />} />
         </Routes>

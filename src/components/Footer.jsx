@@ -13,8 +13,8 @@ export default function Footer() {
                     <div className="link-group">
                         <h4>เกี่ยวกับเรา</h4>
                         <Link to="/about">บริษัท</Link>
-                        <Link to="/">ทีมงาน</Link>
-                        <Link to="/">ร่วมงานกับเรา</Link>
+                        <Link to="/team">ทีมงาน</Link>
+                        <Link to="/join-us">ร่วมงานกับเรา</Link>
                     </div>
                     <div className="link-group">
                         <h4>ช่วยเหลือ</h4>
