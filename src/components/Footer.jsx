@@ -12,7 +12,7 @@ export default function Footer() {
                 <div className="footer-links">
                     <div className="link-group">
                         <h4>เกี่ยวกับเรา</h4>
-                        <Link to="/">บริษัท</Link>
+                        <Link to="/about">บริษัท</Link>
                         <Link to="/">ทีมงาน</Link>
                         <Link to="/">ร่วมงานกับเรา</Link>
                     </div>

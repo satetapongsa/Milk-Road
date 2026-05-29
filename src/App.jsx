@@ -11,6 +11,7 @@ import ProductDetail from './pages/ProductDetail';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProducts from './pages/AdminProducts';
 import AdminLogin from './pages/AdminLogin';
+import About from './pages/About';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="product/:id" element={<ProductDetail />} />
             <Route path="admin" element={<AdminDashboard />} />
             <Route path="admin/products" element={<AdminProducts />} />
+            <Route path="about" element={<About />} />
           </Route>
           <Route path="admin-login" element={<AdminLogin />} />
         </Routes>
