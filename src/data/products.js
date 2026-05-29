@@ -126,7 +126,7 @@ export const products = [
         name: "Multivitamin Complex",
         price: 260,
         category: "Supplements",
-        image: "/images/pill_bottle_white.png",
+        image: "/images/multivitamin_complex.png",
         description: "Comprehensive multivitamin and mineral complex tablets to prevent vitamin deficiencies, boost overall health, and relieve daily fatigue.",
         specs: ["1 bottle x 30 tablets", "Complete daily nutrition", "Dietary supplement"]
     },
