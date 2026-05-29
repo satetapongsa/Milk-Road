@@ -27,7 +27,7 @@ export const products = [
         name: "Ibuprofen 400mg",
         price: 90,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/ibuprofen_blister.png",
         description: "Ibuprofen 400mg tablets to relieve acute inflammatory pain, toothaches, menstrual pain, muscular strains, and reduce fever.",
         specs: ["1 blister x 10 tablets", "400mg per tablet", "Anti-inflammatory NSAID"]
     },
@@ -36,7 +36,7 @@ export const products = [
         name: "Amoxicillin 500mg",
         price: 180,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/amoxicillin_capsules.png",
         description: "Amoxicillin 500mg capsules, a broad-spectrum penicillin antibiotic used to treat bacterial infections of the respiratory tract, skin, and urinary tract.",
         specs: ["1 blister x 10 capsules", "500mg per capsule", "Prescription antibiotic"]
     },
@@ -45,7 +45,7 @@ export const products = [
         name: "Cetirizine 10mg",
         price: 70,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/cetirizine_blister.png",
         description: "Cetirizine hydrochloride 10mg tablets for highly effective 24-hour relief of allergy symptoms like sneezing, runny nose, watery eyes, and hives.",
         specs: ["1 blister x 10 tablets", "10mg per tablet", "Antihistamine / Allergy relief"]
     },
@@ -54,7 +54,7 @@ export const products = [
         name: "Loratadine 10mg",
         price: 85,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/loratadine_blister.png",
         description: "Loratadine 10mg tablets providing 24-hour non-drowsy relief from allergic rhinitis, hay fever, sneezing, runny nose, and skin itching.",
         specs: ["1 blister x 10 tablets", "10mg per tablet", "24-Hour Non-Drowsy Allergy"]
     },
@@ -63,7 +63,7 @@ export const products = [
         name: "Omeprazole 20mg",
         price: 110,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/omeprazole_capsules.png",
         description: "Omeprazole 20mg capsules. Reduces excess acid production in the stomach to treat acid reflux (GERD), heartburn, and gastric ulcers.",
         specs: ["1 blister x 14 capsules", "20mg per capsule", "Proton Pump Inhibitor"]
     },
@@ -72,7 +72,7 @@ export const products = [
         name: "Metformin 500mg",
         price: 150,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/metformin_tablets.png",
         description: "Metformin hydrochloride 500mg tablets, used to control and manage high blood glucose levels in patients with type 2 diabetes mellitus.",
         specs: ["1 blister x 10 tablets", "500mg per tablet", "Oral antidiabetic medication"]
     },
@@ -81,7 +81,7 @@ export const products = [
         name: "Amlodipine 5mg",
         price: 120,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/amlodipine_tablets.png",
         description: "Amlodipine 5mg tablets. Relaxes blood vessels to lower blood pressure, improve blood circulation, and prevent angina (chest pain).",
         specs: ["1 blister x 10 tablets", "5mg per tablet", "Calcium channel blocker"]
     },
@@ -90,7 +90,7 @@ export const products = [
         name: "Simvastatin 20mg",
         price: 140,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/simvastatin_tablets.png",
         description: "Simvastatin 20mg tablets to lower high blood levels of cholesterol and triglycerides, reducing the risk of cardiovascular events.",
         specs: ["1 blister x 10 tablets", "20mg per tablet", "HMG-CoA Reductase Statin"]
     },
@@ -99,7 +99,7 @@ export const products = [
         name: "Bromhexine 8mg",
         price: 50,
         category: "Medicines",
-        image: "/images/pill_blister_white.png",
+        image: "/images/bromhexine_tablets.png",
         description: "Bromhexine hydrochloride 8mg tablets to dissolve, thin, and break up thick sticky mucus in the airways during chesty coughs.",
         specs: ["1 blister x 10 tablets", "8mg per tablet", "Mucolytic / Cough relief"]
     },
