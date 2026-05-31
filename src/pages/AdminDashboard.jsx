@@ -15,7 +15,10 @@ import {
   TrendingUp,
   User,
   X,
-  Star
+  Star,
+  FileText,
+  Printer,
+  ExternalLink
 } from 'lucide-react';
 import {
   Bar,
@@ -324,6 +327,28 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleSimulateShipping = async (targetId) => {
+    try {
+      const target = orders.find((order) => order.id === targetId);
+      if (!target) return;
+      
+      const tracking = 'TH-' + Math.floor(10000000 + Math.random() * 90000000);
+      
+      await updateOrderById(targetId, {
+        status: 'Shipped',
+        admin: {
+          ...target.admin,
+          trackingNo: tracking,
+          note: (target.admin?.note ? target.admin.note + '\n' : '') + '[จำลองแอดมิน] ได้กดจำลองจัดส่งด่วนและสร้างเลขพัสดุอัตโนมัติ'
+        }
+      });
+      await loadOrders();
+    } catch (error) {
+      console.error('Failed to simulate shipping:', error);
+      alert('จำลองการจัดส่งล้มเหลว');
+    }
+  };
+
   return (
     <div className="container" style={{ paddingTop: 20, paddingBottom: 48 }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
@@ -574,30 +599,123 @@ export default function AdminDashboard() {
       {selectedOrder && (
         <div style={overlayStyle} onClick={() => setSelectedOrderId(null)}>
           <div style={drawerStyle} onClick={(e) => e.stopPropagation()}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 16, borderBottom: '1px solid #f1f5f9', paddingBottom: 12 }}>
               <div>
-                <h3 style={{ margin: 0, marginBottom: 6 }}>รายละเอียดคำสั่งซื้อ</h3>
-                <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)' }}>{selectedOrder.id}</p>
+                <span style={{ fontSize: 11, background: '#eef2ff', color: '#4f46e5', padding: '2px 8px', borderRadius: 999, fontWeight: 600, display: 'inline-block', marginBottom: 4 }}>
+                  🛒 คำสั่งซื้อออนไลน์
+                </span>
+                <h3 style={{ margin: 0, fontWeight: 800, fontSize: 18, color: '#0f172a' }}>รายละเอียดคำสั่งซื้อ</h3>
+                <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', fontFamily: 'monospace' }}>ID: {selectedOrder.id}</p>
               </div>
-              <button onClick={() => setSelectedOrderId(null)} style={iconButtonStyle}>
+              <button onClick={() => setSelectedOrderId(null)} style={{ ...iconButtonStyle, width: 32, height: 32, borderRadius: '50%' }}>
                 <X size={16} />
               </button>
             </div>
 
-            <div style={detailSectionStyle}>
-              <h4 style={detailTitleStyle}>ข้อมูลลูกค้า</h4>
-              <EditableRow label="ชื่อ" icon={<User size={14} />} value={selectedOrder.customer?.name || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'name', value)} />
-              <EditableRow label="โทรศัพท์" value={selectedOrder.customer?.phone || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'phone', value)} />
-              <EditableRow label="อีเมล" value={selectedOrder.customer?.email || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'email', value)} />
-              <EditableTextAreaRow label="ที่อยู่" value={selectedOrder.customer?.address || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'address', value)} />
+            {/* QUICK ACTIONS BUTTONS ROW */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 8, marginBottom: 16 }}>
+              <a 
+                href={`/order/${selectedOrder.id}`} 
+                target="_blank" 
+                rel="noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #4338ca 100%)',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: 10,
+                  fontSize: 13,
+                  fontWeight: 700,
+                  height: 40,
+                  boxShadow: '0 4px 10px rgba(79, 70, 229, 0.2)',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Printer size={16} />
+                ดูใบเสร็จ / ดาวน์โหลด PDF ใบเสร็จ
+                <ExternalLink size={12} />
+              </a>
+              
+              {['Pending', 'Processing'].includes(selectedOrder.status) && (
+                <button
+                  onClick={() => handleSimulateShipping(selectedOrder.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: 10,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    height: 40,
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <Truck size={16} />
+                  ⚡ จำลองจัดส่งสินค้าและสร้างเลขพัสดุทันที
+                </button>
+              )}
             </div>
 
             <div style={detailSectionStyle}>
-              <h4 style={detailTitleStyle}>ข้อมูลออเดอร์</h4>
+              <h4 style={{ ...detailTitleStyle, color: '#4f46e5', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <User size={15} /> ข้อมูลลูกค้า
+              </h4>
+              <EditableRow key={`name-${selectedOrder.id}`} label="ชื่อ" icon={<User size={14} />} value={selectedOrder.customer?.name || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'name', value)} />
+              <EditableRow key={`phone-${selectedOrder.id}`} label="โทรศัพท์" value={selectedOrder.customer?.phone || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'phone', value)} />
+              <EditableRow key={`email-${selectedOrder.id}`} label="อีเมล" value={selectedOrder.customer?.email || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'email', value)} />
+              <EditableTextAreaRow key={`address-${selectedOrder.id}`} label="ที่อยู่" value={selectedOrder.customer?.address || ''} onBlurSave={(value) => handleAdminFieldChange(selectedOrder.id, 'address', value)} />
+            </div>
+
+            <div style={detailSectionStyle}>
+              <h4 style={{ ...detailTitleStyle, color: '#4f46e5', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Package size={15} /> ข้อมูลออเดอร์
+              </h4>
               <DetailRow label="วันที่สั่ง" value={selectedOrder.date || '-'} icon={<CalendarDays size={14} />} />
-              <DetailRow label="วิธีชำระเงิน" value={selectedOrder.payment?.method || selectedOrder.paymentMethod || '-'} icon={<CreditCard size={14} />} />
-              <DetailRow label="สถานะ" value={STATUS_OPTIONS.find((item) => item.value === selectedOrder.status)?.label || selectedOrder.status} icon={<Package size={14} />} />
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
+              
+              {/* BEAUTIFUL PAYMENT METHOD BADGE */}
+              <div style={{ display: 'grid', gridTemplateColumns: '92px 1fr', gap: 8, marginBottom: 6, alignItems: 'center' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: 12, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <CreditCard size={14} />
+                  วิธีชำระเงิน
+                </span>
+                <div>
+                  {(() => {
+                    const method = selectedOrder.payment?.method || selectedOrder.paymentMethod || 'ไม่ระบุ';
+                    if (method.includes('บัตร')) {
+                      return (
+                        <span style={{ fontSize: 12, fontWeight: 700, background: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe', padding: '3px 8px', borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                          💳 บัตรเครดิต/เดบิต (Visa)
+                        </span>
+                      );
+                    } else if (method.includes('พร้อม') || method.includes('Prompt')) {
+                      return (
+                        <span style={{ fontSize: 12, fontWeight: 700, background: '#ecfeff', color: '#0891b2', border: '1px solid #a5f3fc', padding: '3px 8px', borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                          📱 โอนผ่านพร้อมเพย์
+                        </span>
+                      );
+                    } else {
+                      return (
+                        <span style={{ fontSize: 12, fontWeight: 700, background: '#fff7ed', color: '#c2410c', border: '1px solid #fed7aa', padding: '3px 8px', borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                          🚚 เก็บเงินปลายทาง (COD)
+                        </span>
+                      );
+                    }
+                  })()}
+                </div>
+              </div>
+
+              <DetailRow label="สถานะ" value={STATUS_OPTIONS.find((item) => item.value === selectedOrder.status)?.label || selectedOrder.status} icon={<CircleDot size={14} />} />
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6, marginTop: 10 }}>
                 <SmallCard label="ยอดสินค้า" value={formatPrice(selectedOrder.totals?.subtotal || 0)} />
                 <SmallCard label="ค่าส่ง" value={formatPrice(selectedOrder.totals?.shipping || 0)} />
                 <SmallCard label="ยอดรวม" value={formatPrice(selectedOrder.totals?.total || 0)} accent />
@@ -605,7 +723,9 @@ export default function AdminDashboard() {
             </div>
 
             <div style={detailSectionStyle}>
-              <h4 style={detailTitleStyle}>รายการสินค้า</h4>
+              <h4 style={{ ...detailTitleStyle, color: '#4f46e5', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <ShoppingBag size={15} /> รายการสินค้า
+              </h4>
               {(selectedOrder.items || []).map((item, index) => (
                 <div key={`${item.id || item.name}-${index}`} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0', borderBottom: '1px dashed #e2e8f0' }}>
                   <img src={item.image || '/images/placeholder.png'} style={{ width: 44, height: 44, objectFit: 'cover', borderRadius: 8, border: '1px solid #e2e8f0', flexShrink: 0 }} alt={item.name} />
@@ -620,11 +740,14 @@ export default function AdminDashboard() {
             </div>
 
             <div style={detailSectionStyle}>
-              <h4 style={detailTitleStyle}>จัดการหลังบ้าน</h4>
-              <label style={labelStyle}>เลขพัสดุ</label>
+              <h4 style={{ ...detailTitleStyle, color: '#4f46e5', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Truck size={15} /> จัดการหลังบ้าน
+              </h4>
+              <label style={labelStyle}>เลขพัสดุจัดส่ง</label>
               <div style={{ position: 'relative', marginBottom: 10 }}>
                 <Truck size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-light)' }} />
                 <input
+                  key={`trackingNo-${selectedOrder.id}`}
                   defaultValue={selectedOrder.admin?.trackingNo || ''}
                   onBlur={(e) => handleAdminFieldChange(selectedOrder.id, 'trackingNo', e.target.value)}
                   placeholder="เช่น TH123456789"
@@ -634,9 +757,10 @@ export default function AdminDashboard() {
 
               <label style={labelStyle}>บันทึกภายในทีมงาน</label>
               <textarea
+                key={`note-${selectedOrder.id}`}
                 defaultValue={selectedOrder.admin?.note || ''}
                 onBlur={(e) => handleAdminFieldChange(selectedOrder.id, 'note', e.target.value)}
-                placeholder="หมายเหตุสำหรับแอดมิน"
+                placeholder="หมายเหตุสำหรับการจัดการภายใน..."
                 rows={3}
                 style={{ ...fieldStyle, width: '100%', resize: 'vertical', padding: 10, height: 'auto' }}
               />
