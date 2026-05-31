@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE } from '../config';
 
 const ProductContext = createContext();
 
@@ -10,7 +11,7 @@ export function ProductProvider({ children }) {
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const res = await fetch('http://localhost:3001/api/products');
+                const res = await fetch(`${API_BASE}/products`);
                 if (!res.ok) throw new Error('Failed to fetch products from backend');
                 const data = await res.json();
                 

@@ -38,6 +38,7 @@ import {
 import { formatPrice } from '../data/products';
 import { clearOrders, deleteOrderById, listOrders, updateOrderById } from '../lib/ordersApi';
 import { getAllReviews } from '../lib/reviewsApi';
+import { API_BASE } from '../config';
 
 const ADMIN_SESSION_HOURS = 8;
 
@@ -150,7 +151,7 @@ export default function AdminDashboard() {
       setReviews(reviewRows);
 
       // Fetch products to check for low stock
-      const prodRes = await fetch('http://localhost:3001/api/products');
+      const prodRes = await fetch(`${API_BASE}/products`);
       if (prodRes.ok) {
         const prodData = await prodRes.json();
         setProducts(prodData.map(p => ({ ...p, price: Number(p.price) })));

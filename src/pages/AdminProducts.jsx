@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Package, Plus, Trash2, Edit3, X, Image as ImageIcon, Search, LayoutDashboard, ShoppingBag } from 'lucide-react';
 import { formatPrice } from '../data/products';
 import { addProduct, updateProduct, deleteProduct, refillAllStock } from '../lib/productsApi';
+import { API_BASE } from '../config';
 
 const ADMIN_SESSION_HOURS = 8;
 
@@ -16,7 +17,7 @@ export default function AdminProducts() {
     useEffect(() => {
         const fetchAdminProducts = async () => {
             try {
-                const res = await fetch('http://localhost:3001/api/admin/products');
+                const res = await fetch(`${API_BASE}/admin/products`);
                 if (!res.ok) throw new Error('Failed to fetch admin products');
                 const data = await res.json();
                 setProducts(data.map(p => ({ ...p, price: Number(p.price) })));
