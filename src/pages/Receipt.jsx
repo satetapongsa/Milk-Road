@@ -17,6 +17,24 @@ export default function Receipt() {
     const [comment, setComment] = useState('');
     const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
+    // Customizer States
+    const [themeColor, setThemeColor] = useState('indigo'); // indigo, emerald, amber, rose, slate
+    const [showLogo, setShowLogo] = useState(true);
+    const [showDetails, setShowDetails] = useState(true);
+    const [showStamp, setShowStamp] = useState(true);
+    const [stampText, setStampText] = useState('PAID'); // PAID, APPROVED, RECEIVED
+    const [customNote, setCustomNote] = useState('ขอบคุณที่ไว้วางใจใช้บริการ Pharm Road ยาสามัญและเวชภัณฑ์ออนไลน์');
+
+    const themes = {
+        indigo: { primary: '#4f46e5', light: '#eef2ff', text: '#312e81', border: '#c7d2fe', shadow: 'rgba(79, 70, 229, 0.1)' },
+        emerald: { primary: '#059669', light: '#ecfdf5', text: '#064e3b', border: '#a7f3d0', shadow: 'rgba(5, 150, 105, 0.1)' },
+        amber: { primary: '#d97706', light: '#fffbeb', text: '#78350f', border: '#fde68a', shadow: 'rgba(217, 119, 6, 0.1)' },
+        rose: { primary: '#e11d48', light: '#fff1f2', text: '#4c0519', border: '#fecdd3', shadow: 'rgba(225, 29, 72, 0.1)' },
+        slate: { primary: '#334155', light: '#f1f5f9', text: '#0f172a', border: '#cbd5e1', shadow: 'rgba(51, 65, 85, 0.1)' },
+    };
+
+    const currentTheme = themes[themeColor];
+
     useEffect(() => {
         const loadReceipt = async () => {
             if (id) {
@@ -63,7 +81,7 @@ export default function Receipt() {
             margin: 10,
             filename: `receipt-${receipt.id}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
+            html2canvas: { scale: 2, useCORS: true },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
         html2pdf().set(opt).from(element).save();
@@ -84,7 +102,7 @@ export default function Receipt() {
         setIsSubmittingReview(true);
         try {
             await submitReview({
-                order_id: receipt._dbId || receipt.id, // Ensure we send the DB UUID if available, fallback to text ID logic won't work cleanly unless db UUID. ordersApi returns _dbId.
+                order_id: receipt._dbId || receipt.id, 
                 product_id: item.id,
                 product_name: item.name,
                 rating,
@@ -108,31 +126,182 @@ export default function Receipt() {
     return (
         <div className="container">
             <div className="receipt-page-container">
-                <div className="no-print" style={{ textAlign: 'center', marginBottom: 40 }}>
-                    <CheckCircle size={64} color="var(--primary)" style={{ marginBottom: 16 }} />
-                    <h1 style={{ fontSize: 32 }}>ขอบคุณสำหรับการสั่งซื้อ!</h1>
-                    <p>เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว</p>
+                
+                {/* Header Section */}
+                <div className="no-print" style={{ textAlign: 'center', marginBottom: 32 }}>
+                    <CheckCircle size={56} color={currentTheme.primary} style={{ marginBottom: 12 }} />
+                    <h1 style={{ fontSize: 28, marginBottom: 8 }}>ขอบคุณสำหรับการสั่งซื้อ!</h1>
+                    <p style={{ margin: 0 }}>เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว ระบบกำลังดำเนินการขั้นตอนถัดไป</p>
                 </div>
 
-                <div className="receipt-paper" id="invoice">
+                {/* --- CUSTOMIZER PANEL --- */}
+                <div className="no-print customizer-panel" style={{
+                    background: 'white',
+                    border: '1px solid var(--border)',
+                    borderRadius: 14,
+                    padding: 24,
+                    marginBottom: 24,
+                    boxShadow: 'var(--shadow-md)',
+                }}>
+                    <h3 style={{ fontSize: 16, display: 'flex', alignItems: 'center', gap: 8, margin: '0 0 16px 0', borderBottom: '1px solid #f1f5f9', paddingBottom: 10 }}>
+                        🎨 ตกแต่งรูปแบบใบเสร็จ / Slip Customizer
+                    </h3>
+                    
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
+                        {/* Theme Picker */}
+                        <div>
+                            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 8, color: 'var(--text-muted)' }}>
+                                โทนสีใบเสร็จ (Themes)
+                            </label>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                {Object.keys(themes).map(key => (
+                                    <button
+                                        key={key}
+                                        onClick={() => setThemeColor(key)}
+                                        style={{
+                                            width: 32,
+                                            height: 32,
+                                            borderRadius: '50%',
+                                            background: themes[key].primary,
+                                            border: themeColor === key ? '3px solid #000' : '2px solid white',
+                                            boxShadow: '0 0 4px rgba(0,0,0,0.15)',
+                                            cursor: 'pointer',
+                                            transform: themeColor === key ? 'scale(1.1)' : 'scale(1)',
+                                            transition: 'all 0.2s',
+                                        }}
+                                        title={key}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Visual Toggles */}
+                        <div>
+                            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 8, color: 'var(--text-muted)' }}>
+                                การแสดงผลส่วนต่างๆ
+                            </label>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer' }}>
+                                    <input type="checkbox" checked={showLogo} onChange={e => setShowLogo(e.target.checked)} />
+                                    แสดงโลโก้แบรนด์
+                                </label>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer' }}>
+                                    <input type="checkbox" checked={showDetails} onChange={e => setShowDetails(e.target.checked)} />
+                                    แสดงข้อมูลติดต่อร้านค้า
+                                </label>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer' }}>
+                                    <input type="checkbox" checked={showStamp} onChange={e => setShowStamp(e.target.checked)} />
+                                    แสดงตรายางชำระเงิน
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Rubber Stamp Customizer */}
+                        {showStamp && (
+                            <div>
+                                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 8, color: 'var(--text-muted)' }}>
+                                    คำบนตรายางชำระเงิน
+                                </label>
+                                <select 
+                                    value={stampText} 
+                                    onChange={e => setStampText(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '8px 12px',
+                                        border: '1px solid var(--border)',
+                                        borderRadius: 8,
+                                        fontSize: 13,
+                                        fontFamily: 'inherit',
+                                        background: 'white'
+                                    }}
+                                >
+                                    <option value="PAID">PAID (ชำระเงินแล้ว)</option>
+                                    <option value="APPROVED">APPROVED (อนุมัติแล้ว)</option>
+                                    <option value="RECEIVED">RECEIVED (ได้รับแล้ว)</option>
+                                    <option value="VERIFIED">VERIFIED (ตรวจสอบแล้ว)</option>
+                                </select>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Thank You Note Text Area */}
+                    <div style={{ marginTop: 16 }}>
+                        <label style={{ display: 'block', fontSize: 13, fontWeight: 600, marginBottom: 8, color: 'var(--text-muted)' }}>
+                            ข้อความขอบคุณท้ายใบเสร็จ (Custom Note)
+                        </label>
+                        <input
+                            type="text"
+                            value={customNote}
+                            onChange={e => setCustomNote(e.target.value)}
+                            placeholder="พิมพ์ข้อความขอบคุณท้ายบิลของคุณ..."
+                            style={{
+                                width: '100%',
+                                padding: '10px 14px',
+                                border: '1px solid var(--border)',
+                                borderRadius: 8,
+                                fontSize: 13,
+                                fontFamily: 'inherit'
+                            }}
+                        />
+                    </div>
+                </div>
+
+                {/* --- RECEIPT PAPER (INVOICE CONTAINER) --- */}
+                <div className="receipt-paper" id="invoice" style={{
+                    borderColor: currentTheme.primary,
+                    boxShadow: `0 10px 30px ${currentTheme.shadow}`,
+                    overflow: 'hidden'
+                }}>
+                    
+                    {/* --- Distressed Rubber Stamp Overlay --- */}
+                    {showStamp && (
+                        <div className="rubber-stamp-container" style={{
+                            position: 'absolute',
+                            top: 40,
+                            right: 40,
+                            border: `4px double ${currentTheme.primary}`,
+                            color: currentTheme.primary,
+                            padding: '6px 12px',
+                            borderRadius: 6,
+                            fontWeight: '900',
+                            fontSize: 20,
+                            fontFamily: '"Impact", "Arial Black", sans-serif',
+                            letterSpacing: 2,
+                            transform: 'rotate(-12deg) scale(1.1)',
+                            opacity: 0.85,
+                            textShadow: '0 0 1px rgba(0,0,0,0.05)',
+                            pointerEvents: 'none',
+                            background: `rgba(255, 255, 255, 0.95)`,
+                            zIndex: 10,
+                            boxShadow: `0 0 4px ${currentTheme.shadow}`,
+                            textAlign: 'center',
+                            lineHeight: 1.1
+                        }}>
+                            <div>{stampText}</div>
+                            <div style={{ fontSize: 9, fontFamily: 'monospace', marginTop: 2, letterSpacing: 0, fontWeight: 600 }}>
+                                {date}
+                            </div>
+                        </div>
+                    )}
+
                     {/* Order Tracking UI */}
                     <div className="no-print" style={{ padding: '0 24px 40px 24px', position: 'relative' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
                             {/* Step 1 */}
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, width: 80 }}>
-                                <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#f59e0b', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, border: '4px solid white' }}></div>
-                                <span style={{ fontSize: 13, fontWeight: 600, color: '#f59e0b' }}>เตรียมจัดส่ง</span>
+                                <div style={{ width: 24, height: 24, borderRadius: '50%', background: currentTheme.primary, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, border: '4px solid white' }}></div>
+                                <span style={{ fontSize: 13, fontWeight: 600, color: currentTheme.primary }}>เตรียมจัดส่ง</span>
                             </div>
 
                             {/* Step 2 (Current) */}
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, width: 80 }}>
                                 <div style={{ position: 'relative' }}>
-                                    <div style={{ position: 'absolute', top: -32, left: '50%', transform: 'translateX(-50%)', color: '#f59e0b' }}>
+                                    <div style={{ position: 'absolute', top: -32, left: '50%', transform: 'translateX(-50%)', color: currentTheme.primary }}>
                                         <Truck size={28} />
                                     </div>
-                                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#f59e0b', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, border: '4px solid white', boxShadow: '0 0 0 4px rgba(245, 158, 11, 0.2)' }}></div>
+                                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: currentTheme.primary, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2, border: '4px solid white', boxShadow: `0 0 0 4px ${currentTheme.border}` }}></div>
                                 </div>
-                                <span style={{ fontSize: 13, fontWeight: 700, color: '#f59e0b' }}>กำลังขนส่ง</span>
+                                <span style={{ fontSize: 13, fontWeight: 700, color: currentTheme.primary }}>กำลังขนส่ง</span>
                             </div>
 
                             {/* Step 3 */}
@@ -144,128 +313,173 @@ export default function Receipt() {
 
                         {/* Progress Lines */}
                         <div style={{ position: 'absolute', top: 10, left: 64, right: 64, height: 4, display: 'flex', zIndex: 0 }}>
-                            <div style={{ flex: 1, background: '#f59e0b' }}></div>
+                            <div style={{ flex: 1, background: currentTheme.primary }}></div>
                             <div style={{ flex: 1, background: '#e2e8f0' }}></div>
                         </div>
                     </div>
-                    <div className="receipt-header">
+
+                    {/* Receipt Invoice Header */}
+                    <div className="receipt-header" style={{ borderBottomColor: currentTheme.primary }}>
                         <div>
-                            <div className="receipt-title" style={{ marginBottom: 16 }}>ใบเสร็จรับเงิน / Receipt</div>
-                            <img src="/images/logo.png" alt="Pharm Road" style={{ height: '50px', marginBottom: '16px' }} />
-                            <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)' }}>
-                                123 Cyber Tower, Digital District<br />
-                                Bangkok, 10110<br />
-                                Tax ID: 0105551234567
-                            </p>
+                            <div className="receipt-title" style={{
+                                borderColor: currentTheme.border,
+                                color: currentTheme.primary,
+                                background: currentTheme.light,
+                                marginBottom: 16
+                            }}>
+                                ใบเสร็จรับเงิน / Receipt
+                            </div>
+                            {showLogo && (
+                                <img src="/images/logo.png" alt="Pharm Road" style={{ height: '50px', marginBottom: '16px' }} />
+                            )}
+                            {showDetails && (
+                                <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
+                                    <strong>บริษัท ฟาร์ม โรด จำกัด (สำนักงานใหญ่)</strong><br />
+                                    123 Cyber Tower, Digital District<br />
+                                    Bangkok, 10110<br />
+                                    Tax ID: 0105551234567<br />
+                                    Tel: 02-123-4567 | Email: support@pharmroad.com
+                                </p>
+                            )}
                         </div>
                         <div style={{ textAlign: 'right' }}>
                             <div className="meta-group">
-                                <span className="meta-label">เลขที่คำสั่งซื้อ</span>
-                                <span className="meta-value">{receiptId}</span>
+                                <span className="meta-label">เลขที่ใบสั่งซื้อ</span>
+                                <span className="meta-value" style={{ color: currentTheme.primary }}>{receiptId}</span>
                             </div>
                             <div className="meta-group">
-                                <span className="meta-label">วันที่</span>
+                                <span className="meta-label">วันที่ออกบิล</span>
                                 <span className="meta-value">{date}</span>
                             </div>
                         </div>
                     </div>
 
+                    {/* Customer Info Section */}
                     <div className="customer-info" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginBottom: 32, paddingBottom: 32, borderBottom: '1px dashed var(--border)' }}>
                         <div>
-                            <h4 style={{ fontSize: 14, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 12 }}>ผู้ซื้อ / Bill To</h4>
-                            <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 4 }}>{customer.name}</div>
-                            <div style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
+                            <h4 style={{ fontSize: 13, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 10, fontWeight: 700, letterSpacing: 1 }}>ผู้ซื้อ / Bill To</h4>
+                            <div style={{ fontWeight: 600, fontSize: 15, marginBottom: 6, color: currentTheme.text }}>{customer.name}</div>
+                            <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
                                 {customer.address}
                             </div>
                         </div>
                         <div>
-                            <h4 style={{ fontSize: 14, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 12 }}>ข้อมูลติดต่อ / Contact</h4>
-                            <div style={{ fontSize: 14, marginBottom: 8 }}>
-                                <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 60 }}>โทร:</span>
-                                {customer.phone}
+                            <h4 style={{ fontSize: 13, color: 'var(--text-light)', textTransform: 'uppercase', marginBottom: 10, fontWeight: 700, letterSpacing: 1 }}>ข้อมูลบิล / Billing</h4>
+                            <div style={{ fontSize: 13, marginBottom: 6 }}>
+                                <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 64 }}>โทร:</span>
+                                <strong>{customer.phone}</strong>
                             </div>
-                            <div style={{ fontSize: 14, marginBottom: 8 }}>
-                                <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 60 }}>อีเมล:</span>
-                                {customer.email}
+                            <div style={{ fontSize: 13, marginBottom: 6 }}>
+                                <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 64 }}>อีเมล:</span>
+                                {customer.email || '-'}
                             </div>
-                            <div style={{ fontSize: 14 }}>
-                                <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 60 }}>ชำระโดย:</span>
-                                <span className="payment-badge">
+                            <div style={{ fontSize: 13, marginBottom: 6 }}>
+                                <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 64 }}>ช่องทาง:</span>
+                                <span className="payment-badge" style={{
+                                    background: currentTheme.light,
+                                    color: currentTheme.text,
+                                    fontWeight: 600,
+                                    border: `1px solid ${currentTheme.border}`
+                                }}>
                                     {payment?.method || paymentMethod}
                                 </span>
                             </div>
                             {payment?.referenceNo && (
-                                <div style={{ fontSize: 14, marginTop: 8 }}>
-                                    <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 60 }}>อ้างอิง:</span>
-                                    <span style={{ fontSize: 13, fontFamily: 'monospace' }}>{payment.referenceNo}</span>
+                                <div style={{ fontSize: 13 }}>
+                                    <span style={{ color: 'var(--text-light)', display: 'inline-block', width: 64 }}>อ้างอิง:</span>
+                                    <span style={{ fontSize: 12, fontFamily: 'monospace', background: '#f8fafc', padding: '2px 6px', borderRadius: 4, border: '1px solid #e2e8f0' }}>
+                                        {payment.referenceNo}
+                                    </span>
                                 </div>
                             )}
                         </div>
                     </div>
 
+                    {/* Receipt Items Table */}
                     <table className="receipt-table">
                         <thead>
                             <tr>
-                                <th style={{ width: '50%' }}>รายการสินค้า</th>
-                                <th style={{ textAlign: 'center', width: '15%' }}>จำนวน</th>
-                                <th style={{ textAlign: 'right', width: '15%' }}>ราคา/หน่วย</th>
-                                <th style={{ textAlign: 'right', width: '20%' }}>รวม</th>
+                                <th style={{ width: '50%', borderBottomColor: currentTheme.primary }}>รายการสินค้า</th>
+                                <th style={{ textAlign: 'center', width: '15%', borderBottomColor: currentTheme.primary }}>จำนวน</th>
+                                <th style={{ textAlign: 'right', width: '15%', borderBottomColor: currentTheme.primary }}>ราคา/หน่วย</th>
+                                <th style={{ textAlign: 'right', width: '20%', borderBottomColor: currentTheme.primary }}>รวมเงิน (บาท)</th>
                             </tr>
                         </thead>
                         <tbody id="receipt-items">
                             {items.map((item, index) => (
                                 <tr key={index}>
                                     <td>
-                                        <div style={{ fontWeight: 500 }}>{item.name}</div>
-                                        <div style={{ fontSize: 12, color: 'var(--text-light)' }}>รหัส: {item.id}</div>
+                                        <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{item.name}</div>
+                                        <div style={{ fontSize: 11, color: 'var(--text-light)' }}>รหัส: {item.id}</div>
                                     </td>
-                                    <td style={{ textAlign: 'center' }}>{item.quantity}</td>
+                                    <td style={{ textAlign: 'center', fontWeight: 600 }}>{item.quantity}</td>
                                     <td style={{ textAlign: 'right' }}>{formatPrice(item.price)}</td>
-                                    <td style={{ textAlign: 'right' }}>{formatPrice(item.price * item.quantity)}</td>
+                                    <td style={{ textAlign: 'right', fontWeight: 600 }}>{formatPrice(item.price * item.quantity)}</td>
                                 </tr>
                             ))}
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan="3" style={{ textAlign: 'right', paddingTop: 24 }}>รวมเป็นเงิน</td>
-                                <td style={{ textAlign: 'right', paddingTop: 24 }}>{formatPrice(totals.subtotal)}</td>
+                                <td colSpan="3" style={{ textAlign: 'right', paddingTop: 20 }}>รวมเป็นเงิน</td>
+                                <td style={{ textAlign: 'right', fontWeight: 600, paddingTop: 20 }}>{formatPrice(totals.subtotal)}</td>
                             </tr>
                             <tr>
                                 <td colSpan="3" style={{ textAlign: 'right' }}>ค่าจัดส่ง</td>
-                                <td style={{ textAlign: 'right' }}>{formatPrice(totals.shipping)}</td>
+                                <td style={{ textAlign: 'right', fontWeight: 600 }}>{formatPrice(totals.shipping)}</td>
                             </tr>
                             <tr>
-                                <td colSpan="3" style={{ textAlign: 'right' }}>ภาษีมูลค่าเพิ่ม (7%)</td>
-                                <td style={{ textAlign: 'right' }}>{formatPrice(totals.subtotal * CONFIG.vatRate)}</td>
+                                <td colSpan="3" style={{ textAlign: 'right' }}>ภาษีมูลค่าเพิ่ม (VAT 7%)</td>
+                                <td style={{ textAlign: 'right', fontWeight: 600 }}>{formatPrice(totals.subtotal * CONFIG.vatRate)}</td>
                             </tr>
-                            <tr style={{ fontSize: 20 }}>
-                                <td colSpan="3" style={{ textAlign: 'right', fontWeight: 700, paddingTop: 16, color: 'var(--secondary)' }}>ยอดสุทธิ</td>
-                                <td style={{ textAlign: 'right', fontWeight: 700, paddingTop: 16, color: 'var(--primary)' }}>{formatPrice(totals.total)}</td>
+                            <tr style={{ fontSize: 18 }}>
+                                <td colSpan="3" style={{ textAlign: 'right', fontWeight: 700, paddingTop: 16 }}>ยอดเงินสุทธิ</td>
+                                <td style={{ textAlign: 'right', fontWeight: 800, paddingTop: 16, color: currentTheme.primary }}>
+                                    {formatPrice(totals.total)}
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
 
-                    <div className="receipt-footer" style={{ marginTop: 60, textAlign: 'center', fontSize: 12, color: 'var(--text-light)' }}>
-                        <p>ขอบคุณที่ใช้บริการ Pharm Road</p>
-                        <p>เอกสารนี้ออกโดยระบบอัตโนมัติ</p>
+                    {/* Thank You / Custom Note Area */}
+                    {customNote && (
+                        <div style={{
+                            background: currentTheme.light,
+                            borderLeft: `4px solid ${currentTheme.primary}`,
+                            padding: '12px 16px',
+                            borderRadius: '0 8px 8px 0',
+                            marginTop: 32,
+                            fontSize: 13,
+                            color: currentTheme.text,
+                            lineHeight: 1.5,
+                            textAlign: 'left'
+                        }}>
+                            💡 <strong>ข้อความพิเศษ:</strong> {customNote}
+                        </div>
+                    )}
+
+                    {/* Receipt Footer */}
+                    <div className="receipt-footer" style={{ marginTop: 48, textAlign: 'center', fontSize: 12, color: 'var(--text-light)' }}>
+                        <p style={{ margin: '0 0 4px 0' }}>ขอบคุณที่สนับสนุนร้านขายยาและเวชภัณฑ์ออนไลน์ Pharm Road</p>
+                        <p style={{ margin: 0 }}>เอกสารนี้ได้รับการลงทะเบียนและออกผ่านระบบอิเล็กทรอนิกส์โดยสมบูรณ์</p>
                     </div>
                 </div>
 
-                <div className="no-print" style={{ textAlign: 'center', marginTop: 40, display: 'flex', justifyContent: 'center', gap: 16 }}>
-                    <button className="btn btn-outline" onClick={() => window.print()}>
-                        <Printer size={18} /> พิมพ์ใบเสร็จ
+                {/* Print / Download Button Group */}
+                <div className="no-print" style={{ textAlign: 'center', marginTop: 32, display: 'flex', justifyContent: 'center', gap: 16 }}>
+                    <button className="btn btn-outline" onClick={() => window.print()} style={{ height: 44 }}>
+                        <Printer size={18} /> พิมพ์เอกสาร
                     </button>
-                    <button className="btn btn-primary" onClick={handleDownloadPDF}>
+                    <button className="btn btn-primary" onClick={handleDownloadPDF} style={{ background: currentTheme.primary, color: 'white', height: 44 }}>
                         <Download size={18} /> ดาวน์โหลด PDF
                     </button>
-                    <button className="btn btn-outline" onClick={() => navigate('/')}>
+                    <button className="btn btn-outline" onClick={() => navigate('/')} style={{ height: 44 }}>
                         <ArrowLeft size={18} /> กลับสู่หน้าหลัก
                     </button>
                 </div>
 
                 {/* --- รีวิวสินค้า (NO PRINT) --- */}
-                <div className="no-print" style={{ marginTop: 60, borderTop: '1px solid var(--border)', paddingTop: 40 }}>
-                    <h3 style={{ textAlign: 'center', marginBottom: 24, fontSize: 24 }}>รีวิวสินค้าที่คุณได้รับ ⭐️</h3>
+                <div className="no-print" style={{ marginTop: 48, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
+                    <h3 style={{ textAlign: 'center', marginBottom: 20, fontSize: 22 }}>ให้คะแนนและรีวิวสินค้าที่คุณได้รับ ⭐️</h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 600, margin: '0 auto' }}>
                         {items?.map(item => (
                             <div key={item.id} style={{ border: '1px solid var(--border)', padding: 16, borderRadius: 12, background: 'white' }}>
@@ -322,7 +536,7 @@ export default function Receipt() {
                                             <button className="btn btn-outline" style={{ height: 36, fontSize: 14 }} onClick={() => setIsReviewing(null)}>ยกเลิก</button>
                                             <button 
                                                 className="btn btn-primary" 
-                                                style={{ height: 36, fontSize: 14 }} 
+                                                style={{ height: 36, fontSize: 14, background: currentTheme.primary }} 
                                                 disabled={isSubmittingReview}
                                                 onClick={() => handleSubmitReview(item)}
                                             >
@@ -340,19 +554,19 @@ export default function Receipt() {
             <style>{`
                 .meta-group { margin-bottom: 8px; }
                 .meta-label { display: block; font-size: 12px; color: var(--text-light); }
-                .meta-value { font-size: 16px; fontWeight: 600; }
+                .meta-value { font-size: 16px; font-weight: 600; }
                 .payment-badge { 
-                    background: #f1f5f9; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;
+                    padding: 2px 8px; border-radius: 4px; font-size: 12px;
                 }
                 
                 @media print {
-                    .no-print { display: none !important; }
+                    .no-print, .customizer-panel { display: none !important; }
                     body { background: white; }
                     .container { max-width: 100%; padding: 0; margin: 0; }
                     .receipt-page-container { margin: 0; box-shadow: none; border: none; max-width: 100%; }
-                    .receipt-paper { padding: 0; box-shadow: none; border-radius: 0; }
+                    .receipt-paper { padding: 0 !important; box-shadow: none !important; border: none !important; border-radius: 0; }
+                    .rubber-stamp-container { border: 4px double ${currentTheme.primary} !important; color: ${currentTheme.primary} !important; background: transparent !important; }
                     
-                    /* Hide header/footer from Layout if possible, or use global print styles */
                     header, footer, .cart-sidebar, .cart-overlay { display: none !important; }
                 }
             `}</style>
