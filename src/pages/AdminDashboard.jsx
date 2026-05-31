@@ -472,6 +472,12 @@ export default function AdminDashboard() {
           </div>
         </div>
 
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12, marginBottom: 18 }}>
+          <StatCard icon={<ShoppingBag size={22} color="#4f46e5" />} label="คำสั่งซื้อทั้งหมด" value={String(stats.totalOrders)} />
+          <StatCard icon={<TrendingUp size={22} color="#16a34a" />} label="รายได้รวม" value={formatPrice(stats.totalRevenue)} />
+          <StatCard icon={<BadgeCheck size={22} color="#0f766e" />} label="สำเร็จแล้ว" value={String(stats.completedOrders)} />
+          <StatCard icon={<CircleDot size={22} color="#ea580c" />} label="ระหว่างดำเนินการ" value={String(stats.pendingOrders)} />
+          <StatCard icon={<CreditCard size={22} color="#2563eb" />} label="ค่าเฉลี่ยต่อออเดอร์" value={formatPrice(stats.averageOrderValue)} />
         </div>
 
         {/* LOW STOCK ALERT WIDGET */}
