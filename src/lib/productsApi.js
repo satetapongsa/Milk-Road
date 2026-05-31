@@ -36,3 +36,17 @@ export const deleteProduct = async (id) => {
     }
     return true;
 };
+
+export const refillAllStock = async (quantity = 1000) => {
+    const res = await fetch(`${API_BASE}/admin/products/refill-stock`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity })
+    });
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to refill stock');
+    }
+    return res.json();
+};
+

@@ -86,7 +86,20 @@ app.get('/api/admin/products', async (req, res) => {
   }
 });
 
+app.post('/api/admin/products/refill-stock', async (req, res) => {
+  try {
+    if (!pool) return res.status(500).json({ error: 'Database not connected' });
+    const { quantity } = req.body;
+    const targetQty = quantity !== undefined ? Number(quantity) : 1000;
+    await pool.query('UPDATE products SET stock_quantity = $1', [targetQty]);
+    res.json({ success: true, message: `Refilled all products to ${targetQty} units` });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post('/api/products', async (req, res) => {
+
   try {
     if (!pool) return res.status(500).json({ error: 'Database not connected' });
     const { name, category, description, price, stock_quantity, image, specs, is_active } = req.body;

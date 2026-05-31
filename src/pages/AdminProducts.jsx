@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Package, Plus, Trash2, Edit3, X, Image as ImageIcon, Search, LayoutDashboard, ShoppingBag } from 'lucide-react';
 import { formatPrice } from '../data/products';
-import { addProduct, updateProduct, deleteProduct } from '../lib/productsApi';
+import { addProduct, updateProduct, deleteProduct, refillAllStock } from '../lib/productsApi';
 
 const ADMIN_SESSION_HOURS = 8;
 
@@ -154,6 +154,23 @@ export default function AdminProducts() {
         }
     };
 
+    const handleBulkRefillStock = async () => {
+        if (!window.confirm('⚡ คุณแน่ใจหรือไม่ว่าต้องการเติมสต็อกสินค้าทุกรายการเป็น 1,000 ชิ้น?')) return;
+        
+        setIsLoading(true);
+        try {
+            await refillAllStock(1000);
+            setProducts(prev => prev.map(p => ({ ...p, stock_quantity: 1000 })));
+            alert('⚡ เติมสต็อกสินค้าทุกรายการเป็น 1,000 ชิ้นสำเร็จเรียบร้อยแล้ว!');
+        } catch (error) {
+            console.error('Failed to bulk refill stock:', error);
+            alert(`เกิดข้อผิดพลาดในการเติมสต็อก: ${error.message || error}`);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
     return (
         <div style={{ background: '#f8fafc', minHeight: '100vh', padding: '24px' }}>
             {/* Top Navigation Bar */}
@@ -176,9 +193,33 @@ export default function AdminProducts() {
                             ดูแลราคาสินค้า รูปภาพ และสต็อกคงเหลือทั้งหมด
                         </p>
                     </div>
-                    <button onClick={() => openDrawer()} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <Plus size={18} /> เพิ่มสินค้าใหม่
-                    </button>
+                    <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                        <button 
+                            onClick={handleBulkRefillStock} 
+                            disabled={isLoading}
+                            className="btn" 
+                            style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: 8, 
+                                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
+                                color: 'white',
+                                border: 'none',
+                                padding: '10px 16px',
+                                borderRadius: 8,
+                                fontWeight: 600,
+                                fontSize: 14,
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)',
+                                transition: 'all 0.2s ease-in-out'
+                            }}
+                        >
+                            ⚡ เติมสต็อกทุกสินค้า (1,000 ชิ้น)
+                        </button>
+                        <button onClick={() => openDrawer()} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <Plus size={18} /> เพิ่มสินค้าใหม่
+                        </button>
+                    </div>
                 </div>
 
                 <div style={{ padding: 24 }}>
