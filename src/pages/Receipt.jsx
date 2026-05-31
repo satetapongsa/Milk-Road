@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatPrice, CONFIG } from '../data/products';
-import { CheckCircle, Printer, ArrowLeft, Download, Truck, Star, Edit3 } from 'lucide-react';
+import { CheckCircle, Printer, ArrowLeft, Download, Truck, Star, Edit3, Palette, Lightbulb } from 'lucide-react';
 import { getOrderById, listOrders } from '../lib/ordersApi';
 import { submitReview } from '../lib/reviewsApi';
 
@@ -143,8 +143,8 @@ export default function Receipt() {
                     marginBottom: 24,
                     boxShadow: 'var(--shadow-md)',
                 }}>
-                    <h3 style={{ fontSize: 16, display: 'flex', alignItems: 'center', gap: 8, margin: '0 0 16px 0', borderBottom: '1px solid #f1f5f9', paddingBottom: 10 }}>
-                        🎨 ตกแต่งรูปแบบใบเสร็จ / Slip Customizer
+                    <h3 style={{ fontSize: 16, display: 'inline-flex', alignItems: 'center', gap: 8, margin: '0 0 16px 0', borderBottom: '1px solid #f1f5f9', paddingBottom: 10, width: '100%' }}>
+                        <Palette size={18} color={currentTheme.primary} /> ตกแต่งรูปแบบใบเสร็จ / Slip Customizer
                     </h3>
                     
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
@@ -453,7 +453,7 @@ export default function Receipt() {
                             lineHeight: 1.5,
                             textAlign: 'left'
                         }}>
-                            💡 <strong>ข้อความพิเศษ:</strong> {customNote}
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, verticalAlign: 'middle' }}><Lightbulb size={15} /> <strong>ข้อความพิเศษ:</strong></span> {customNote}
                         </div>
                     )}
 
@@ -479,7 +479,7 @@ export default function Receipt() {
 
                 {/* --- รีวิวสินค้า (NO PRINT) --- */}
                 <div className="no-print" style={{ marginTop: 48, borderTop: '1px solid var(--border)', paddingTop: 32 }}>
-                    <h3 style={{ textAlign: 'center', marginBottom: 20, fontSize: 22 }}>ให้คะแนนและรีวิวสินค้าที่คุณได้รับ ⭐️</h3>
+                    <h3 style={{ textAlign: 'center', marginBottom: 20, fontSize: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>ให้คะแนนและรีวิวสินค้าที่คุณได้รับ <Star size={22} color="#f59e0b" fill="#f59e0b" style={{ display: 'inline-block' }} /></h3>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 600, margin: '0 auto' }}>
                         {items?.map(item => (
                             <div key={item.id} style={{ border: '1px solid var(--border)', padding: 16, borderRadius: 12, background: 'white' }}>

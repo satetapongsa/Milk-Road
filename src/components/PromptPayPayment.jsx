@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import QRCode from 'qrcode';
-import { CheckCircle, Clock, Zap } from 'lucide-react';
+import { CheckCircle, Clock, Zap, QrCode, Smartphone, Radio } from 'lucide-react';
 import { formatPrice } from '../data/products';
 
 // PromptPay QR Code Generator (EMV Format)
@@ -277,7 +277,9 @@ export default function PromptPayPayment({
 
       {verificationStep === 'qr' && (
         <div className="payment-step">
-          <h3 style={{ marginBottom: 8, fontSize: 20 }}>📱 PromptPay</h3>
+          <h3 style={{ marginBottom: 8, fontSize: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            <Smartphone size={20} color="var(--primary)" /> PromptPay
+          </h3>
           <p style={{ marginBottom: 20, fontSize: 14 }}>สแกน QR Code เพื่อชำระเงิน</p>
           
           <div className="qr-container">
@@ -326,7 +328,7 @@ export default function PromptPayPayment({
           
           <div className="verification-status status-pending">
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, fontSize: 16 }}>
-              <span>📡 ตรวจสอบการชำระ</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Radio size={16} /> ตรวจสอบการชำระ</span>
             </div>
           </div>
 
@@ -343,11 +345,11 @@ export default function PromptPayPayment({
           <div style={{ marginBottom: 20 }} className="success-icon">
             <CheckCircle size={56} style={{ margin: '0 auto', display: 'block', color: '#4CAF50' }} />
           </div>
-          <h3 style={{ fontSize: 20, color: '#4CAF50' }}>✓ ชำระเงินสำเร็จ</h3>
+          <h3 style={{ fontSize: 20, color: '#4CAF50', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}><CheckCircle size={22} /> ชำระเงินสำเร็จ</h3>
           
           <div className="verification-status status-confirmed">
-            <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#2e7d32' }}>
-              ✓ ได้รับชำระเงิน {formatPrice(total)}
+            <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#2e7d32', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              <CheckCircle size={20} /> ได้รับชำระเงิน {formatPrice(total)}
             </div>
             <div style={{ fontSize: 14, marginBottom: 8, color: '#333' }}>
               เบอร์โทร: {phoneNumber}
@@ -357,8 +359,8 @@ export default function PromptPayPayment({
             </div>
           </div>
 
-          <p style={{ fontSize: 13, marginTop: 16, color: '#4CAF50', fontWeight: 500 }}>
-            ✓ การสั่งซื้อของคุณได้รับการยืนยันแล้ว
+          <p style={{ fontSize: 13, marginTop: 16, color: '#4CAF50', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+            <CheckCircle size={14} /> การสั่งซื้อของคุณได้รับการยืนยันแล้ว
           </p>
         </div>
       )}

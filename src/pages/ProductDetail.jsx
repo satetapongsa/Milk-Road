@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
-import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw, FlaskConical, Factory, CalendarDays, CalendarX } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw, FlaskConical, Factory, CalendarDays, CalendarX, ClipboardList, XCircle, AlertTriangle } from 'lucide-react';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -24,7 +24,7 @@ export default function ProductDetail() {
     };
 
     if (isLoading) return <div className="container" style={{ padding: 40, textAlign: 'center' }}>กำลังโหลดข้อมูลสินค้า...</div>;
-    if (error) return <div className="container" style={{ padding: 40, textAlign: 'center', color: 'red' }}>⚠️ เกิดข้อผิดพลาดในการโหลดสินค้า</div>;
+    if (error) return <div className="container" style={{ padding: 40, textAlign: 'center', color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}><AlertTriangle size={20} /> เกิดข้อผิดพลาดในการโหลดสินค้า</div>;
     if (!product) return <div className="container" style={{ padding: 40, textAlign: 'center' }}>ไม่พบสินค้านี้ในระบบ</div>;
 
     return (
@@ -151,7 +151,7 @@ export default function ProductDetail() {
                             gap: 16
                         }}>
                             <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#0f172a', borderBottom: '1px solid var(--border)', paddingBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-                                📋 ข้อมูลรายละเอียดผลิตภัณฑ์
+                                <ClipboardList size={18} color="var(--primary)" /> ข้อมูลรายละเอียดผลิตภัณฑ์
                             </h3>
                             
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -218,8 +218,8 @@ export default function ProductDetail() {
                         }}>
                             {product.stock_quantity <= 0 ? (
                                 <div style={{ textAlign: 'center', padding: '8px 0' }}>
-                                    <div style={{ color: '#dc2626', fontWeight: 700, fontSize: 16, marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                                        <span>❌ ขออภัย สินค้าชิ้นนี้หมดสต็อกชั่วคราว</span>
+                                    <div style={{ color: '#dc2626', fontWeight: 700, fontSize: 16, marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                                        <XCircle size={20} /> ขออภัย สินค้าชิ้นนี้หมดสต็อกชั่วคราว
                                     </div>
                                     <p style={{ color: '#64748b', fontSize: 13, margin: 0 }}>
                                         คุณสามารถติดต่อแอดมินหรือกลับมาตรวจสอบสต็อกอีกครั้งในภายหลัง

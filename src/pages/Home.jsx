@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowRight, ShoppingCart } from 'lucide-react';
+import { ArrowRight, ShoppingCart, XCircle, Loader, AlertTriangle } from 'lucide-react';
 import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
@@ -37,9 +37,13 @@ export default function Home() {
 
                     <div className="products-grid" id="products-container">
                         {isLoading ? (
-                            <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px' }}>⏳ กำลังโหลดสินค้าจากระบบร้านค้า...</p>
+                            <p style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                                <Loader className="spin" size={18} style={{ animation: 'spin 1s linear infinite' }} /> กำลังโหลดสินค้าจากระบบร้านค้า...
+                            </p>
                         ) : error ? (
-                            <p style={{ gridColumn: '1/-1', textAlign: 'center', color: 'red' }}>⚠️ เกิดข้อผิดพลาดในการโหลดสินค้า: {error}</p>
+                            <p style={{ gridColumn: '1/-1', textAlign: 'center', color: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                                <AlertTriangle size={18} /> เกิดข้อผิดพลาดในการโหลดสินค้า: {error}
+                            </p>
                         ) : filteredProducts.length === 0 ? (
                             <p style={{ gridColumn: '1/-1', textAlign: 'center' }}>ไม่พบสินค้าที่ค้นหา</p>
                         ) : (
@@ -59,8 +63,8 @@ export default function Home() {
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
                                                 <span className="product-category">{product.category}</span>
                                                 {product.stock_quantity <= 0 && (
-                                                    <span style={{ fontSize: 10, fontWeight: 700, color: '#dc2626', background: '#fee2e2', padding: '2px 6px', borderRadius: 4 }}>
-                                                        หมด ❌
+                                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 10, fontWeight: 700, color: '#dc2626', background: '#fee2e2', padding: '2px 6px', borderRadius: 4 }}>
+                                                        <XCircle size={10} /> หมด
                                                     </span>
                                                 )}
                                             </div>

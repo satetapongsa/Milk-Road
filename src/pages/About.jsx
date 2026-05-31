@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, Users, Clock, Award, ZoomIn, X } from 'lucide-react';
+import { Shield, Users, Clock, Award, ZoomIn, X, Zap, Lock, Smartphone } from 'lucide-react';
 
 export default function About() {
     const [isZoomed, setIsZoomed] = useState(false);
@@ -101,19 +101,25 @@ export default function About() {
                 </h3>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '24px', marginTop: '20px' }}>
                     <div>
-                        <strong style={{ fontSize: '15px', color: 'var(--text-main)' }}>🚀 Fast Performance</strong>
+                        <strong style={{ fontSize: '15px', color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <Zap size={16} color="var(--primary)" /> Fast Performance
+                        </strong>
                         <p style={{ fontSize: '13px', color: 'var(--text-light)', marginTop: '6px', lineHeight: '1.5' }}>
                             ขับเคลื่อนด้วย React และ Vite ตัวเลือกล่าสุด มอบความเร็วในการเรนเดอร์สูงสุดในเสี้ยววินาที
                         </p>
                     </div>
                     <div>
-                        <strong style={{ fontSize: '15px', color: 'var(--text-main)' }}>🔐 Neon PostgreSQL</strong>
+                        <strong style={{ fontSize: '15px', color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <Lock size={16} color="var(--primary)" /> Neon PostgreSQL
+                        </strong>
                         <p style={{ fontSize: '13px', color: 'var(--text-light)', marginTop: '6px', lineHeight: '1.5' }}>
                             เก็บข้อมูลแบบ Cloud-Serverless ปลอดภัย เชื่อถือได้ ข้อมูลสินค้าไม่มีตกหล่น
                         </p>
                     </div>
                     <div>
-                        <strong style={{ fontSize: '15px', color: 'var(--text-main)' }}>📱 Ultra Responsive</strong>
+                        <strong style={{ fontSize: '15px', color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                            <Smartphone size={16} color="var(--primary)" /> Ultra Responsive
+                        </strong>
                         <p style={{ fontSize: '13px', color: 'var(--text-light)', marginTop: '6px', lineHeight: '1.5' }}>
                             แสดงผลได้ไร้ที่ติบนอุปกรณ์ทุกขนาด ไม่ว่าจะเป็นคอมพิวเตอร์ แท็บเล็ต หรือสมาร์ทโฟน
                         </p>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { formatPrice, CONFIG } from '../data/products';
-import { CreditCard, Truck, Loader } from 'lucide-react';
+import { CreditCard, Truck, Loader, QrCode, Smartphone, Lock, Lightbulb } from 'lucide-react';
 import PromptPayPayment from '../components/PromptPayPayment';
 import { createOrder } from '../lib/ordersApi';
 
@@ -180,8 +180,8 @@ export default function Checkout() {
                                 animation: 'spin 1s linear infinite',
                                 margin: '0 auto 24px auto'
                             }}></div>
-                            <h2 style={{ fontSize: 24, fontWeight: 700, color: '#f8fafc', marginBottom: 12 }}>
-                                🔒 กำลังเข้ารหัสและประมวลผลชำระเงิน...
+                            <h2 style={{ fontSize: 24, fontWeight: 700, color: '#f8fafc', marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                                <Lock size={24} /> กำลังเข้ารหัสและประมวลผลชำระเงิน...
                             </h2>
                             <p style={{ color: '#94a3b8', fontSize: 15, maxWidth: 440, margin: '0 auto' }}>
                                 ระบบกำลังเชื่อมต่อเกตเวย์การชำระเงินอย่างปลอดภัยผ่าน SSL 256-bit กรุณาอย่าปิดหน้าต่างนี้...
@@ -207,7 +207,7 @@ export default function Checkout() {
                                 </svg>
                             </div>
                             <h2 style={{ fontSize: 28, fontWeight: 800, color: '#10b981', marginBottom: 12 }}>
-                                ✓ ชำระเงินสำเร็จเสร็จสิ้น!
+                                ชำระเงินสำเร็จเสร็จสิ้น!
                             </h2>
                             <p style={{ color: '#e2e8f0', fontSize: 16, marginBottom: 8 }}>
                                 ยอดชำระ {formatPrice(total)} ได้รับการอนุมัติแล้ว
@@ -548,7 +548,7 @@ export default function Checkout() {
                                     justifyContent: 'center',
                                     gap: 8
                                 }}>
-                                    📱 โอนเงินผ่านระบบพร้อมเพย์ (PromptPay QR)
+                                    <Smartphone size={20} color="var(--primary)" /> โอนเงินผ่านระบบพร้อมเพย์ (PromptPay QR)
                                 </div>
                                 <p style={{ fontSize: 13, color: '#64748b', marginBottom: 20 }}>
                                     ระบบจำลองนี้จะช่วยจำลองการสร้าง QR Code และโอนเงินเข้าร้านยาโดยไม่ต้องเชื่อมสแกนจริง
@@ -568,7 +568,7 @@ export default function Checkout() {
                                 </div>
                                 
                                 <div style={{ fontSize: 12, color: '#64748b', fontStyle: 'italic' }}>
-                                    💡 กดปุ่ม <strong>"ยืนยันสั่งชำระเงิน"</strong> ที่เมนูด้านขวาเพื่อจำลองการยืนยันสลิปทันที
+                                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, verticalAlign: 'middle' }}><Lightbulb size={14} /> <strong>กดปุ่ม "ยืนยันสั่งชำระเงิน"</strong> ที่เมนูด้านขวาเพื่อจำลองการยืนยันสลิปทันที</span>
                                 </div>
                             </div>
                         )}
@@ -661,11 +661,11 @@ export default function Checkout() {
                                 cursor: 'pointer'
                             }}
                         >
-                            {paymentMethod === 'credit' ? '💳 ยืนยันชำระเงินผ่านบัตร' : paymentMethod === 'promptpay' ? '📱 ยืนยันโอนพร้อมเพย์' : '🚚 ยืนยันสั่งซื้อสินค้า'}
+                            {paymentMethod === 'credit' ? 'ยืนยันชำระเงินผ่านบัตร' : paymentMethod === 'promptpay' ? 'ยืนยันโอนพร้อมเพย์' : 'ยืนยันสั่งซื้อสินค้า'}
                         </button>
                         
                         <p style={{ fontSize: 11, color: '#64748b', textAlign: 'center', marginTop: 16, lineHeight: 1.4 }}>
-                            🔒 ระบบเชื่อมต่อความปลอดภัย SSL แบบ 256-bit<br />
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, verticalAlign: 'middle' }}><Lock size={12} /> ระบบเชื่อมต่อความปลอดภัย SSL แบบ 256-bit</span><br />
                             ข้อมูลจำลองเพื่อวัตถุประสงค์ในการสาธิตและทดลองเท่านั้น
                         </p>
                     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatPrice, CONFIG } from '../data/products';
-import { FileText, Printer, ArrowLeft, Download, Wallet } from 'lucide-react';
+import { FileText, Printer, ArrowLeft, Download, Wallet, Palette, Lightbulb } from 'lucide-react';
 
 export default function Quotation() {
     const navigate = useNavigate();
@@ -71,8 +71,8 @@ export default function Quotation() {
                     marginBottom: 24,
                     boxShadow: 'var(--shadow-md)',
                 }}>
-                    <h3 style={{ fontSize: 16, display: 'flex', alignItems: 'center', gap: 8, margin: '0 0 16px 0', borderBottom: '1px solid #f1f5f9', paddingBottom: 10 }}>
-                        🎨 ตกแต่งรูปแบบใบเสนอราคา / Quotation Customizer
+                    <h3 style={{ fontSize: 16, display: 'inline-flex', alignItems: 'center', gap: 8, margin: '0 0 16px 0', borderBottom: '1px solid #f1f5f9', paddingBottom: 10, width: '100%' }}>
+                        <Palette size={18} color={currentTheme.primary} /> ตกแต่งรูปแบบใบเสนอราคา / Quotation Customizer
                     </h3>
                     
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 20 }}>
@@ -352,7 +352,7 @@ export default function Quotation() {
                             lineHeight: 1.5,
                             textAlign: 'left'
                         }}>
-                            💡 <strong>หมายเหตุเพิ่มเติม:</strong> {customNote}
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, verticalAlign: 'middle' }}><Lightbulb size={15} /> <strong>หมายเหตุเพิ่มเติม:</strong></span> {customNote}
                         </div>
                     )}
 

@@ -18,7 +18,13 @@ import {
   Star,
   FileText,
   Printer,
-  ExternalLink
+  ExternalLink,
+  AlertTriangle,
+  BarChart3,
+  Mail,
+  Zap,
+  Smartphone,
+  QrCode
 } from 'lucide-react';
 import {
   Bar,
@@ -117,7 +123,7 @@ export default function AdminDashboard() {
     const notifId = Date.now() + Math.random().toString().slice(-4);
     const newNotif = {
       id: notifId,
-      title: '🔔 มีออเดอร์สั่งซื้อเข้าใหม่!',
+      title: 'มีออเดอร์สั่งซื้อเข้าใหม่!',
       orderId: order.id,
       customer: order.customer?.name || 'ลูกค้าทั่วไป',
       total: order.totals?.total || 0,
@@ -460,7 +466,7 @@ export default function AdminDashboard() {
               }}
             >
               <FileText size={15} />
-              {isExportingPDF ? 'กำลังสร้างรายงาน PDF...' : '📊 ออกรายงานผู้บริหาร (PDF)'}
+              {isExportingPDF ? 'กำลังสร้างรายงาน PDF...' : 'ออกรายงานผู้บริหาร (PDF)'}
             </button>
             <button onClick={handleClearAll} style={dangerButtonStyle}>
               <Trash2 size={15} />
@@ -498,7 +504,8 @@ export default function AdminDashboard() {
               boxShadow: 'var(--shadow-sm)'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#b45309', fontWeight: 700, fontSize: 15 }}>
-                <span>🚨 ตรวจพบสินค้าใกล้หมดคลัง ({lowStockProducts.length} รายการ)</span>
+                <AlertTriangle size={18} />
+                <span>ตรวจพบสินค้าใกล้หมดคลัง ({lowStockProducts.length} รายการ)</span>
                 <span style={{ fontSize: 11, background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: 999, marginLeft: 'auto', fontWeight: 600 }}>
                   สต็อกต่ำกว่า 10 ชิ้น
                 </span>
@@ -511,7 +518,7 @@ export default function AdminDashboard() {
                       <span style={{ fontWeight: 600 }}>{p.name}</span>
                     </div>
                     <span style={{ color: p.stock_quantity === 0 ? '#dc2626' : '#d97706', fontWeight: 700 }}>
-                      {p.stock_quantity === 0 ? 'หมดสต็อก ❌' : `เหลือเพียง ${p.stock_quantity} ชิ้น`}
+                      {p.stock_quantity === 0 ? 'หมดสต็อก' : `เหลือเพียง ${p.stock_quantity} ชิ้น`}
                     </span>
                   </div>
                 ))}
@@ -732,8 +739,8 @@ export default function AdminDashboard() {
           <div style={drawerStyle} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, marginBottom: 16, borderBottom: '1px solid #f1f5f9', paddingBottom: 12 }}>
               <div>
-                <span style={{ fontSize: 11, background: '#eef2ff', color: '#4f46e5', padding: '2px 8px', borderRadius: 999, fontWeight: 600, display: 'inline-block', marginBottom: 4 }}>
-                  🛒 คำสั่งซื้อออนไลน์
+                <span style={{ fontSize: 11, background: '#eef2ff', color: '#4f46e5', padding: '2px 8px', borderRadius: 999, fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4, marginBottom: 4 }}>
+                  <ShoppingBag size={11} /> คำสั่งซื้อออนไลน์
                 </span>
                 <h3 style={{ margin: 0, fontWeight: 800, fontSize: 18, color: '#0f172a' }}>รายละเอียดคำสั่งซื้อ</h3>
                 <p style={{ margin: 0, fontSize: 12, color: 'var(--text-muted)', fontFamily: 'monospace' }}>ID: {selectedOrder.id}</p>
@@ -791,7 +798,7 @@ export default function AdminDashboard() {
                   }}
                 >
                   <Truck size={16} />
-                  ⚡ จำลองจัดส่งสินค้าและสร้างเลขพัสดุทันที
+                  จำลองจัดส่งสินค้าและสร้างเลขพัสดุทันที
                 </button>
               )}
             </div>
@@ -824,19 +831,19 @@ export default function AdminDashboard() {
                     if (method.includes('บัตร')) {
                       return (
                         <span style={{ fontSize: 12, fontWeight: 700, background: '#eff6ff', color: '#1d4ed8', border: '1px solid #bfdbfe', padding: '3px 8px', borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                          💳 บัตรเครดิต/เดบิต (Visa)
+                          <CreditCard size={12} /> บัตรเครดิต/เดบิต (Visa)
                         </span>
                       );
                     } else if (method.includes('พร้อม') || method.includes('Prompt')) {
                       return (
                         <span style={{ fontSize: 12, fontWeight: 700, background: '#ecfeff', color: '#0891b2', border: '1px solid #a5f3fc', padding: '3px 8px', borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                          📱 โอนผ่านพร้อมเพย์
+                          <QrCode size={12} /> โอนผ่านพร้อมเพย์
                         </span>
                       );
                     } else {
                       return (
                         <span style={{ fontSize: 12, fontWeight: 700, background: '#fff7ed', color: '#c2410c', border: '1px solid #fed7aa', padding: '3px 8px', borderRadius: 8, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                          🚚 เก็บเงินปลายทาง (COD)
+                          <Truck size={12} /> เก็บเงินปลายทาง (COD)
                         </span>
                       );
                     }
@@ -917,8 +924,8 @@ export default function AdminDashboard() {
                   transition: 'all 0.2s'
                 }}
               >
-                <FileText size={15} />
-                ✉️ จำลองส่งใบเสร็จเข้าอีเมลลูกค้า
+                <Mail size={15} />
+                จำลองส่งใบเสร็จเข้าอีเมลลูกค้า
               </button>
             </div>
           </div>
@@ -956,7 +963,7 @@ export default function AdminDashboard() {
                 animation: 'spin 1s linear infinite',
                 margin: '0 auto 20px auto'
               }}></div>
-              <h3 style={{ fontSize: 18, fontWeight: 700 }}>✉️ กำลังจัดเตรียมและจัดส่งใบเสร็จเข้าอีเมล...</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 700 }}>กำลังจัดเตรียมและจัดส่งใบเสร็จเข้าอีเมล...</h3>
               <p style={{ color: '#94a3b8', fontSize: 13, marginTop: 6 }}>
                 ระบบกำลังเรนเดอร์บิล PDF ความละเอียดสูงและส่งหาคุณ {selectedOrder?.customer?.name || 'ลูกค้า'}
               </p>
@@ -977,7 +984,7 @@ export default function AdminDashboard() {
               }}>
                 <BadgeCheck size={36} color="white" />
               </div>
-              <h3 style={{ fontSize: 20, fontWeight: 800, color: '#10b981' }}>✓ จัดส่งอีเมลใบเสร็จสำเร็จ!</h3>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: '#10b981' }}>จัดส่งอีเมลใบเสร็จสำเร็จ!</h3>
               <p style={{ color: '#e2e8f0', fontSize: 13, marginTop: 4 }}>
                 ใบเสร็จรับเงินถูกส่งไปยัง {selectedOrder?.customer?.email || 'อีเมลลูกค้า'} เรียบร้อยแล้ว
               </p>
