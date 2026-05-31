@@ -34,7 +34,7 @@ export function ProductProvider({ children }) {
     }, []);
 
     const getProductById = (id) => {
-        return products.find(p => p.id === Number(id));
+        return products.find(p => String(p.id) === String(id));
     };
 
     return (
