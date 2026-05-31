@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
-import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw, FlaskConical, Factory, CalendarDays, CalendarX } from 'lucide-react';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -120,7 +120,7 @@ export default function ProductDetail() {
                         </p>
 
                         {/* Specs */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 32 }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
                             {product.specs && product.specs.map((spec, i) => (
                                 <div key={i} style={{
                                     background: '#f8fafc',
@@ -137,6 +137,75 @@ export default function ProductDetail() {
                                     {spec}
                                 </div>
                             ))}
+                        </div>
+
+                        {/* Deep Specs Block */}
+                        <div style={{
+                            background: '#f8fafc',
+                            borderRadius: 16,
+                            padding: 20,
+                            border: '1px solid var(--border)',
+                            marginBottom: 32,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 16
+                        }}>
+                            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#0f172a', borderBottom: '1px solid var(--border)', paddingBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                📋 ข้อมูลรายละเอียดผลิตภัณฑ์
+                            </h3>
+                            
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                                {product.ingredients && (
+                                    <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                                        <div style={{ background: '#e0f2fe', color: '#0284c7', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <FlaskConical size={18} />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>ส่วนผสมหลัก (Ingredients)</div>
+                                            <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.ingredients}</div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {product.origin && (
+                                    <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                                        <div style={{ background: '#fef3c7', color: '#d97706', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Factory size={18} />
+                                        </div>
+                                        <div>
+                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>แหล่งผลิต/ผู้ผลิต (Origin)</div>
+                                            <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.origin}</div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {(product.mfg_date || product.exp_date) && (
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, borderTop: '1px dashed var(--border)', paddingTop: 12 }}>
+                                        {product.mfg_date && (
+                                            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                                                <div style={{ background: '#dcfce7', color: '#16a34a', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <CalendarDays size={18} />
+                                                </div>
+                                                <div>
+                                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>วันที่ผลิต (MFG)</div>
+                                                    <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.mfg_date}</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {product.exp_date && (
+                                            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                                                <div style={{ background: '#fee2e2', color: '#dc2626', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <CalendarX size={18} />
+                                                </div>
+                                                <div>
+                                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>วันที่หมดอายุ (EXP)</div>
+                                                    <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.exp_date}</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
                         {/* Actions */}

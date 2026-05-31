@@ -99,13 +99,12 @@ app.post('/api/admin/products/refill-stock', async (req, res) => {
 });
 
 app.post('/api/products', async (req, res) => {
-
   try {
     if (!pool) return res.status(500).json({ error: 'Database not connected' });
-    const { name, category, description, price, stock_quantity, image, specs, is_active } = req.body;
+    const { name, category, description, price, stock_quantity, image, specs, is_active, ingredients, origin, mfg_date, exp_date } = req.body;
     const { rows } = await pool.query(
-      `INSERT INTO products (name, category, description, price, stock_quantity, image, specs, is_active)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+      `INSERT INTO products (name, category, description, price, stock_quantity, image, specs, is_active, ingredients, origin, mfg_date, exp_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
       [
         name, 
         category, 
@@ -114,7 +113,11 @@ app.post('/api/products', async (req, res) => {
         Number(stock_quantity) || 0, 
         image || '/images/placeholder.png', 
         JSON.stringify(specs || []), 
-        is_active !== false
+        is_active !== false,
+        ingredients || '',
+        origin || '',
+        mfg_date || '',
+        exp_date || ''
       ]
     );
     res.json({ ...rows[0], price: Number(rows[0].price) });
@@ -127,7 +130,7 @@ app.put('/api/products/:id', async (req, res) => {
   try {
     if (!pool) return res.status(500).json({ error: 'Database not connected' });
     const { id } = req.params;
-    const { name, category, description, price, stock_quantity, image, specs, is_active } = req.body;
+    const { name, category, description, price, stock_quantity, image, specs, is_active, ingredients, origin, mfg_date, exp_date } = req.body;
     const { rows } = await pool.query(
       `UPDATE products 
        SET name = COALESCE($1, name),
@@ -137,8 +140,12 @@ app.put('/api/products/:id', async (req, res) => {
            stock_quantity = COALESCE($5, stock_quantity),
            image = COALESCE($6, image),
            specs = COALESCE($7, specs),
-           is_active = COALESCE($8, is_active)
-       WHERE id = $9 RETURNING *`,
+           is_active = COALESCE($8, is_active),
+           ingredients = COALESCE($9, ingredients),
+           origin = COALESCE($10, origin),
+           mfg_date = COALESCE($11, mfg_date),
+           exp_date = COALESCE($12, exp_date)
+       WHERE id = $13 RETURNING *`,
       [
         name, 
         category, 
@@ -148,6 +155,10 @@ app.put('/api/products/:id', async (req, res) => {
         image, 
         specs ? JSON.stringify(specs) : undefined, 
         is_active,
+        ingredients,
+        origin,
+        mfg_date,
+        exp_date,
         id
       ]
     );

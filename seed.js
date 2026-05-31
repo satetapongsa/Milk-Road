@@ -86,6 +86,10 @@ async function runSeed() {
         images TEXT[] DEFAULT '{}',
         specs JSONB DEFAULT '[]'::jsonb,
         is_active BOOLEAN DEFAULT true,
+        ingredients TEXT,
+        origin TEXT,
+        mfg_date TEXT,
+        exp_date TEXT,
         created_at TIMESTAMPTZ DEFAULT NOW(),
         updated_at TIMESTAMPTZ DEFAULT NOW()
       );
@@ -157,8 +161,8 @@ async function runSeed() {
     for (const product of products) {
       console.log(`Inserting: ${product.name}`);
       await client.query(
-        `INSERT INTO products (id, name, category, description, price, specs, image, is_active)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+        `INSERT INTO products (id, name, category, description, price, specs, image, is_active, ingredients, origin, mfg_date, exp_date)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
         [
           product.id,
           product.name,
@@ -167,7 +171,11 @@ async function runSeed() {
           product.price,
           JSON.stringify(product.specs),
           product.image,
-          true
+          true,
+          product.ingredients || 'ส่วนประกอบสำคัญทางยา (Active Ingredients)',
+          product.origin || 'ประเทศไทย (Thailand)',
+          product.mfg_date || '2026-01-15',
+          product.exp_date || '2029-01-15'
         ]
       );
     }

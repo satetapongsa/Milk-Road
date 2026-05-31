@@ -20,7 +20,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/paracetamol_500mg.png",
         description: "Standard Paracetamol 500mg tablets for fast and effective relief of headaches, body aches, muscle pain, and fever reduction. Gentle on the stomach.",
-        specs: ["1 blister x 10 tablets", "500mg per tablet", "Relieves fever & pain"]
+        specs: ["1 blister x 10 tablets", "500mg per tablet", "Relieves fever & pain"],
+        ingredients: "Paracetamol 500mg, Maize Starch, Povidone, Magnesium Stearate",
+        origin: "บริษัท ไทยเภสัชเคมี จำกัด (ประเทศไทย)",
+        mfg_date: "2026-01-10",
+        exp_date: "2029-01-10"
     },
     {
         id: 2,
@@ -29,7 +33,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/ibuprofen_blister.png",
         description: "Ibuprofen 400mg tablets to relieve acute inflammatory pain, toothaches, menstrual pain, muscular strains, and reduce fever.",
-        specs: ["1 blister x 10 tablets", "400mg per tablet", "Anti-inflammatory NSAID"]
+        specs: ["1 blister x 10 tablets", "400mg per tablet", "Anti-inflammatory NSAID"],
+        ingredients: "Ibuprofen 400mg, Lactose, Microcrystalline Cellulose, Silica",
+        origin: "บริษัท สยามเภสัช จำกัด (ประเทศไทย)",
+        mfg_date: "2026-02-15",
+        exp_date: "2029-02-15"
     },
     {
         id: 3,
@@ -38,7 +46,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/amoxicillin_capsules.png",
         description: "Amoxicillin 500mg capsules, a broad-spectrum penicillin antibiotic used to treat bacterial infections of the respiratory tract, skin, and urinary tract.",
-        specs: ["1 blister x 10 capsules", "500mg per capsule", "Prescription antibiotic"]
+        specs: ["1 blister x 10 capsules", "500mg per capsule", "Prescription antibiotic"],
+        ingredients: "Amoxicillin Trihydrate 500mg, Magnesium Stearate, Gelatin",
+        origin: "บริษัท เมก้า ไลฟ์ไซแอ็นซ์ จำกัด (ประเทศไทย)",
+        mfg_date: "2026-03-01",
+        exp_date: "2028-03-01"
     },
     {
         id: 4,
@@ -47,7 +59,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/cetirizine_blister.png",
         description: "Cetirizine hydrochloride 10mg tablets for highly effective 24-hour relief of allergy symptoms like sneezing, runny nose, watery eyes, and hives.",
-        specs: ["1 blister x 10 tablets", "10mg per tablet", "Antihistamine / Allergy relief"]
+        specs: ["1 blister x 10 tablets", "10mg per tablet", "Antihistamine / Allergy relief"],
+        ingredients: "Cetirizine Dihydrochloride 10mg, Lactose Monohydrate",
+        origin: "บริษัท เบอร์ลินฟาร์มาซูติคอลอินดัสตรี้ จำกัด (ประเทศไทย)",
+        mfg_date: "2026-01-20",
+        exp_date: "2029-01-20"
     },
     {
         id: 5,
@@ -56,7 +72,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/loratadine_blister.png",
         description: "Loratadine 10mg tablets providing 24-hour non-drowsy relief from allergic rhinitis, hay fever, sneezing, runny nose, and skin itching.",
-        specs: ["1 blister x 10 tablets", "10mg per tablet", "24-Hour Non-Drowsy Allergy"]
+        specs: ["1 blister x 10 tablets", "10mg per tablet", "24-Hour Non-Drowsy Allergy"],
+        ingredients: "Loratadine 10mg, Lactose, Starch, Magnesium Stearate",
+        origin: "บริษัท สหแพทย์เภสัช จำกัด (ประเทศไทย)",
+        mfg_date: "2025-12-05",
+        exp_date: "2028-12-05"
     },
     {
         id: 6,
@@ -65,7 +85,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/omeprazole_capsules.png",
         description: "Omeprazole 20mg capsules. Reduces excess acid production in the stomach to treat acid reflux (GERD), heartburn, and gastric ulcers.",
-        specs: ["1 blister x 14 capsules", "20mg per capsule", "Proton Pump Inhibitor"]
+        specs: ["1 blister x 14 capsules", "20mg per capsule", "Proton Pump Inhibitor"],
+        ingredients: "Omeprazole 20mg, Sucrose, Corn Starch, Gelatin",
+        origin: "บริษัท แอสตร้าเซนเนก้า (ประเทศไทย) จำกัด",
+        mfg_date: "2026-02-28",
+        exp_date: "2028-02-28"
     },
     {
         id: 7,
@@ -74,7 +98,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/metformin_tablets.png",
         description: "Metformin hydrochloride 500mg tablets, used to control and manage high blood glucose levels in patients with type 2 diabetes mellitus.",
-        specs: ["1 blister x 10 tablets", "500mg per tablet", "Oral antidiabetic medication"]
+        specs: ["1 blister x 10 tablets", "500mg per tablet", "Oral antidiabetic medication"],
+        ingredients: "Metformin Hydrochloride 500mg, Povidone, Magnesium Stearate",
+        origin: "บริษัท สยามเภสัช จำกัด (ประเทศไทย)",
+        mfg_date: "2026-01-05",
+        exp_date: "2029-01-05"
     },
     {
         id: 8,
@@ -83,7 +111,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/amlodipine_tablets.png",
         description: "Amlodipine 5mg tablets. Relaxes blood vessels to lower blood pressure, improve blood circulation, and prevent angina (chest pain).",
-        specs: ["1 blister x 10 tablets", "5mg per tablet", "Calcium channel blocker"]
+        specs: ["1 blister x 10 tablets", "5mg per tablet", "Calcium channel blocker"],
+        ingredients: "Amlodipine Besylate 5mg, Microcrystalline Cellulose",
+        origin: "บริษัท ไฟเซอร์ (ประเทศไทย) จำกัด",
+        mfg_date: "2026-03-10",
+        exp_date: "2029-03-10"
     },
     {
         id: 9,
@@ -92,7 +124,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/simvastatin_tablets.png",
         description: "Simvastatin 20mg tablets to lower high blood levels of cholesterol and triglycerides, reducing the risk of cardiovascular events.",
-        specs: ["1 blister x 10 tablets", "20mg per tablet", "HMG-CoA Reductase Statin"]
+        specs: ["1 blister x 10 tablets", "20mg per tablet", "HMG-CoA Reductase Statin"],
+        ingredients: "Simvastatin 20mg, Lactose Monohydrate, Ascorbic Acid",
+        origin: "บริษัท เอ็มแอนด์เอชฟาร์มาซูติคอล จำกัด (ประเทศไทย)",
+        mfg_date: "2026-02-12",
+        exp_date: "2029-02-12"
     },
     {
         id: 10,
@@ -101,7 +137,11 @@ export const products = [
         category: "Medicines",
         image: "/images/medicines/bromhexine_tablets.png",
         description: "Bromhexine hydrochloride 8mg tablets to dissolve, thin, and break up thick sticky mucus in the airways during chesty coughs.",
-        specs: ["1 blister x 10 tablets", "8mg per tablet", "Mucolytic / Cough relief"]
+        specs: ["1 blister x 10 tablets", "8mg per tablet", "Mucolytic / Cough relief"],
+        ingredients: "Bromhexine Hydrochloride 8mg, Lactose, Potato Starch",
+        origin: "บริษัท บี.แอล.ฮัว จำกัด (ประเทศไทย)",
+        mfg_date: "2026-01-18",
+        exp_date: "2029-01-18"
     },
     {
         id: 11,
@@ -110,7 +150,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/whey_protein.png",
         description: "Ultra-pure grass-fed whey protein isolate designed for rapid muscle recovery, lean muscle growth, and optimal post-workout nutrition.",
-        specs: ["1 tub x 900g", "25g protein per scoop", "Zero sugar & low fat"]
+        specs: ["1 tub x 900g", "25g protein per scoop", "Zero sugar & low fat"],
+        ingredients: "Grass-Fed Whey Protein Isolate, Natural Vanilla Flavor, Sunflower Lecithin, Stevia",
+        origin: "Optimum Nutrition, Inc. (สหรัฐอเมริกา)",
+        mfg_date: "2026-03-05",
+        exp_date: "2028-03-05"
     },
     {
         id: 12,
@@ -119,7 +163,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/collagen_peptide.png",
         description: "Hydrolyzed Type I & III collagen peptides to boost skin elasticity, reduce deep wrinkles, hydrate skin cells, and support joint health.",
-        specs: ["1 tub x 250g", "Premium marine source", "Unflavored dietary powder"]
+        specs: ["1 tub x 250g", "Premium marine source", "Unflavored dietary powder"],
+        ingredients: "Hydrolyzed Marine Collagen Peptides 100%",
+        origin: "บริษัท เมจิ จำกัด (ประเทศญี่ปุ่น)",
+        mfg_date: "2026-02-20",
+        exp_date: "2028-02-20"
     },
     {
         id: 13,
@@ -128,7 +176,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/multivitamin_complex.png",
         description: "Comprehensive multivitamin and mineral complex tablets to prevent vitamin deficiencies, boost overall health, and relieve daily fatigue.",
-        specs: ["1 bottle x 30 tablets", "Complete daily nutrition", "Dietary supplement"]
+        specs: ["1 bottle x 30 tablets", "Complete daily nutrition", "Dietary supplement"],
+        ingredients: "Vitamin A, B-Complex, C, D3, E, Zinc, Iron, Calcium, Magnesium",
+        origin: "Blackmores Limited (ประเทศออสเตรเลีย)",
+        mfg_date: "2026-01-15",
+        exp_date: "2028-01-15"
     },
     {
         id: 14,
@@ -137,7 +189,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "High-absorption medical-grade Vitamin C (Ascorbic Acid) 1000mg to strengthen daily immunity defenses, prevent common colds, and support collagen.",
-        specs: ["1 bottle x 30 tablets", "1000mg per tablet", "Immune support antioxidant"]
+        specs: ["1 bottle x 30 tablets", "1000mg per tablet", "Immune support antioxidant"],
+        ingredients: "Ascorbic Acid 1000mg, Rosehips Extract, Citrus Bioflavonoids",
+        origin: "บริษัท เมก้า ไลฟ์ไซแอ็นซ์ จำกัด (ประเทศไทย)",
+        mfg_date: "2026-02-10",
+        exp_date: "2029-02-10"
     },
     {
         id: 15,
@@ -146,7 +202,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "Premium omega-3 fish oil softgels containing rich EPA and DHA fatty acids. Promotes cardiovascular health, brain function, and joint elasticity.",
-        specs: ["1 bottle x 30 softgels", "1000mg per softgel", "Omega-3 dietary supplement"]
+        specs: ["1 bottle x 30 softgels", "1000mg per softgel", "Omega-3 dietary supplement"],
+        ingredients: "Natural Fish Oil 1000mg (EPA 180mg, DHA 120mg), Vitamin E",
+        origin: "Blackmores Limited (ประเทศออสเตรเลีย)",
+        mfg_date: "2026-01-25",
+        exp_date: "2028-01-25"
     },
     {
         id: 16,
@@ -155,7 +215,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "High-strength Calcium carbonate combined with active Vitamin D3 to maximize calcium absorption, supporting healthy bones, teeth, and muscles.",
-        specs: ["1 bottle x 60 tablets", "Enhanced calcium absorption", "Supports strong bones & joints"]
+        specs: ["1 bottle x 60 tablets", "Enhanced calcium absorption", "Supports strong bones & joints"],
+        ingredients: "Calcium Carbonate 1500mg (Elemental Calcium 600mg), Cholecalciferol (Vitamin D3) 200 IU",
+        origin: "Caltrate (สหรัฐอเมริกา)",
+        mfg_date: "2026-02-01",
+        exp_date: "2029-02-01"
     },
     {
         id: 17,
@@ -164,7 +228,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "Coenzyme Q10 softgels. Powerhouse cellular energy promoter and cardiovascular antioxidant supporting active heart health and vitality.",
-        specs: ["1 bottle x 30 softgels", "100mg active CoQ10", "Heart health & energy booster"]
+        specs: ["1 bottle x 30 softgels", "100mg active CoQ10", "Heart health & energy booster"],
+        ingredients: "Coenzyme Q10 (Ubidecarenone) 100mg, Soya Oil, Gelatin, Glycerol",
+        origin: "บริษัท เมก้า ไลฟ์ไซแอ็นซ์ จำกัด (ประเทศไทย)",
+        mfg_date: "2026-01-30",
+        exp_date: "2028-01-30"
     },
     {
         id: 18,
@@ -173,7 +241,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "Highly bioavailable zinc amino acid chelate (glycinate) for superior immune defense, skin barrier healing, acne control, and hormonal balance.",
-        specs: ["1 bottle x 60 tablets", "15mg elemental Zinc", "Superior absorption chelate"]
+        specs: ["1 bottle x 60 tablets", "15mg elemental Zinc", "Superior absorption chelate"],
+        ingredients: "Zinc Amino Acid Chelate (providing Zinc 15mg)",
+        origin: "Blackmores Limited (ประเทศออสเตรเลีย)",
+        mfg_date: "2026-02-14",
+        exp_date: "2029-02-14"
     },
     {
         id: 19,
@@ -182,7 +254,11 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "Daily gut health optimizer with 10 billion CFU active organisms from 5 clinically-studied probiotic strains to relieve bloating and support digestion.",
-        specs: ["1 bottle x 30 capsules", "10 Billion CFU guaranteed", "Acid-resistant capsules"]
+        specs: ["1 bottle x 30 capsules", "10 Billion CFU guaranteed", "Acid-resistant capsules"],
+        ingredients: "Lactobacillus acidophilus, Bifidobacterium lactis, Inulin Prebiotic",
+        origin: "บริษัท ไบโอฟาร์ม เคมิคัลส์ จำกัด (ประเทศไทย)",
+        mfg_date: "2026-03-01",
+        exp_date: "2027-09-01"
     },
     {
         id: 20,
@@ -191,7 +267,10 @@ export const products = [
         category: "Supplements",
         image: "/images/supplements/pill_bottle_white.png",
         description: "Advanced eye strain protection formula containing standardized lutein and zeaxanthin to filter harmful blue light and protect macular health.",
-        specs: ["1 bottle x 30 softgels", "Blue light filter protection", "Supports vision & macular health"]
+        specs: ["1 bottle x 30 softgels", "Blue light filter protection", "Supports vision & macular health"],
+        ingredients: "Lutein 20mg, Zeaxanthin 4mg, Bilberry Extract, Vitamin A",
+        origin: "บริษัท แบลคมอร์ส จำกัด (ประเทศออสเตรเลีย)",
+        mfg_date: "2026-02-10",
+        exp_date: "2028-02-10"
     }
-];;
-;
+];

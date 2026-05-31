@@ -60,7 +60,7 @@ export default function AdminProducts() {
     // DRAWER STATE
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [editingProduct, setEditingProduct] = useState(null);
-    const [formData, setFormData] = useState({ name: '', category: '', price: 0, stock_quantity: 0, image: '', description: '', is_active: true });
+    const [formData, setFormData] = useState({ name: '', category: '', price: 0, stock_quantity: 0, image: '', description: '', is_active: true, ingredients: '', origin: '', mfg_date: '', exp_date: '' });
     const [isSaving, setIsSaving] = useState(false);
 
     const openDrawer = (product = null) => {
@@ -73,11 +73,15 @@ export default function AdminProducts() {
                 stock_quantity: product.stock_quantity || 0,
                 image: product.image || '',
                 description: product.description || '',
-                is_active: product.is_active !== false
+                is_active: product.is_active !== false,
+                ingredients: product.ingredients || '',
+                origin: product.origin || '',
+                mfg_date: product.mfg_date || '',
+                exp_date: product.exp_date || ''
             });
         } else {
             setEditingProduct(null);
-            setFormData({ name: '', category: '', price: 0, stock_quantity: 0, image: '', description: '', is_active: true });
+            setFormData({ name: '', category: '', price: 0, stock_quantity: 0, image: '', description: '', is_active: true, ingredients: '', origin: '', mfg_date: '', exp_date: '' });
         }
         setIsDrawerOpen(true);
     };
@@ -364,6 +368,28 @@ export default function AdminProducts() {
                                 <div>
                                     <label style={labelStyle}>รายละเอียดสินค้า</label>
                                     <textarea name="description" value={formData.description} onChange={handleChange} style={{ ...inputStyle, minHeight: 100, resize: 'vertical' }} placeholder="บรรยายสรรพคุณ..." />
+                                </div>
+
+                                <div style={{ display: 'flex', gap: 16 }}>
+                                    <div style={{ flex: 1 }}>
+                                        <label style={labelStyle}>ส่วนผสมหลัก</label>
+                                        <input name="ingredients" value={formData.ingredients} onChange={handleChange} style={inputStyle} placeholder="เช่น Paracetamol 500mg, Starch" />
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                        <label style={labelStyle}>แหล่งผลิต/ผู้ผลิต</label>
+                                        <input name="origin" value={formData.origin} onChange={handleChange} style={inputStyle} placeholder="เช่น ประเทศไทย" />
+                                    </div>
+                                </div>
+
+                                <div style={{ display: 'flex', gap: 16 }}>
+                                    <div style={{ flex: 1 }}>
+                                        <label style={labelStyle}>วันที่ผลิต</label>
+                                        <input type="date" name="mfg_date" value={formData.mfg_date} onChange={handleChange} style={inputStyle} />
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                        <label style={labelStyle}>วันที่หมดอายุ</label>
+                                        <input type="date" name="exp_date" value={formData.exp_date} onChange={handleChange} style={inputStyle} />
+                                    </div>
                                 </div>
 
                                 <div>

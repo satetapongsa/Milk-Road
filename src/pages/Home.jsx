@@ -32,8 +32,7 @@ export default function Home() {
             <section className="section" id="products">
                 <div className="container">
                     <div className="section-header">
-                        <h2>สินค้าแนะนำ</h2>
-                        <Link to="/" className="view-all">ดูทั้งหมด <ArrowRight size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /></Link>
+                        <h2>สินค้าทั้งหมด</h2>
                     </div>
 
                     <div className="products-grid" id="products-container">

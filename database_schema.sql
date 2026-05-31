@@ -47,6 +47,10 @@ CREATE TABLE products (
   images TEXT[] DEFAULT '{}',
   specs JSONB DEFAULT '[]'::jsonb,
   is_active BOOLEAN DEFAULT true,
+  ingredients TEXT,
+  origin TEXT,
+  mfg_date TEXT,
+  exp_date TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
