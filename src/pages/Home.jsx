@@ -57,18 +57,45 @@ export default function Home() {
                                             />
                                         </div>
                                         <div className="product-info">
-                                            <div className="product-category">{product.category}</div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
+                                                <span className="product-category">{product.category}</span>
+                                                {product.stock_quantity <= 0 && (
+                                                    <span style={{ fontSize: 10, fontWeight: 700, color: '#dc2626', background: '#fee2e2', padding: '2px 6px', borderRadius: 4 }}>
+                                                        หมด ❌
+                                                    </span>
+                                                )}
+                                            </div>
                                             <h3 className="product-title">{product.name}</h3>
                                             <div className="product-price">{formatPrice(product.price)}</div>
                                         </div>
                                     </Link>
                                     <div style={{ padding: '0 24px 24px 24px', marginTop: 'auto' }}>
-                                        <button className="add-to-cart-btn" onClick={(e) => {
-                                            e.preventDefault();
-                                            addToCart(product);
-                                        }}>
-                                            <ShoppingCart size={18} /> เพิ่มลงตะกร้า
-                                        </button>
+                                        {product.stock_quantity <= 0 ? (
+                                            <button 
+                                                className="add-to-cart-btn" 
+                                                disabled
+                                                style={{ 
+                                                    background: '#e2e8f0', 
+                                                    color: '#94a3b8', 
+                                                    cursor: 'not-allowed',
+                                                    border: 'none',
+                                                    boxShadow: 'none',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: 6
+                                                }}
+                                            >
+                                                สินค้าหมดชั่วคราว
+                                            </button>
+                                        ) : (
+                                            <button className="add-to-cart-btn" onClick={(e) => {
+                                                e.preventDefault();
+                                                addToCart(product);
+                                            }}>
+                                                <ShoppingCart size={18} /> เพิ่มลงตะกร้า
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))

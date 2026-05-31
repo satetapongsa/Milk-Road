@@ -144,33 +144,47 @@ export default function ProductDetail() {
                             padding: 24,
                             border: '1px solid var(--border)',
                             borderRadius: 16,
-                            marginBottom: 32
+                            marginBottom: 32,
+                            background: product.stock_quantity <= 0 ? '#f8fafc' : 'white'
                         }}>
-                            <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
-                                <div className="qty-control" style={{ padding: 8, gap: 16 }}>
-                                    <button className="qty-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus size={16} /></button>
-                                    <span style={{ fontSize: 16, fontWeight: 600, minWidth: 24, textAlign: 'center' }}>{quantity}</span>
-                                    <button className="qty-btn" onClick={() => setQuantity(quantity + 1)}><Plus size={16} /></button>
+                            {product.stock_quantity <= 0 ? (
+                                <div style={{ textAlign: 'center', padding: '8px 0' }}>
+                                    <div style={{ color: '#dc2626', fontWeight: 700, fontSize: 16, marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                                        <span>❌ ขออภัย สินค้าชิ้นนี้หมดสต็อกชั่วคราว</span>
+                                    </div>
+                                    <p style={{ color: '#64748b', fontSize: 13, margin: 0 }}>
+                                        คุณสามารถติดต่อแอดมินหรือกลับมาตรวจสอบสต็อกอีกครั้งในภายหลัง
+                                    </p>
                                 </div>
-                                <button
-                                    className={`btn btn-block ${isAdded ? 'btn-success' : 'btn-primary'}`}
-                                    onClick={handleAddToCart}
-                                    style={{ flexGrow: 1, backgroundColor: isAdded ? '#10b981' : undefined, border: isAdded ? 'none' : undefined }}
-                                >
-                                    {isAdded ? (
-                                        <>
-                                            <Check size={20} /> เพิ่มเรียบร้อยแล้ว
-                                        </>
-                                    ) : (
-                                        <>
-                                            <ShoppingCart size={20} /> เพิ่มใส่ตะกร้า
-                                        </>
-                                    )}
-                                </button>
-                            </div>
-                            <div style={{ fontSize: 13, color: 'var(--text-light)', textAlign: 'center' }}>
-                                จัดส่งฟรีทั่วประเทศ เมื่อมียอดสั่งซื้อครบ 5,000 บาท
-                            </div>
+                            ) : (
+                                <>
+                                    <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
+                                        <div className="qty-control" style={{ padding: 8, gap: 16 }}>
+                                            <button className="qty-btn" onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus size={16} /></button>
+                                            <span style={{ fontSize: 16, fontWeight: 600, minWidth: 24, textAlign: 'center' }}>{quantity}</span>
+                                            <button className="qty-btn" onClick={() => setQuantity(quantity + 1)}><Plus size={16} /></button>
+                                        </div>
+                                        <button
+                                            className={`btn btn-block ${isAdded ? 'btn-success' : 'btn-primary'}`}
+                                            onClick={handleAddToCart}
+                                            style={{ flexGrow: 1, backgroundColor: isAdded ? '#10b981' : undefined, border: isAdded ? 'none' : undefined }}
+                                        >
+                                            {isAdded ? (
+                                                <>
+                                                    <Check size={20} /> เพิ่มเรียบร้อยแล้ว
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <ShoppingCart size={20} /> เพิ่มใส่ตะกร้า
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                    <div style={{ fontSize: 13, color: 'var(--text-light)', textAlign: 'center' }}>
+                                        จัดส่งฟรีทั่วประเทศ เมื่อมียอดสั่งซื้อครบ 5,000 บาท
+                                    </div>
+                                </>
+                            )}
                         </div>
 
                         {/* Trust Badges */}

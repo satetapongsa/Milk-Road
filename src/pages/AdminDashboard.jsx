@@ -99,20 +99,66 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  
+  // Custom Premium States
+  const [notifications, setNotifications] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [emailSendingState, setEmailSendingState] = useState('none');
+  const [isExportingPDF, setIsExportingPDF] = useState(false);
 
   const selectedOrder = useMemo(() => orders.find((order) => order.id === selectedOrderId) || null, [orders, selectedOrderId]);
+
+  const triggerLiveNotification = useCallback((order) => {
+    // Bubble POP sound effect (Mixkit secure sound file)
+    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-84.wav');
+    audio.play().catch(() => {});
+    
+    const notifId = Date.now() + Math.random().toString().slice(-4);
+    const newNotif = {
+      id: notifId,
+      title: '🔔 มีออเดอร์สั่งซื้อเข้าใหม่!',
+      orderId: order.id,
+      customer: order.customer?.name || 'ลูกค้าทั่วไป',
+      total: order.totals?.total || 0,
+      timestamp: new Date().toLocaleTimeString('th-TH')
+    };
+    
+    setNotifications(prev => [newNotif, ...prev]);
+    
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== notifId));
+    }, 6000);
+  }, []);
 
   const loadOrders = useCallback(async () => {
     try {
       const rows = await listOrders();
-      setOrders(rows);
+      setOrders(prev => {
+        if (prev && prev.length > 0) {
+          const prevIds = new Set(prev.map(o => o.id));
+          const newOrders = rows.filter(o => !prevIds.has(o.id));
+          if (newOrders.length > 0) {
+            newOrders.forEach(order => {
+              triggerLiveNotification(order);
+            });
+          }
+        }
+        return rows;
+      });
       
       const reviewRows = await getAllReviews();
       setReviews(reviewRows);
+
+      // Fetch products to check for low stock
+      const prodRes = await fetch('http://localhost:3001/api/products');
+      if (prodRes.ok) {
+        const prodData = await prodRes.json();
+        setProducts(prodData.map(p => ({ ...p, price: Number(p.price) })));
+      }
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
     }
-  }, []);
+  }, [triggerLiveNotification]);
 
   useEffect(() => {
     const isAuthenticated = localStorage.getItem('admin_authenticated');
@@ -349,6 +395,37 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleSendEmailSimulate = async (orderId) => {
+    setEmailSendingState('sending');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setEmailSendingState('success');
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setEmailSendingState('none');
+  };
+
+  const handleExportSalesReportPDF = async () => {
+    setIsExportingPDF(true);
+    setTimeout(async () => {
+      try {
+        const html2pdf = (await import('html2pdf.js')).default;
+        const element = document.getElementById('sales-report-pdf-template');
+        const opt = {
+          margin: 10,
+          filename: `executive-sales-report-${new Date().toISOString().slice(0, 10)}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        await html2pdf().set(opt).from(element).save();
+      } catch (error) {
+        console.error('Failed to export PDF:', error);
+        alert('เกิดข้อผิดพลาดในการดาวน์โหลด PDF');
+      } finally {
+        setIsExportingPDF(false);
+      }
+    }, 150);
+  };
+
   return (
     <div className="container" style={{ paddingTop: 20, paddingBottom: 48 }}>
       <div style={{ maxWidth: 1320, margin: '0 auto' }}>
@@ -370,6 +447,20 @@ export default function AdminDashboard() {
           </div>
 
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button
+              onClick={handleExportSalesReportPDF}
+              disabled={isExportingPDF}
+              style={{
+                ...secondaryButtonStyle,
+                background: 'linear-gradient(135deg, #4f46e5 0%, #4338ca 100%)',
+                color: 'white',
+                border: 'none',
+                boxShadow: '0 4px 10px rgba(79, 70, 229, 0.2)'
+              }}
+            >
+              <FileText size={15} />
+              {isExportingPDF ? 'กำลังสร้างรายงาน PDF...' : '📊 ออกรายงานผู้บริหาร (PDF)'}
+            </button>
             <button onClick={handleClearAll} style={dangerButtonStyle}>
               <Trash2 size={15} />
               ลบคำสั่งซื้อทั้งหมด
@@ -381,13 +472,46 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12, marginBottom: 18 }}>
-          <StatCard icon={<ShoppingBag size={22} color="#4f46e5" />} label="คำสั่งซื้อทั้งหมด" value={String(stats.totalOrders)} />
-          <StatCard icon={<TrendingUp size={22} color="#16a34a" />} label="รายได้รวม" value={formatPrice(stats.totalRevenue)} />
-          <StatCard icon={<BadgeCheck size={22} color="#0f766e" />} label="สำเร็จแล้ว" value={String(stats.completedOrders)} />
-          <StatCard icon={<CircleDot size={22} color="#ea580c" />} label="ระหว่างดำเนินการ" value={String(stats.pendingOrders)} />
-          <StatCard icon={<CreditCard size={22} color="#2563eb" />} label="ค่าเฉลี่ยต่อออเดอร์" value={formatPrice(stats.averageOrderValue)} />
         </div>
+
+        {/* LOW STOCK ALERT WIDGET */}
+        {(() => {
+          const lowStockProducts = products.filter(p => p.stock_quantity < 10);
+          if (lowStockProducts.length === 0) return null;
+          return (
+            <div style={{
+              background: '#fffbeb',
+              border: '1px solid #fde68a',
+              borderRadius: 12,
+              padding: 16,
+              marginBottom: 18,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+              boxShadow: 'var(--shadow-sm)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#b45309', fontWeight: 700, fontSize: 15 }}>
+                <span>🚨 ตรวจพบสินค้าใกล้หมดคลัง ({lowStockProducts.length} รายการ)</span>
+                <span style={{ fontSize: 11, background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: 999, marginLeft: 'auto', fontWeight: 600 }}>
+                  สต็อกต่ำกว่า 10 ชิ้น
+                </span>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
+                {lowStockProducts.map(p => (
+                  <div key={p.id} style={{ display: 'flex', justifyContent: 'space-between', background: 'white', padding: '8px 12px', borderRadius: 8, border: '1px solid #fef08a', fontSize: 13, alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <img src={p.image} style={{ width: 28, height: 28, borderRadius: 4, objectFit: 'cover', border: '1px solid #f1f5f9' }} alt="" />
+                      <span style={{ fontWeight: 600 }}>{p.name}</span>
+                    </div>
+                    <span style={{ color: p.stock_quantity === 0 ? '#dc2626' : '#d97706', fontWeight: 700 }}>
+                      {p.stock_quantity === 0 ? 'หมดสต็อก ❌' : `เหลือเพียง ${p.stock_quantity} ชิ้น`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14, marginBottom: 18 }}>
           <section style={sectionStyle}>
@@ -764,10 +888,244 @@ export default function AdminDashboard() {
                 rows={3}
                 style={{ ...fieldStyle, width: '100%', resize: 'vertical', padding: 10, height: 'auto' }}
               />
+
+              <button
+                type="button"
+                onClick={() => handleSendEmailSimulate(selectedOrder.id)}
+                style={{
+                  width: '100%',
+                  marginTop: 12,
+                  height: 38,
+                  borderRadius: 10,
+                  border: '1px solid #cbd5e1',
+                  background: '#f8fafc',
+                  color: '#334155',
+                  fontWeight: 600,
+                  fontSize: 13,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 8,
+                  transition: 'all 0.2s'
+                }}
+              >
+                <FileText size={15} />
+                ✉️ จำลองส่งใบเสร็จเข้าอีเมลลูกค้า
+              </button>
             </div>
           </div>
         </div>
       )}
+
+      {/* EMAIL SIMULATION FULL SCREEN OVERLAY */}
+      {emailSendingState !== 'none' && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(15, 23, 42, 0.85)',
+          backdropFilter: 'blur(6px)',
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          fontFamily: 'var(--font-main)',
+          textAlign: 'center',
+          animation: 'fadeIn 0.2s ease-out'
+        }}>
+          {emailSendingState === 'sending' && (
+            <div>
+              <div className="payment-spinner" style={{
+                width: 54,
+                height: 54,
+                border: '4px solid rgba(255, 255, 255, 0.1)',
+                borderTop: '4px solid #4f46e5',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite',
+                margin: '0 auto 20px auto'
+              }}></div>
+              <h3 style={{ fontSize: 18, fontWeight: 700 }}>✉️ กำลังจัดเตรียมและจัดส่งใบเสร็จเข้าอีเมล...</h3>
+              <p style={{ color: '#94a3b8', fontSize: 13, marginTop: 6 }}>
+                ระบบกำลังเรนเดอร์บิล PDF ความละเอียดสูงและส่งหาคุณ {selectedOrder?.customer?.name || 'ลูกค้า'}
+              </p>
+            </div>
+          )}
+          {emailSendingState === 'success' && (
+            <div style={{ animation: 'bounceIn 0.5s ease-out' }}>
+              <div style={{
+                width: 64,
+                height: 64,
+                borderRadius: '50%',
+                background: '#10b981',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 20px auto',
+                boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)'
+              }}>
+                <BadgeCheck size={36} color="white" />
+              </div>
+              <h3 style={{ fontSize: 20, fontWeight: 800, color: '#10b981' }}>✓ จัดส่งอีเมลใบเสร็จสำเร็จ!</h3>
+              <p style={{ color: '#e2e8f0', fontSize: 13, marginTop: 4 }}>
+                ใบเสร็จรับเงินถูกส่งไปยัง {selectedOrder?.customer?.email || 'อีเมลลูกค้า'} เรียบร้อยแล้ว
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* REAL-TIME NEW ORDER NOTIFICATION TOASTS */}
+      <div style={{
+        position: 'fixed',
+        top: 24,
+        right: 24,
+        zIndex: 9999,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 12,
+        maxWidth: 380,
+        width: '100%'
+      }}>
+        {notifications.map(n => (
+          <div key={n.id} style={{
+            background: 'rgba(15, 23, 42, 0.95)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderLeft: '5px solid #10b981',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.3)',
+            borderRadius: 12,
+            padding: '16px 20px',
+            color: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 6,
+            animation: 'slideInRight 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+            fontFamily: 'var(--font-main)'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <strong style={{ color: '#10b981', fontSize: 14, fontWeight: 700 }}>{n.title}</strong>
+              <span style={{ fontSize: 10, color: '#94a3b8' }}>{n.timestamp}</span>
+            </div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#f8fafc', fontFamily: 'monospace' }}>
+              ID: {n.orderId}
+            </div>
+            <div style={{ fontSize: 12, color: '#cbd5e1' }}>
+              คุณ {n.customer} ชำระยอดรวม <strong>{formatPrice(n.total)}</strong>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* SALES PDF EXPORT TEMPLATE */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }}>
+        <div id="sales-report-pdf-template" style={{ width: '210mm', padding: '24px', background: 'white', color: '#0f172a', fontFamily: 'sans-serif' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #4f46e5', paddingBottom: 16, marginBottom: 20 }}>
+            <div>
+              <h1 style={{ margin: 0, color: '#4f46e5', fontSize: 24, fontWeight: 800 }}>PHARM ROAD</h1>
+              <p style={{ margin: 4, color: '#64748b', fontSize: 12 }}>รายงานสรุปผลการดำเนินงานและยอดขายผู้บริหาร</p>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 12, fontWeight: 600 }}>วันที่ออกเอกสาร: {new Date().toLocaleDateString('th-TH')}</div>
+              <div style={{ fontSize: 10, color: '#64748b' }}>รหัสรายงาน: SR-{Date.now().toString().slice(-6)}</div>
+            </div>
+          </div>
+
+          <h3 style={{ fontSize: 16, color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: 8, marginBottom: 12 }}>
+            📈 ข้อมูลภาพรวมหลัก (Key Performance Indicators)
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 10, marginBottom: 24 }}>
+            <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 12, textAlign: 'center' }}>
+              <div style={{ fontSize: 11, color: '#64748b', marginBottom: 4 }}>คำสั่งซื้อทั้งหมด</div>
+              <div style={{ fontSize: 18, fontWeight: 700 }}>{stats.totalOrders} ออเดอร์</div>
+            </div>
+            <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 12, textAlign: 'center' }}>
+              <div style={{ fontSize: 11, color: '#64748b', marginBottom: 4 }}>ยอดขายสะสมรวม</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#16a34a' }}>{formatPrice(stats.totalRevenue)}</div>
+            </div>
+            <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 12, textAlign: 'center' }}>
+              <div style={{ fontSize: 11, color: '#64748b', marginBottom: 4 }}>เฉลี่ยต่อคำสั่งซื้อ</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#4f46e5' }}>{formatPrice(stats.averageOrderValue)}</div>
+            </div>
+            <div style={{ border: '1px solid #e2e8f0', borderRadius: 8, padding: 12, textAlign: 'center' }}>
+              <div style={{ fontSize: 11, color: '#64748b', marginBottom: 4 }}>อัตราออเดอร์สำเร็จ</div>
+              <div style={{ fontSize: 18, fontWeight: 700, color: '#0f766e' }}>{stats.completedOrders} รายการ</div>
+            </div>
+          </div>
+
+          <h3 style={{ fontSize: 16, color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: 8, marginBottom: 12 }}>
+            🏆 รายการสินค้าขายดี 5 อันดับแรก (Top Performing Products)
+          </h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 24, fontSize: 12 }}>
+            <thead>
+              <tr style={{ background: '#f8fafc', borderBottom: '1px solid #cbd5e1' }}>
+                <th style={{ padding: '8px 12px', textAlign: 'left' }}>อันดับ</th>
+                <th style={{ padding: '8px 12px', textAlign: 'left' }}>ชื่อสินค้า</th>
+                <th style={{ padding: '8px 12px', textAlign: 'right' }}>จำนวนที่ขายได้</th>
+                <th style={{ padding: '8px 12px', textAlign: 'right' }}>รายได้รวมสะสม</th>
+              </tr>
+            </thead>
+            <tbody>
+              {topProductsData.slice(0, 5).map((p, idx) => (
+                <tr key={p.key} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                  <td style={{ padding: '8px 12px' }}>{idx + 1}</td>
+                  <td style={{ padding: '8px 12px', fontWeight: 600 }}>{p.name}</td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right' }}>{p.quantity} ชิ้น</td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right', color: '#16a34a', fontWeight: 700 }}>{formatPrice(p.revenue)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <h3 style={{ fontSize: 16, color: '#1e293b', borderBottom: '1px solid #e2e8f0', paddingBottom: 8, marginBottom: 12 }}>
+            🧾 รายการคำสั่งซื้อล่าสุด (Recent Transactions Summary)
+          </h3>
+          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 30, fontSize: 11 }}>
+            <thead>
+              <tr style={{ background: '#f8fafc', borderBottom: '1px solid #cbd5e1' }}>
+                <th style={{ padding: '8px', textAlign: 'left' }}>รหัสออเดอร์</th>
+                <th style={{ padding: '8px', textAlign: 'left' }}>ลูกค้า</th>
+                <th style={{ padding: '8px', textAlign: 'left' }}>วิธีชำระ</th>
+                <th style={{ padding: '8px', textAlign: 'left' }}>สถานะ</th>
+                <th style={{ padding: '8px', textAlign: 'right' }}>ยอดชำระสุทธิ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.slice(0, 8).map(o => (
+                <tr key={o.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                  <td style={{ padding: '8px', fontWeight: 600 }}>{o.id}</td>
+                  <td style={{ padding: '8px' }}>{o.customer?.name || 'ลูกค้าทั่วไป'}</td>
+                  <td style={{ padding: '8px' }}>{o.payment?.method || o.paymentMethod || 'COD'}</td>
+                  <td style={{ padding: '8px' }}>{o.status}</td>
+                  <td style={{ padding: '8px', textAlign: 'right', fontWeight: 700, color: '#4f46e5' }}>{formatPrice(o.totals?.total || 0)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px dashed #cbd5e1', paddingTop: 20, fontSize: 12, marginTop: 40 }}>
+            <div>
+              <p style={{ margin: 0, fontWeight: 700 }}>Pharm Road Analytics Suite</p>
+              <p style={{ margin: 2, color: '#64748b' }}>รายงานนี้สร้างขึ้นจากคลังข้อมูลจำลอง Neon PostgreSQL</p>
+            </div>
+            <div style={{ textAlign: 'center', width: 160 }}>
+              <div style={{ height: 40, borderBottom: '1px solid #94a3b8', marginBottom: 4 }}></div>
+              <p style={{ margin: 0, fontWeight: 600 }}>ลายเซ็นผู้บริหารอนุมัติ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes slideInRight {
+          from { transform: translateX(120%); opacity: 0; }
+          to { transform: translateX(0); opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }

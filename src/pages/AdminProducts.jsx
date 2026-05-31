@@ -130,6 +130,30 @@ export default function AdminProducts() {
         }
     };
 
+    const handleQuickStockAdjust = async (targetId, delta) => {
+        const prod = products.find(p => p.id === targetId);
+        if (!prod) return;
+
+        const nextStock = Math.max(0, prod.stock_quantity + delta);
+        if (nextStock === prod.stock_quantity) return;
+
+        try {
+            await updateProduct(targetId, {
+                name: prod.name,
+                category: prod.category,
+                price: Number(prod.price),
+                stock_quantity: nextStock,
+                image: prod.image,
+                description: prod.description,
+                is_active: prod.is_active !== false
+            });
+            setProducts(prev => prev.map(p => p.id === targetId ? { ...p, stock_quantity: nextStock } : p));
+        } catch (error) {
+            console.error('Failed to quick adjust stock:', error);
+            alert('ปรับคลังสินค้าไม่สำเร็จ');
+        }
+    };
+
     return (
         <div style={{ background: '#f8fafc', minHeight: '100vh', padding: '24px' }}>
             {/* Top Navigation Bar */}
@@ -215,9 +239,25 @@ export default function AdminProducts() {
                                             <td style={{ padding: '12px 16px', fontSize: 14 }}>{product.category}</td>
                                             <td style={{ padding: '12px 16px', fontSize: 14, textAlign: 'right', fontWeight: 600, color: 'var(--primary)' }}>{formatPrice(product.price)}</td>
                                             <td style={{ padding: '12px 16px', textAlign: 'center' }}>
-                                                <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 12, fontSize: 12, fontWeight: 600, background: product.stock_quantity > 10 ? '#dcfce7' : product.stock_quantity > 0 ? '#fef08a' : '#fee2e2', color: product.stock_quantity > 10 ? '#16a34a' : product.stock_quantity > 0 ? '#ca8a04' : '#dc2626' }}>
-                                                    {product.stock_quantity} ชิ้น
-                                                </span>
+                                                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                                                     <button 
+                                                         onClick={() => handleQuickStockAdjust(product.id, -1)}
+                                                         style={{ width: 24, height: 24, border: '1px solid #cbd5e1', background: 'white', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontWeight: 'bold', color: '#64748b', outline: 'none' }}
+                                                         title="ลดสต็อก 1 ชิ้น"
+                                                     >
+                                                         -
+                                                     </button>
+                                                     <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 12, fontSize: 12, fontWeight: 600, minWidth: 60, background: product.stock_quantity > 10 ? '#dcfce7' : product.stock_quantity > 0 ? '#fef08a' : '#fee2e2', color: product.stock_quantity > 10 ? '#16a34a' : product.stock_quantity > 0 ? '#ca8a04' : '#dc2626' }}>
+                                                         {product.stock_quantity} ชิ้น
+                                                     </span>
+                                                     <button 
+                                                         onClick={() => handleQuickStockAdjust(product.id, 1)}
+                                                         style={{ width: 24, height: 24, border: '1px solid #cbd5e1', background: 'white', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontWeight: 'bold', color: '#64748b', outline: 'none' }}
+                                                         title="เพิ่มสต็อก 1 ชิ้น"
+                                                     >
+                                                         +
+                                                     </button>
+                                                 </div>
                                             </td>
                                             <td style={{ padding: '12px 16px', textAlign: 'center' }}>
                                                 <span style={{ fontSize: 12, fontWeight: 600, color: product.is_active ? '#16a34a' : '#64748b' }}>
