@@ -62,6 +62,7 @@ export default function AdminProducts() {
     const [editingProduct, setEditingProduct] = useState(null);
     const [formData, setFormData] = useState({ name: '', category: '', price: 0, stock_quantity: 0, image: '', description: '', is_active: true, ingredients: '', origin: '', mfg_date: '', exp_date: '' });
     const [isSaving, setIsSaving] = useState(false);
+    const [isRefillModalOpen, setIsRefillModalOpen] = useState(false);
 
     const openDrawer = (product = null) => {
         if (product) {
@@ -158,14 +159,12 @@ export default function AdminProducts() {
         }
     };
 
-    const handleBulkRefillStock = async () => {
-        if (!window.confirm('⚡ คุณแน่ใจหรือไม่ว่าต้องการเติมสต็อกสินค้าทุกรายการเป็น 1,000 ชิ้น?')) return;
-        
+    const executeBulkRefill = async () => {
         setIsLoading(true);
         try {
             await refillAllStock(1000);
             setProducts(prev => prev.map(p => ({ ...p, stock_quantity: 1000 })));
-            alert('⚡ เติมสต็อกสินค้าทุกรายการเป็น 1,000 ชิ้นสำเร็จเรียบร้อยแล้ว!');
+            alert('เติมสต็อกสินค้าทุกรายการเป็น 1,000 ชิ้นสำเร็จเรียบร้อยแล้ว!');
         } catch (error) {
             console.error('Failed to bulk refill stock:', error);
             alert(`เกิดข้อผิดพลาดในการเติมสต็อก: ${error.message || error}`);
@@ -199,7 +198,7 @@ export default function AdminProducts() {
                     </div>
                     <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                         <button 
-                            onClick={handleBulkRefillStock} 
+                            onClick={() => setIsRefillModalOpen(true)} 
                             disabled={isLoading}
                             className="btn" 
                             style={{ 
@@ -209,8 +208,8 @@ export default function AdminProducts() {
                                 background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', 
                                 color: 'white',
                                 border: 'none',
-                                padding: '10px 16px',
-                                borderRadius: 8,
+                                padding: '10px 20px',
+                                borderRadius: '24px',
                                 fontWeight: 600,
                                 fontSize: 14,
                                 cursor: 'pointer',
@@ -218,7 +217,7 @@ export default function AdminProducts() {
                                 transition: 'all 0.2s ease-in-out'
                             }}
                         >
-                            ⚡ เติมสต็อกทุกสินค้า (1,000 ชิ้น)
+                            <Package size={18} /> เติมสต็อกทุกสินค้า (1,000 ชิ้น)
                         </button>
                         <button onClick={() => openDrawer()} className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                             <Plus size={18} /> เพิ่มสินค้าใหม่
@@ -419,6 +418,93 @@ export default function AdminProducts() {
                             </button>
                         </div>
 
+                    </div>
+                </div>
+            )}
+
+            {/* Custom Premium Refill Confirmation Modal */}
+            {isRefillModalOpen && (
+                <div style={{
+                    position: 'fixed',
+                    inset: 0,
+                    background: 'rgba(15, 23, 42, 0.45)',
+                    backdropFilter: 'blur(4px)',
+                    zIndex: 2000,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 16
+                }} onClick={() => setIsRefillModalOpen(false)}>
+                    <div style={{
+                        background: 'white',
+                        borderRadius: 20,
+                        padding: '32px 24px',
+                        maxWidth: 400,
+                        width: '100%',
+                        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        textAlign: 'center'
+                    }} onClick={e => e.stopPropagation()}>
+                        <div style={{
+                            background: '#ecfdf5',
+                            color: '#10b981',
+                            width: 56,
+                            height: 56,
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            margin: '0 auto 20px auto'
+                        }}>
+                            <Package size={28} />
+                        </div>
+                        
+                        <h3 style={{ margin: '0 0 8px 0', fontSize: 18, fontWeight: 700, color: '#0f172a' }}>
+                            ยืนยันการเติมสต็อกสินค้า
+                        </h3>
+                        <p style={{ margin: '0 0 24px 0', fontSize: 14, color: '#64748b', lineHeight: 1.5 }}>
+                            คุณต้องการรีเซ็ตและเติมสต็อกของสินค้าทุกรายการในคลังให้เป็น <b>1,000 ชิ้น</b> ใช่หรือไม่?
+                        </p>
+                        
+                        <div style={{ display: 'flex', gap: 12 }}>
+                            <button 
+                                onClick={() => setIsRefillModalOpen(false)} 
+                                style={{
+                                    flex: 1,
+                                    padding: '12px 16px',
+                                    borderRadius: 12,
+                                    border: '1px solid #cbd5e1',
+                                    background: 'white',
+                                    color: '#64748b',
+                                    fontWeight: 600,
+                                    fontSize: 14,
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                ยกเลิก
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    setIsRefillModalOpen(false);
+                                    executeBulkRefill();
+                                }} 
+                                style={{
+                                    flex: 1,
+                                    padding: '12px 16px',
+                                    borderRadius: 12,
+                                    border: 'none',
+                                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                                    color: 'white',
+                                    fontWeight: 600,
+                                    fontSize: 14,
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.2)',
+                                    transition: 'all 0.2s'
+                                }}
+                            >
+                                ยืนยันการเติม
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
