@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "vite build && node server.js",
+    "serve": "node server.js",
     "dev": "vite",
     "build": "vite build",
+    "seed": "node scripts/seed_milk_road.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

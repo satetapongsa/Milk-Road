@@ -755,20 +755,29 @@ app.post('/webhook/payment-confirm', (req, res) => {
   });
 });
 
-// Health check
-app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    timestamp: new Date().toISOString(),
-    database: pool ? 'Neon PostgreSQL' : 'Local File JSON'
+// Serve public assets & static dist files for unified single-server mode
+const publicDir = path.join(__dirname, 'public');
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+}
+
+const distDir = path.join(__dirname, 'dist');
+if (fs.existsSync(distDir)) {
+  app.use(express.static(distDir));
+  app.use((req, res, next) => {
+    if (req.method === 'GET' && !req.path.startsWith('/api') && !req.path.startsWith('/webhook') && !req.path.startsWith('/health')) {
+      return res.sendFile(path.join(distDir, 'index.html'));
+    }
+    next();
   });
-});
+}
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`\n🚀 Payment API & Database Server running on http://localhost:${PORT}`);
-  console.log(`📝 Local backup orders saved in: ${ordersFile}\n`);
+  console.log(`\n🚀 Milk Road Unified App & Server running on http://localhost:${PORT}`);
+  console.log(`📝 Database connected: ${pool ? 'Neon PostgreSQL' : 'Local File JSON'}\n`);
   console.log('Available endpoints:');
+  console.log(`  🌐 Website UI         - http://localhost:${PORT}`);
   console.log(`  GET    /api/products         - List active products`);
   console.log(`  POST   /api/products         - Add a new product (Admin)`);
   console.log(`  PUT    /api/products/:id     - Edit a product (Admin)`);
