@@ -18,7 +18,7 @@ export const products = [
         "name": "Milk Road Pure Fresh Milk (นมสดพาสเจอร์ไรส์รสออริจินัล)",
         "price": 55,
         "category": "Milk & Dairy",
-        "image": "/images/products/product_1.svg",
+        "image": "/images/products/product_1.png",
         "description": "นมสดพาสเจอร์ไรส์เข้มข้น 100% จากฟาร์มโคนมธรรมชาติ ไม่ผสมนมผง หอมมัน อุดมด้วยแคลเซียมและโปรตีนสูง",
         "specs": [
             "ขวดแก้ว 450 ml",
@@ -36,7 +36,7 @@ export const products = [
         "name": "Hokkaido Strawberry Milk (นมสดสตรอเบอร์รี่ฮอกไกโด)",
         "price": 65,
         "category": "Milk & Dairy",
-        "image": "/images/products/product_2.svg",
+        "image": "/images/products/product_2.png",
         "description": "นมสดฮอกไกโดเข้มข้นผสมซอสสตรอเบอร์รี่สดลูกโต รสชาติหวานอมเปรี้ยวกลมกล่อม หอมกลิ่นสตรอเบอร์รี่แท้",
         "specs": [
             "ขวด 450 ml",
@@ -54,7 +54,7 @@ export const products = [
         "name": "Belgian Chocolate Fresh Milk (นมสดช็อกโกแลตเข้มข้นเบลเยียม)",
         "price": 70,
         "category": "Milk & Dairy",
-        "image": "/images/products/product_3.svg",
+        "image": "/images/products/product_3.png",
         "description": "นมสดแท้ผสมผสานกับโกโก้เข้มข้นส่งตรงจากเบลเยียม ให้ความหอมนุ่ม กลมกล่อมสำหรับสาวกช็อกโกแลต",
         "specs": [
             "ขวด 450 ml",
@@ -72,7 +72,7 @@ export const products = [
         "name": "Uji Matcha Fresh Milk (นมสดมัจฉะเข้มข้นอุจิ)",
         "price": 75,
         "category": "Milk & Dairy",
-        "image": "/images/products/product_4.svg",
+        "image": "/images/products/product_4.png",
         "description": "ชาเขียวมัจฉะเกรดพรีเมียมจากเมืองอุจิ ประเทศญี่ปุ่น ผสมผสานกับนมสดพาสเจอร์ไรส์ หอมละมุน หวานน้อย",
         "specs": [
             "ขวด 450 ml",
@@ -90,7 +90,7 @@ export const products = [
         "name": "Caramel Butter Fresh Milk (นมสดคาราเมลเนยสด)",
         "price": 65,
         "category": "Milk & Dairy",
-        "image": "/images/products/product_5.svg",
+        "image": "/images/products/product_5.png",
         "description": "นมสดแท้เคี่ยวพร้อมซอสคาราเมลโฮมเมดและเนยสดแท้ ให้ความหอมหวานกลมกล่อมและกลิ่นหอมเนยเตะจมูก",
         "specs": [
             "ขวด 450 ml",
@@ -108,7 +108,7 @@ export const products = [
         "name": "Sweet Condensed Milk Butter Toast (ปังปิ้งเนยนมสดราดนมข้น)",
         "price": 49,
         "category": "Bakery & Toast",
-        "image": "/images/products/product_6.svg",
+        "image": "/images/products/product_6.png",
         "description": "ขนมปังชิ้นหนานุ่ม ทาเนยสดแท้ปิ้งจนกรอบนอกนุ่มใน ราดด้วยนมข้นหวานสูตรพิเศษของมิลค์โรด",
         "specs": [
             "1 จาน (2 ชิ้นใหญ่)",
@@ -126,7 +126,7 @@ export const products = [
         "name": "Double Cheese Butter Toast (ปังปิ้งดับเบิ้ลชีสเนยสด)",
         "price": 69,
         "category": "Bakery & Toast",
-        "image": "/images/products/product_7.svg",
+        "image": "/images/products/product_7.png",
         "description": "ขนมปังเนยสดท็อปด้วยมอสซาเรลล่าชีสและเชดดาร์ชีส ปิ้งจนชีสเยิ้ม ยืด หอมมันเค็มกำลังดี",
         "specs": [
             "1 จาน",
@@ -144,7 +144,7 @@ export const products = [
         "name": "Nutella Banana Toast (ปังปิ้งนูเทลล่ากล้วยหอมเนยสด)",
         "price": 79,
         "category": "Bakery & Toast",
-        "image": "/images/products/product_8.svg",
+        "image": "/images/products/product_8.png",
         "description": "ขนมปังปิ้งเนยสดทาดิปนูเทลล่าเข้มข้น วางเรียงกล้วยหอมสุกหวานหอม อร่อยลงตัวสุดๆ",
         "specs": [
             "1 จาน",
@@ -162,7 +162,7 @@ export const products = [
         "name": "Garlic Cream Cheese Bread (ขนมปังกระเทียมครีมชีสสไตล์เกาหลี)",
         "price": 89,
         "category": "Bakery & Toast",
-        "image": "/images/products/product_9.svg",
+        "image": "/images/products/product_9.png",
         "description": "ขนมปังเนื้อนุ่มสอดไส้ครีมชีสเนื้อเนียน ชุบเนยกระเทียมและพาร์สลีย์ อบจนหอมฟุ้งทั่วร้าน",
         "specs": [
             "1 ก้อนใหญ่",
@@ -180,7 +180,7 @@ export const products = [
         "name": "Fresh Milk Custard Bun (ซาลาเปาไส้ครีมนมสดลาวา)",
         "price": 45,
         "category": "Bakery & Toast",
-        "image": "/images/products/product_10.svg",
+        "image": "/images/products/product_10.png",
         "description": "ปังนึ่งไส้ครีมนมสดลาวาไหลเยิ้ม นุ่มฟู หอมหวานละมุนลิ้น ไส้ทะลักทุกคำ",
         "specs": [
             "แพ็ค 2 ชิ้น",
@@ -198,7 +198,7 @@ export const products = [
         "name": "Fresh Milk Ice Cream Soft Serve (ไอศกรีมนมสดซอฟต์เสิร์ฟ)",
         "price": 40,
         "category": "Ice Cream & Desserts",
-        "image": "/images/products/product_11.svg",
+        "image": "/images/products/product_11.png",
         "description": "ไอศกรีมซอฟต์เสิร์ฟทำจากนมสดแท้ 100% นุ่มเนียน ละลายในปาก ไม่หวานเกินไป",
         "specs": [
             "1 โคน / ถ้วย",
@@ -216,7 +216,7 @@ export const products = [
         "name": "Milk Road Signature Bingsoo (บิงซูนมสดถั่วแดงเกาหลี)",
         "price": 159,
         "category": "Ice Cream & Desserts",
-        "image": "/images/products/product_12.svg",
+        "image": "/images/products/product_12.png",
         "description": "น้ำแข็งไสนมสดเนื้อปุยหิมะ ราดด้วยซอสนมข้น ท็อปด้วยถั่วแดงกวนเกาหลีและอัลมอนด์สไลด์",
         "specs": [
             "1 ถ้วยใหญ่ (2-3 ท่าน)",
@@ -234,7 +234,7 @@ export const products = [
         "name": "Mango Fresh Milk Bingsoo (บิงซูนมสดมะม่วงน้ำดอกไม้)",
         "price": 179,
         "category": "Ice Cream & Desserts",
-        "image": "/images/products/product_13.svg",
+        "image": "/images/products/product_13.png",
         "description": "บิงซูนมสดเกล็ดหิมะบางเบา ท็อปด้วยมะม่วงน้ำดอกไม้สุกหวานฉ่ำเต็มคำ และซอสมะม่วงเข้มข้น",
         "specs": [
             "1 ถ้วยใหญ่",
@@ -252,7 +252,7 @@ export const products = [
         "name": "Fresh Milk Pudding with Caramel (พุดดิ้งนมสดคาราเมลลาวา)",
         "price": 55,
         "category": "Ice Cream & Desserts",
-        "image": "/images/products/product_14.svg",
+        "image": "/images/products/product_14.png",
         "description": "พุดดิ้งนมสดเนื้อเด้งดึ๋ง ละมุนลิ้น เสิร์ฟพร้อมซอสคาราเมลหอมหวานเข้มข้น",
         "specs": [
             "1 ถ้วย 150g",
@@ -270,7 +270,7 @@ export const products = [
         "name": "Choco Brownie Sundae (ไอศกรีมนมสดช็อกบราวนี่ซันเดย์)",
         "price": 99,
         "category": "Ice Cream & Desserts",
-        "image": "/images/products/product_15.svg",
+        "image": "/images/products/product_15.png",
         "description": "ไอศกรีมนมสดท็อปด้วยบราวนี่ช็อกโกแลตเนื้อหนึบ ราดซอสช็อกโกแลตและอัลมอนด์อบกรอบ",
         "specs": [
             "1 ถ้วยซันเดย์",
@@ -288,7 +288,7 @@ export const products = [
         "name": "Iced Milk Pink Sweet Shake (นมสดชมพูเย็น / นมเย็นนมสด)",
         "price": 50,
         "category": "Fresh Drinks",
-        "image": "/images/products/product_16.svg",
+        "image": "/images/products/product_16.png",
         "description": "นมสดพาสเจอร์ไรส์ผสมเฮลบลูบอยสละ หวานหอม กลมกล่อม สดชื่นคลายร้อน",
         "specs": [
             "แก้ว 22 oz",
@@ -306,7 +306,7 @@ export const products = [
         "name": "Iced Ceylon Milk Tea (ชาเย็นนมสดพรีเมียม)",
         "price": 60,
         "category": "Fresh Drinks",
-        "image": "/images/products/product_17.svg",
+        "image": "/images/products/product_17.png",
         "description": "ชาซีลอนบ่มพิเศษชงเข้มข้น ผสมผสานกับนมสดพาสเจอร์ไรส์ หอมชาเข้มข้น นุ่มนมสดแท้",
         "specs": [
             "แก้ว 22 oz",
@@ -324,7 +324,7 @@ export const products = [
         "name": "Fresh Milk Coffee Latte (กาแฟนมสดลาเต้เย็น)",
         "price": 65,
         "category": "Fresh Drinks",
-        "image": "/images/products/product_18.svg",
+        "image": "/images/products/product_18.png",
         "description": "เอสเปรสโซ่ช็อตจากเมล็ดกาแฟอาราบิก้าคั่วกลาง ผสมกับนมสดแท้ นุ่มลึก ละมุนลิ้น",
         "specs": [
             "แก้ว 22 oz",
@@ -342,7 +342,7 @@ export const products = [
         "name": "Fresh Milk Cocoa Volcano (นมสดโกโก้ภูเขาไฟ)",
         "price": 75,
         "category": "Fresh Drinks",
-        "image": "/images/products/product_19.svg",
+        "image": "/images/products/product_19.png",
         "description": "นมสดเย็นเข้มข้น ท็อปด้วยผงโกโก้ภูเขาไฟและซอสช็อกโกแลตล้นแก้ว สดชื่นสะใจ",
         "specs": [
             "แก้ว 22 oz",
@@ -360,7 +360,7 @@ export const products = [
         "name": "Whipped Butter Croissant (ครัวซองต์เนยสดฝรั่งเศส)",
         "price": 65,
         "category": "Bakery & Toast",
-        "image": "/images/products/product_20.svg",
+        "image": "/images/products/product_20.png",
         "description": "ครัวซองต์อบสดใหม่ทุกเช้า ใช้เนยสดแท้จากฝรั่งเศส แป้งกรอบเป็นชั้น สอดไส้หอมเนยฟุ้ง",
         "specs": [
             "1 ชิ้น (80g)",
