@@ -39,7 +39,20 @@ if (pool) {
   console.warn('⚠️ Warning: DATABASE_URL is missing in .env. Falling back to local file database.');
 }
 
+const productsFile = path.join(__dirname, 'products.json');
+
 // Helper functions for file-based fallback
+function getLocalProducts() {
+  if (!fs.existsSync(productsFile)) {
+    fs.writeFileSync(productsFile, JSON.stringify(localProducts));
+  }
+  return JSON.parse(fs.readFileSync(productsFile, 'utf-8'));
+}
+
+function saveLocalProducts(products) {
+  fs.writeFileSync(productsFile, JSON.stringify(products, null, 2));
+}
+
 function getLocalOrders() {
   if (!fs.existsSync(ordersFile)) {
     fs.writeFileSync(ordersFile, JSON.stringify([]));
@@ -59,7 +72,7 @@ function saveLocalOrders(orders) {
 app.get('/api/products', async (req, res) => {
   try {
     if (!pool) {
-      return res.json(localProducts);
+      return res.json(getLocalProducts().filter(p => p.is_active !== false));
     }
     const { rows } = await pool.query(
       "SELECT * FROM products WHERE is_active = true ORDER BY id ASC"
@@ -71,13 +84,13 @@ app.get('/api/products', async (req, res) => {
     res.json(formatted);
   } catch (err) {
     console.error('Error fetching products:', err);
-    res.json(localProducts); // Fail-safe fallback to static array
+    res.json(getLocalProducts().filter(p => p.is_active !== false));
   }
 });
 
 app.get('/api/admin/products', async (req, res) => {
   try {
-    if (!pool) return res.json(localProducts);
+    if (!pool) return res.json(getLocalProducts());
     const { rows } = await pool.query("SELECT * FROM products ORDER BY id DESC");
     const formatted = rows.map(p => ({ ...p, price: Number(p.price) }));
     res.json(formatted);
@@ -88,9 +101,14 @@ app.get('/api/admin/products', async (req, res) => {
 
 app.post('/api/admin/products/refill-stock', async (req, res) => {
   try {
-    if (!pool) return res.status(500).json({ error: 'Database not connected' });
     const { quantity } = req.body;
     const targetQty = quantity !== undefined ? Number(quantity) : 1000;
+    if (!pool) {
+      const local = getLocalProducts();
+      const updated = local.map(p => ({ ...p, stock_quantity: targetQty }));
+      saveLocalProducts(updated);
+      return res.json({ success: true, message: `Refilled all products to ${targetQty} units` });
+    }
     await pool.query('UPDATE products SET stock_quantity = $1', [targetQty]);
     res.json({ success: true, message: `Refilled all products to ${targetQty} units` });
   } catch (err) {
@@ -100,8 +118,31 @@ app.post('/api/admin/products/refill-stock', async (req, res) => {
 
 app.post('/api/products', async (req, res) => {
   try {
-    if (!pool) return res.status(500).json({ error: 'Database not connected' });
     const { name, category, description, price, stock_quantity, image, specs, is_active, ingredients, origin, mfg_date, exp_date } = req.body;
+    
+    if (!pool) {
+      const local = getLocalProducts();
+      const newId = local.length > 0 ? Math.max(...local.map(p => Number(p.id) || 0)) + 1 : 1;
+      const newProduct = {
+        id: newId,
+        name,
+        category: category || 'General',
+        description: description || '',
+        price: Number(price) || 0,
+        stock_quantity: Number(stock_quantity) || 0,
+        image: image || '/images/placeholder.png',
+        specs: specs || [],
+        is_active: is_active !== false,
+        ingredients: ingredients || '',
+        origin: origin || '',
+        mfg_date: mfg_date || '',
+        exp_date: exp_date || ''
+      };
+      local.unshift(newProduct);
+      saveLocalProducts(local);
+      return res.json(newProduct);
+    }
+
     const { rows } = await pool.query(
       `INSERT INTO products (name, category, description, price, stock_quantity, image, specs, is_active, ingredients, origin, mfg_date, exp_date)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
@@ -128,9 +169,32 @@ app.post('/api/products', async (req, res) => {
 
 app.put('/api/products/:id', async (req, res) => {
   try {
-    if (!pool) return res.status(500).json({ error: 'Database not connected' });
     const { id } = req.params;
     const { name, category, description, price, stock_quantity, image, specs, is_active, ingredients, origin, mfg_date, exp_date } = req.body;
+
+    if (!pool) {
+      const local = getLocalProducts();
+      const index = local.findIndex(p => String(p.id) === String(id));
+      if (index === -1) return res.status(404).json({ error: 'Product not found' });
+      local[index] = {
+        ...local[index],
+        ...(name !== undefined && { name }),
+        ...(category !== undefined && { category }),
+        ...(description !== undefined && { description }),
+        ...(price !== undefined && { price: Number(price) }),
+        ...(stock_quantity !== undefined && { stock_quantity: Number(stock_quantity) }),
+        ...(image !== undefined && { image }),
+        ...(specs !== undefined && { specs }),
+        ...(is_active !== undefined && { is_active }),
+        ...(ingredients !== undefined && { ingredients }),
+        ...(origin !== undefined && { origin }),
+        ...(mfg_date !== undefined && { mfg_date }),
+        ...(exp_date !== undefined && { exp_date })
+      };
+      saveLocalProducts(local);
+      return res.json(local[index]);
+    }
+
     const { rows } = await pool.query(
       `UPDATE products 
        SET name = COALESCE($1, name),
@@ -171,8 +235,13 @@ app.put('/api/products/:id', async (req, res) => {
 
 app.delete('/api/products/:id', async (req, res) => {
   try {
-    if (!pool) return res.status(500).json({ error: 'Database not connected' });
     const { id } = req.params;
+    if (!pool) {
+      const local = getLocalProducts();
+      const filtered = local.filter(p => String(p.id) !== String(id));
+      saveLocalProducts(filtered);
+      return res.json({ success: true });
+    }
     await pool.query('DELETE FROM products WHERE id = $1', [id]);
     res.json({ success: true });
   } catch (err) {

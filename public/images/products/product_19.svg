@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad-19" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3f2305" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="600" height="600" fill="url(#grad-19)" />
+  <circle cx="300" cy="260" r="160" fill="#fed7aa" opacity="0.2" />
+  <circle cx="300" cy="260" r="130" fill="#fed7aa" opacity="0.3" filter="url(#shadow)" />
+  <text x="300" y="295" font-size="110" text-anchor="middle" dominant-baseline="middle">🌋</text>
+  <rect x="50" y="440" width="500" height="110" rx="20" fill="rgba(255, 255, 255, 0.95)" filter="url(#shadow)" />
+  <text x="300" y="485" font-family="'Inter', system-ui, sans-serif" font-size="28" font-weight="800" fill="#0f172a" text-anchor="middle">Cocoa Volcano</text>
+  <text x="300" y="520" font-family="'Inter', system-ui, sans-serif" font-size="18" font-weight="600" fill="#3f2305" text-anchor="middle">MILK ROAD • FRESH DRINKS</text>
+</svg>
