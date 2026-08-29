@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatPrice, CONFIG } from '../data/products';
-import { CheckCircle, Printer, ArrowLeft, Download, Truck, Star, Edit3, Palette, Lightbulb } from 'lucide-react';
+import { CheckCircle, Printer, ArrowLeft, Download, Truck, Star, Edit3, Palette, Lightbulb, BookOpen, ArrowRight } from 'lucide-react';
 import { getOrderById, listOrders } from '../lib/ordersApi';
 import { submitReview } from '../lib/reviewsApi';
 
@@ -128,10 +127,58 @@ export default function Receipt() {
             <div className="receipt-page-container">
                 
                 {/* Header Section */}
-                <div className="no-print" style={{ textAlign: 'center', marginBottom: 32 }}>
+                <div className="no-print" style={{ textAlign: 'center', marginBottom: 24 }}>
                     <CheckCircle size={56} color={currentTheme.primary} style={{ marginBottom: 12 }} />
                     <h1 style={{ fontSize: 28, marginBottom: 8 }}>ขอบคุณสำหรับการสั่งซื้อ!</h1>
-                    <p style={{ margin: 0 }}>เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว ระบบกำลังดำเนินการขั้นตอนถัดไป</p>
+                    <p style={{ margin: 0 }}>เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว ระบบออกใบเสร็จรับเงินให้เรียบร้อยแล้ว</p>
+                </div>
+
+                {/* --- PROMINENT DRM READER ACCESS BANNER --- */}
+                <div className="no-print" style={{
+                    background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                    borderRadius: 16,
+                    padding: '24px 32px',
+                    marginBottom: 32,
+                    boxShadow: '0 10px 25px rgba(5, 150, 105, 0.3)',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: 16
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                        <div style={{ background: 'rgba(255,255,255,0.2)', padding: 12, borderRadius: 12, display: 'flex' }}>
+                            <BookOpen size={32} />
+                        </div>
+                        <div>
+                            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>
+                                🎓 ชำระเงินสำเร็จแล้ว! สิทธิ์เข้าอ่านชีทสรุปในระบบพร้อมใช้งานแล้ว
+                            </h3>
+                            <p style={{ margin: '4px 0 0 0', fontSize: 14, opacity: 0.9 }}>
+                                คุณสามารถเปิดอ่านชีทสรุปในระบบ DRM Reader แบบเต็มจอ ตีมสว่าง อ่านได้ตลอดชีพทันที
+                            </p>
+                        </div>
+                    </div>
+                    <Link
+                        to={`/reader/${items && items[0] ? items[0].id : 1}`}
+                        style={{
+                            background: 'white',
+                            color: '#047857',
+                            padding: '14px 28px',
+                            borderRadius: 10,
+                            fontWeight: 800,
+                            fontSize: 15,
+                            textDecoration: 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                            flexShrink: 0
+                        }}
+                    >
+                        📖 เปิดอ่านชีทเรียนที่สั่งซื้อทันที <ArrowRight size={18} />
+                    </Link>
                 </div>
 
                 {/* --- CUSTOMIZER PANEL --- */}
