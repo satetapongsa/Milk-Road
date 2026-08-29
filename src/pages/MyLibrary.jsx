@@ -42,12 +42,12 @@ export default function MyLibrary() {
                 gap: 20
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                    <div style={{ background: 'rgba(255,255,255,0.15)', padding: '16px', borderRadius: '20px', display: 'flex' }}>
-                        <BookOpen size={40} color="#a5b4fc" />
+                    <div style={{ background: 'rgba(255,255,255,0.2)', padding: '16px', borderRadius: '20px', display: 'flex' }}>
+                        <BookOpen size={40} color="#ffffff" />
                     </div>
                     <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                            <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                            <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0, color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.2)' }}>
                                 📚 คลังไฟล์หนังสือส่วนตัว (My Digital Library)
                             </h1>
                             {isAdmin && (
@@ -56,7 +56,7 @@ export default function MyLibrary() {
                                 </span>
                             )}
                         </div>
-                        <p style={{ margin: 0, fontSize: 14, color: '#e0e7ff', opacity: 0.95 }}>
+                        <p style={{ margin: 0, fontSize: 14, color: '#ffffff', opacity: 1, fontWeight: 500, lineHeight: 1.5 }}>
                             รวบรวมไฟล์สรุปและคอร์สเรียนทั้งหมดที่คุณครอบครองสิทธิ์เข้าอ่านถาวร อ่านในระบบเว็บได้ตลอด 24 ชั่วโมง
                         </p>
                     </div>
