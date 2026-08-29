@@ -5,6 +5,7 @@ import { formatPrice, CONFIG } from '../data/products';
 import { CreditCard, Truck, Loader, QrCode, Smartphone, Lock, Lightbulb } from 'lucide-react';
 import PromptPayPayment from '../components/PromptPayPayment';
 import { createOrder } from '../lib/ordersApi';
+import { API_BASE } from '../config';
 
 export default function Checkout() {
     const { cart, subtotal, total, clearCart } = useCart();
@@ -124,6 +125,24 @@ export default function Checkout() {
             };
 
             const savedOrder = await createOrder(receipt);
+
+            if (paymentMethod === 'credit') {
+                try {
+                    await fetch(`${API_BASE}/payment/stripe`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            orderId: (savedOrder || receipt).id,
+                            amount: total,
+                            card_name: cardName || finalName,
+                            card_last4: cardNumber.slice(-4) || '4242'
+                        })
+                    });
+                } catch (stripeErr) {
+                    console.warn('Stripe API background sync notice:', stripeErr);
+                }
+            }
+
             localStorage.setItem('shopii_receipt', JSON.stringify(savedOrder || receipt));
             
             // Save order ID to local history

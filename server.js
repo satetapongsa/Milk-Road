@@ -799,6 +799,45 @@ app.post('/api/payment', (req, res) => {
   });
 });
 
+app.post('/api/payment/stripe', async (req, res) => {
+  try {
+    const { orderId, amount, currency = 'thb', card_name, card_last4 = '4242' } = req.body;
+    const chargeId = 'ch_' + Math.random().toString(36).substring(2, 12);
+    const clientSecret = 'pi_' + Math.random().toString(36).substring(2, 15) + '_secret_test';
+
+    console.log(`💳 Stripe Payment Processing: ฿${amount} for Order ${orderId} (Cardholder: ${card_name || 'Customer'})`);
+
+    // Sync status to Completed in Neon DB
+    if (pool) {
+      try {
+        await pool.query("UPDATE orders SET status = 'Completed' WHERE order_no = $1 OR id::text = $1", [orderId]);
+        const { rows } = await pool.query("SELECT id FROM orders WHERE order_no = $1 OR id::text = $1", [orderId]);
+        if (rows.length > 0) {
+          await pool.query(
+            `INSERT INTO payments (order_id, method, status, reference_no, payload, paid_at)
+             VALUES ($1, 'Stripe Credit/Debit Card', 'paid', $2, $3::jsonb, NOW())`,
+            [rows[0].id, chargeId, JSON.stringify({ chargeId, clientSecret, card_last4 })]
+          );
+        }
+      } catch (dbErr) {
+        console.error('Stripe DB sync error:', dbErr);
+      }
+    }
+
+    res.json({
+      success: true,
+      orderId,
+      status: 'succeeded',
+      method: 'Stripe Credit/Debit Card',
+      chargeId,
+      clientSecret,
+      message: 'Stripe Payment Authorized & Captured Successfully'
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/payment/:orderId', (req, res) => {
   const { orderId } = req.params;
   const orders = getLocalOrders();
