@@ -194,23 +194,27 @@ export default function Header({ onOpenCart }) {
                         </div>
                     ) : (
                         <button
-                            onClick={() => openAuthModal('กรุณาเข้าสู่ระบบหรือสมัครสมาชิกก่อนเข้าชม/สั่งซื้อไฟล์สรุป')}
+                            onClick={() => openAuthModal('เข้าสู่ระบบเพื่อเข้าชมคลังหนังสือส่วนตัว และสั่งซื้อคอร์สเรียน')}
                             style={{
-                                background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
+                                background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
                                 color: 'white',
                                 border: 'none',
-                                padding: '8px 16px',
-                                borderRadius: 20,
-                                fontSize: 12,
+                                padding: '9px 18px',
+                                borderRadius: '24px',
+                                fontSize: '13px',
                                 fontWeight: 700,
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 6,
-                                boxShadow: '0 2px 8px rgba(5, 150, 105, 0.25)'
+                                gap: 8,
+                                boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
+                                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                                letterSpacing: '0.2px'
                             }}
+                            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-1px)'}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
                         >
-                            <LogIn size={15} /> เข้าสู่ระบบ / สมัครสมาชิก
+                            <User size={16} /> เข้าสู่ระบบ / สมัครสมาชิก
                         </button>
                     )}
                 </div>
