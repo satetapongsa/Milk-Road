@@ -540,14 +540,20 @@ app.post('/api/orders', async (req, res) => {
     );
     const createdOrder = orderRows[0];
 
-    // 3. Payment row
+    // 3. Payment row (Strip massive base64 from DB payload to keep DB fast)
+    const paymentSanitized = { ...(order.payment || {}) };
+    if (paymentSanitized.slipImage && paymentSanitized.slipImage.length > 500) {
+      paymentSanitized.has_slip = true;
+      delete paymentSanitized.slipImage;
+    }
+
     const paymentPayload = {
       order_id: createdOrder.id,
       method: order.payment?.method || order.paymentMethod || '',
       status: order.status === 'Completed' ? 'paid' : 'pending',
       reference_no: order.payment?.referenceNo || null,
       paid_at: order.payment?.timestamp || new Date().toISOString(),
-      payload: order.payment || null
+      payload: paymentSanitized
     };
 
     await client.query(

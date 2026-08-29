@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { formatPrice, CONFIG } from '../data/products';
-import { CreditCard, Truck, Loader, QrCode, Smartphone, Lock, Lightbulb } from 'lucide-react';
+import { CreditCard, Truck, Loader, QrCode, Smartphone, Lock, Lightbulb, CheckCircle2 } from 'lucide-react';
 import PromptPayPayment from '../components/PromptPayPayment';
 import { createOrder } from '../lib/ordersApi';
 import { API_BASE } from '../config';
