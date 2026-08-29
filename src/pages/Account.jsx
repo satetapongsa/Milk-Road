@@ -4,13 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Account() {
-    const { currentUser, isLoggedIn, isAdmin, logout, openAuthModal } = useAuth();
+    const { currentUser, isLoggedIn, isAdmin, logout, updateProfile, openAuthModal } = useAuth();
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
 
     const [userInfo, setUserInfo] = useState({
-        phone: '081-501-8272',
-        address: '123 Cyber Tower, Digital District\nBangkok, 10110',
+        phone: currentUser?.phone || '081-501-8272',
+        address: currentUser?.address || '123 Cyber Tower, Digital District\nBangkok, 10110',
     });
 
     if (!isLoggedIn) {
@@ -63,10 +63,23 @@ export default function Account() {
     const handleSave = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        const newFullName = formData.get('full_name');
+        const newPhone = formData.get('phone');
+        const newAddress = formData.get('address');
+
         setUserInfo({
-            phone: formData.get('phone'),
-            address: formData.get('address')
+            phone: newPhone,
+            address: newAddress
         });
+
+        if (updateProfile) {
+            updateProfile({
+                full_name: newFullName,
+                phone: newPhone,
+                address: newAddress
+            });
+        }
+
         setIsEditing(false);
     };
 
@@ -117,7 +130,7 @@ export default function Account() {
                                 </span>
                             ) : (
                                 <span style={{ background: '#dcfce7', color: '#16a34a', fontSize: 12, padding: '4px 12px', borderRadius: 20, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                                    <CheckCircle2 size={14} /> สมาชิกยืนยันตัวตนแล้ว
+                                    <ShieldCheck size={14} /> สมาชิกยืนยันตัวตนแล้ว
                                 </span>
                             )}
                         </div>
@@ -161,7 +174,7 @@ export default function Account() {
                                 onClick={() => setIsEditing(true)}
                                 style={{ padding: '8px 18px', fontSize: 14, borderRadius: 12, fontWeight: 700 }}
                             >
-                                <Edit size={16} /> แก้ไขข้อมูล
+                                <Edit size={16} /> แก้ไขข้อมูลโปรไฟล์
                             </button>
                         )}
                     </div>
@@ -178,9 +191,19 @@ export default function Account() {
                                 <label style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, fontWeight: 700, color: '#334155' }}>
                                     <User size={16} /> ชื่อ-นามสกุล
                                 </label>
-                                <div style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', padding: '12px', background: '#f8fafc', borderRadius: 10, border: '1px solid #e2e8f0' }}>
-                                    {currentUser?.full_name}
-                                </div>
+                                {isEditing ? (
+                                    <input 
+                                        type="text" 
+                                        name="full_name" 
+                                        defaultValue={currentUser?.full_name || ''} 
+                                        placeholder="กรอกชื่อ-นามสกุลของคุณ" 
+                                        required 
+                                    />
+                                ) : (
+                                    <div style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', padding: '12px', background: '#f8fafc', borderRadius: 10, border: '1px solid #e2e8f0' }}>
+                                        {currentUser?.full_name || 'ไม่ได้ระบุชื่อ-นามสกุล'}
+                                    </div>
+                                )}
                             </div>
 
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>

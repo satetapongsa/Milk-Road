@@ -92,6 +92,18 @@ export function AuthProvider({ children }) {
         }
     }, [currentUser]);
 
+    const updateProfile = (updatedFields) => {
+        setCurrentUser(prev => {
+            const newUser = { ...prev, ...updatedFields };
+            try {
+                localStorage.setItem('studyroad_user', JSON.stringify(newUser));
+            } catch (e) {
+                console.error('Failed to update studyroad_user:', e);
+            }
+            return newUser;
+        });
+    };
+
     return (
         <AuthContext.Provider value={{
             currentUser,
@@ -100,6 +112,7 @@ export function AuthProvider({ children }) {
             login,
             register,
             logout,
+            updateProfile,
             isAuthModalOpen,
             authModalMessage,
             openAuthModal,
