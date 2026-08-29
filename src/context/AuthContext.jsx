@@ -78,7 +78,19 @@ export function AuthProvider({ children }) {
     };
 
     const isLoggedIn = !!currentUser;
-    const isAdmin = currentUser?.role === 'admin';
+    const isAdmin = currentUser?.role === 'admin' || currentUser?.email?.toLowerCase() === 'satetapongs@gmail.com';
+
+    useEffect(() => {
+        if (currentUser) {
+            try {
+                localStorage.setItem('studyroad_user', JSON.stringify(currentUser));
+            } catch (e) {
+                console.error('Failed to save studyroad_user:', e);
+            }
+        } else {
+            localStorage.removeItem('studyroad_user');
+        }
+    }, [currentUser]);
 
     return (
         <AuthContext.Provider value={{

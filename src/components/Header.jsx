@@ -160,7 +160,7 @@ export default function Header({ onOpenCart }) {
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#f8fafc', padding: '4px 12px', borderRadius: 20, border: '1px solid #e2e8f0' }}>
                             <span style={{ fontSize: 12, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 4 }}>
                                 {isAdmin && <ShieldCheck size={14} color="#4f46e5" />}
-                                {currentUser.full_name}
+                                {currentUser?.full_name || currentUser?.email || 'สมาชิก StudyRoad'}
                                 {isAdmin && <span style={{ background: '#eef2ff', color: '#4f46e5', fontSize: 10, padding: '1px 6px', borderRadius: 10 }}>Admin</span>}
                             </span>
 
