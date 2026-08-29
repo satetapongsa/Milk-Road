@@ -202,6 +202,8 @@ export default function Checkout() {
                                 margin: '0 auto 24px auto',
                                 boxShadow: '0 0 30px rgba(79, 70, 229, 0.4)'
                             }}>
+                                <CheckCircle2 size={48} color="#ffffff" />
+                            </div>
                             <h2 style={{ fontSize: 28, fontWeight: 800, color: '#6366f1', marginBottom: 12 }}>
                                 ชำระเงินสำเร็จเสร็จสิ้น!
                             </h2>
