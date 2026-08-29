@@ -319,9 +319,9 @@ export default function ProductDetail() {
                             </div>
                             <div>
                                 <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>
-                                    📖 ตัวอย่างหน้าปกและสารบัญชีทสรุป (Sample Teaser Preview)
-                                    <span style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: 'white', fontSize: 11, padding: '2px 10px', borderRadius: 12, fontWeight: 600 }}>
-                                        ดูฟรี 3 หน้าแรก
+                                    📖 ตัวอย่างหน้าปกและเนื้อหาทดลองอ่าน (Sample Teaser Preview)
+                                    <span style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: 'white', fontSize: 11, padding: '2px 10px', borderRadius: 12, fontWeight: 700 }}>
+                                        {product?.price === 0 ? '🎁 เล่มแรกทดลองอ่านฟรี 5 หน้าแรก' : 'ดูฟรี 3 หน้าแรก'}
                                     </span>
                                 </h3>
                                 <p style={{ margin: '4px 0 0 0', fontSize: 13, color: '#64748b' }}>
