@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, Download, Maximize2, Minimize2, ShoppingCart, Check, FileText, Sparkles, Layers } from 'lucide-react';
+import { BookOpen, Maximize2, Minimize2, ShoppingCart, Check, FileText, Sparkles, Layers } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 export default function PDFReaderViewer({ product, pdfUrl = "/downloads/biology_summary_m46.pdf" }) {
@@ -51,13 +51,13 @@ export default function PDFReaderViewer({ product, pdfUrl = "/downloads/biology_
                 gap: '12px'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <div style={{ background: '#059669', color: 'white', padding: '8px', borderRadius: '10px', display: 'flex' }}>
+                    <div style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: 'white', padding: '8px', borderRadius: '10px', display: 'flex' }}>
                         <BookOpen size={20} />
                     </div>
                     <div>
                         <div style={{ color: '#f8fafc', fontWeight: 700, fontSize: '15px', display: 'flex', alignItems: 'center', gap: 6 }}>
                             📖 ระบบอ่านไฟล์สรุปในเว็บไซต์ (Interactive Web PDF Reader)
-                            <span style={{ background: '#059669', color: 'white', fontSize: 10, padding: '2px 8px', borderRadius: 12 }}>
+                            <span style={{ background: '#4f46e5', color: 'white', fontSize: 10, padding: '2px 8px', borderRadius: 12 }}>
                                 Live Preview
                             </span>
                         </div>
@@ -90,7 +90,7 @@ export default function PDFReaderViewer({ product, pdfUrl = "/downloads/biology_
                     <a 
                         href={`/reader/${product?.id || 1}`}
                         style={{
-                            background: '#047857',
+                            background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
                             color: 'white',
                             padding: '8px 16px',
                             borderRadius: '8px',
@@ -109,7 +109,7 @@ export default function PDFReaderViewer({ product, pdfUrl = "/downloads/biology_
                         <button 
                             onClick={handleAddToCart}
                             style={{
-                                background: isAdded ? '#10b981' : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                                background: isAdded ? '#818cf8' : 'linear-gradient(135deg, #6366f1, #8b5cf6)',
                                 color: 'white',
                                 border: 'none',
                                 padding: '8px 18px',
@@ -140,7 +140,7 @@ export default function PDFReaderViewer({ product, pdfUrl = "/downloads/biology_
                         key={ch.id}
                         onClick={() => setActiveChapter(ch.id)}
                         style={{
-                            background: activeChapter === ch.id ? '#059669' : '#0f172a',
+                            background: activeChapter === ch.id ? '#4f46e5' : '#0f172a',
                             color: activeChapter === ch.id ? 'white' : '#cbd5e1',
                             border: '1px solid #334155',
                             padding: '4px 12px',
@@ -172,7 +172,7 @@ export default function PDFReaderViewer({ product, pdfUrl = "/downloads/biology_
             {/* Bottom Info Bar */}
             <div style={{ background: '#0f172a', padding: '12px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#94a3b8', fontSize: '12px' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <Sparkles size={14} color="#10b981" /> อ่านฟรีตัวอย่างในเว็บ 2 หน้าแรก | ซื้อสินค้าเพื่อรับสิทธิ์อัปเดตเวอร์ชัน 2026 ฟรีตลอดชีพ
+                    <Sparkles size={14} color="#818cf8" /> อ่านฟรีตัวอย่างในเว็บ 2 หน้าแรก | ซื้อสินค้าเพื่อรับสิทธิ์อัปเดตเวอร์ชัน 2026 ฟรีตลอดชีพ
                 </span>
                 <span>StudyRoad Interactive Reader v2.0</span>
             </div>

@@ -69,7 +69,7 @@ export default function AuthModal() {
                 animation: 'scaleUp 0.2s ease-out'
             }}>
                 {/* Header */}
-                <div style={{ background: 'linear-gradient(135deg, #059669 0%, #047857 100%)', padding: '24px', color: 'white', position: 'relative' }}>
+                <div style={{ background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)', padding: '24px', color: 'white', position: 'relative' }}>
                     <button 
                         onClick={closeAuthModal}
                         style={{ position: 'absolute', top: 16, right: 16, background: 'rgba(255,255,255,0.2)', border: 'none', color: 'white', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
@@ -78,9 +78,9 @@ export default function AuthModal() {
                     </button>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
                         <img src="/images/logo.png" alt="StudyRoad" style={{ height: 32, borderRadius: 6 }} />
-                        <span style={{ fontSize: 18, fontWeight: 800 }}>StudyRoad Auth</span>
+                        <span style={{ fontSize: 18, fontWeight: 800, color: '#ffffff' }}>StudyRoad Auth</span>
                     </div>
-                    <p style={{ margin: 0, fontSize: 13, opacity: 0.95 }}>
+                    <p style={{ margin: 0, fontSize: 13, opacity: 0.95, color: '#e0e7ff' }}>
                         {authModalMessage || 'จำเป็นต้องสมัครสมาชิกหรือเข้าสู่ระบบก่อนเข้าชม/สั่งซื้อ'}
                     </p>
                 </div>
@@ -94,11 +94,11 @@ export default function AuthModal() {
                             padding: '14px',
                             border: 'none',
                             background: tab === 'login' ? 'white' : 'transparent',
-                            color: tab === 'login' ? '#047857' : '#64748b',
+                            color: tab === 'login' ? '#4f46e5' : '#64748b',
                             fontWeight: tab === 'login' ? 700 : 500,
                             fontSize: 14,
                             cursor: 'pointer',
-                            borderBottom: tab === 'login' ? '2px solid #047857' : 'none',
+                            borderBottom: tab === 'login' ? '2px solid #4f46e5' : 'none',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -114,11 +114,11 @@ export default function AuthModal() {
                             padding: '14px',
                             border: 'none',
                             background: tab === 'register' ? 'white' : 'transparent',
-                            color: tab === 'register' ? '#047857' : '#64748b',
+                            color: tab === 'register' ? '#4f46e5' : '#64748b',
                             fontWeight: tab === 'register' ? 700 : 500,
                             fontSize: 14,
                             cursor: 'pointer',
-                            borderBottom: tab === 'register' ? '2px solid #047857' : 'none',
+                            borderBottom: tab === 'register' ? '2px solid #4f46e5' : 'none',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -190,14 +190,14 @@ export default function AuthModal() {
                         style={{
                             width: '100%',
                             padding: '12px',
-                            background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                            background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
                             color: 'white',
                             border: 'none',
                             borderRadius: 10,
                             fontSize: 15,
                             fontWeight: 700,
                             cursor: 'pointer',
-                            boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)',
+                            boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)',
                             marginBottom: 16
                         }}
                     >
@@ -223,7 +223,7 @@ export default function AuthModal() {
                                 gap: 6
                             }}
                         >
-                            <ShieldCheck size={14} color="#059669" /> เข้าสู่ระบบด้วยบัญชีแอดมิน (Super Admin Quick Login)
+                            <ShieldCheck size={14} color="#4f46e5" /> เข้าสู่ระบบด้วยบัญชีแอดมิน (Super Admin Quick Login)
                         </button>
                     </div>
                 </form>

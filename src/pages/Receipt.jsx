@@ -134,11 +134,11 @@ export default function Receipt() {
 
                 {/* --- PROMINENT DRM READER ACCESS BANNER --- */}
                 <div className="no-print" style={{
-                    background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                    background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)',
                     borderRadius: 16,
                     padding: '24px 32px',
                     marginBottom: 32,
-                    boxShadow: '0 10px 25px rgba(5, 150, 105, 0.3)',
+                    boxShadow: '0 10px 25px rgba(79, 70, 229, 0.3)',
                     color: 'white',
                     display: 'flex',
                     alignItems: 'center',
@@ -147,14 +147,14 @@ export default function Receipt() {
                     gap: 16
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                        <div style={{ background: 'rgba(255,255,255,0.2)', padding: 12, borderRadius: 12, display: 'flex' }}>
-                            <BookOpen size={32} />
+                        <div style={{ background: 'rgba(255,255,255,0.15)', padding: 12, borderRadius: 12, display: 'flex' }}>
+                            <BookOpen size={32} color="#a5b4fc" />
                         </div>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800 }}>
+                            <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: '#ffffff' }}>
                                 🎓 ชำระเงินสำเร็จแล้ว! สิทธิ์เข้าอ่านชีทสรุปในระบบพร้อมใช้งานแล้ว
                             </h3>
-                            <p style={{ margin: '4px 0 0 0', fontSize: 14, opacity: 0.9 }}>
+                            <p style={{ margin: '4px 0 0 0', fontSize: 14, color: '#e0e7ff', opacity: 0.95 }}>
                                 คุณสามารถเปิดอ่านชีทสรุปในระบบ DRM Reader แบบเต็มจอ ตีมสว่าง อ่านได้ตลอดชีพทันที
                             </p>
                         </div>
@@ -162,8 +162,8 @@ export default function Receipt() {
                     <Link
                         to={`/reader/${items && items[0] ? items[0].id : 1}`}
                         style={{
-                            background: 'white',
-                            color: '#047857',
+                            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                            color: 'white',
                             padding: '14px 28px',
                             borderRadius: 10,
                             fontWeight: 800,
