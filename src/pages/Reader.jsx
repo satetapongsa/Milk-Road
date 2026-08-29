@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, BookOpen, Lock, ShieldCheck, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize, Minimize, AlertCircle, Layers, CheckCircle2, FileText, Sparkles } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, BookOpen, Lock, ShieldCheck, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize, Minimize, AlertTriangle, Layers, FileText, EyeOff } from 'lucide-react';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
-import { formatPrice } from '../data/products';
 
 export default function Reader() {
     const { id } = useParams();
@@ -16,7 +15,7 @@ export default function Reader() {
     const [zoom, setZoom] = useState(100);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [selectedChapter, setSelectedChapter] = useState(0);
-    const [activeTab, setActiveTab] = useState('reader'); // reader | contents | info
+    const [isScreenObscured, setIsScreenObscured] = useState(false);
 
     // Chapter outline with rich high-yield study content
     const chapters = [
@@ -47,30 +46,47 @@ export default function Reader() {
         }
     ];
 
-    // DRM Security Handlers: Block Copy, Context Menu, Shortcuts, DevTools
+    // =========================================================================
+    // DRM SECURITY & SOLID BLACK SCREENSHOT PROTECTION (BLACKOUT SHIELD)
+    // =========================================================================
     useEffect(() => {
         const preventDefaultAction = (e) => e.preventDefault();
 
-        // 1. Disable Right Click Context Menu
+        // 1. Disable Context Menu, Copy, Cut, Selection & Dragging
         document.addEventListener('contextmenu', preventDefaultAction);
-        
-        // 2. Disable Select & Copy
         document.addEventListener('copy', preventDefaultAction);
         document.addEventListener('cut', preventDefaultAction);
         document.addEventListener('selectstart', preventDefaultAction);
         document.addEventListener('dragstart', preventDefaultAction);
 
-        // 3. Disable Print & Screen capture keyboard shortcuts
+        // 2. Blackout Screen on Window Blur, Visibility Hidden, or Mouse Leave (Snipping Tool Guard)
+        const handleBlur = () => setIsScreenObscured(true);
+        const handleFocus = () => setIsScreenObscured(false);
+        const handleVisibilityChange = () => {
+            if (document.hidden) setIsScreenObscured(true);
+            else setIsScreenObscured(false);
+        };
+
+        window.addEventListener('blur', handleBlur);
+        window.addEventListener('focus', handleFocus);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // 3. Disable Keyboard Capture Shortcuts & Clear Clipboard on PrtScn
         const handleKeyDown = (e) => {
             if (
                 e.key === 'PrintScreen' ||
+                (e.key === 's' && (e.metaKey || e.shiftKey)) ||
                 (e.ctrlKey && ['p', 's', 'c', 'u', 'a'].includes(e.key.toLowerCase())) ||
                 (e.metaKey && ['p', 's', 'c', 'u', 'a'].includes(e.key.toLowerCase())) ||
                 e.key === 'F12' ||
                 (e.ctrlKey && e.shiftKey && ['i', 'j', 'c'].includes(e.key.toLowerCase()))
             ) {
                 e.preventDefault();
-                alert('🛡️ ระบบรักษาความปลอดภัยลิขสิทธิ์: ไม่อนุญาตให้คัดลอก พิมพ์ หรือบันทึกภาพหน้าจอ');
+                setIsScreenObscured(true);
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText('🛡️ STUDYROAD PROTECTED CONTENT - SCREENSHOT BLOCKED').catch(() => {});
+                }
+                setTimeout(() => setIsScreenObscured(false), 2000);
             }
         };
 
@@ -82,6 +98,9 @@ export default function Reader() {
             document.removeEventListener('cut', preventDefaultAction);
             document.removeEventListener('selectstart', preventDefaultAction);
             document.removeEventListener('dragstart', preventDefaultAction);
+            window.removeEventListener('blur', handleBlur);
+            window.removeEventListener('focus', handleFocus);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
@@ -90,7 +109,8 @@ export default function Reader() {
 
     return (
         <div style={{ background: '#f8fafc', minHeight: '100vh', userSelect: 'none', WebkitUserSelect: 'none' }}>
-            {/* DRM Print Guard Styles */}
+            
+            {/* DRM Print & Screenshot CSS Guard */}
             <style>{`
                 @media print {
                     body { display: none !important; }
@@ -105,7 +125,41 @@ export default function Reader() {
                 }
             `}</style>
 
-            {/* Top Security Header */}
+            {/* SOLID BLACKOUT SCREEN OBSCURED OVERLAY (SCREENSHOT BLACKOUT SHIELD) */}
+            {isScreenObscured && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: '#000000',
+                    zIndex: 999999,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffffff',
+                    padding: '40px',
+                    textAlign: 'center'
+                }}>
+                    <div style={{ background: '#1e1b4b', padding: 24, borderRadius: '50%', marginBottom: 20, border: '2px solid #6366f1' }}>
+                        <EyeOff size={56} color="#818cf8" />
+                    </div>
+                    <h2 style={{ fontSize: 26, fontWeight: 800, color: '#ffffff', marginBottom: 10, letterSpacing: 1 }}>
+                        🛡️ SCREENSHOT PROTECTION ACTIVE
+                    </h2>
+                    <h3 style={{ fontSize: 18, fontWeight: 700, color: '#a5b4fc', marginBottom: 12 }}>
+                        เนื้อหาถูกซ่อนเพื่อป้องกันการบันทึกภาพหน้าจอ (Solid Blackout Guard)
+                    </h3>
+                    <p style={{ fontSize: 13, color: '#94a3b8', maxWidth: 500, lineHeight: 1.6 }}>
+                        ระบบตรวจจับการแคปภาพหน้าจอหรือเปลี่ยนหน้าต่าง ระบบทำการจอดำ (Pure Black) เพื่อปกป้องลิขสิทธิ์หนังสือ<br />
+                        กรุณากลับมาที่หน้าต่างเบราว์เซอร์หลักเพื่ออ่านต่อตามปกติ
+                    </p>
+                </div>
+            )}
+
+            {/* Top Reader Navigation Header (Indigo / Purple Homepage Theme) */}
             <header style={{ 
                 background: '#ffffff', 
                 borderBottom: '1px solid #e2e8f0', 
@@ -145,12 +199,12 @@ export default function Reader() {
                         <div>
                             <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 6 }}>
                                 {product?.name || 'สรุปชีทเรียนออนไลน์'}
-                                <span style={{ background: '#dcfce7', color: '#16a34a', fontSize: 10, padding: '2px 8px', borderRadius: 12, border: '1px solid #bbf7d0', fontWeight: 600 }}>
+                                <span style={{ background: '#eef2ff', color: '#4f46e5', fontSize: 10, padding: '2px 8px', borderRadius: 12, border: '1px solid #c7d2fe', fontWeight: 700 }}>
                                     <ShieldCheck size={11} style={{ verticalAlign: 'middle', marginRight: 2 }} /> DRM Protected
                                 </span>
                             </div>
                             <div style={{ fontSize: 11, color: '#64748b' }}>
-                                โหมดอ่านในระบบเว็บ (Light Theme Reader) | ลิขสิทธิ์เฉพาะผู้ซื้อเท่านั้น
+                                โหมดอ่านในระบบเว็บ (StudyRoad Light Reader) | ลิขสิทธิ์เฉพาะผู้ซื้อเท่านั้น
                             </div>
                         </div>
                     </div>
@@ -200,21 +254,22 @@ export default function Reader() {
                         </button>
                     </div>
 
-                    {/* Fullscreen Button */}
+                    {/* Fullscreen Button (Homepage Theme Gradient) */}
                     <button 
                         onClick={() => setIsFullscreen(!isFullscreen)}
                         style={{
-                            background: '#047857',
+                            background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
                             color: 'white',
                             border: 'none',
-                            padding: '8px 14px',
+                            padding: '8px 16px',
                             borderRadius: '8px',
                             cursor: 'pointer',
                             fontSize: '12px',
-                            fontWeight: 600,
+                            fontWeight: 700,
                             display: 'flex',
                             alignItems: 'center',
-                            gap: 6
+                            gap: 6,
+                            boxShadow: '0 2px 8px rgba(99, 102, 241, 0.3)'
                         }}
                     >
                         {isFullscreen ? <Minimize size={15} /> : <Maximize size={15} />}
@@ -236,8 +291,8 @@ export default function Reader() {
                         gap: 20 
                     }}>
                         <div>
-                            <h4 style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
-                                <Layers size={14} color="#059669" /> สารบัญบทเรียน (Contents)
+                            <h4 style={{ fontSize: 12, fontWeight: 700, color: '#4f46e5', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+                                <Layers size={14} color="#6366f1" /> สารบัญบทเรียน (Contents)
                             </h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                                 {chapters.map((ch, idx) => (
@@ -252,9 +307,9 @@ export default function Reader() {
                                             padding: '10px 12px',
                                             borderRadius: '8px',
                                             border: '1px solid',
-                                            borderColor: selectedChapter === idx ? '#10b981' : '#f1f5f9',
-                                            background: selectedChapter === idx ? '#ecfdf5' : '#f8fafc',
-                                            color: selectedChapter === idx ? '#047857' : '#334155',
+                                            borderColor: selectedChapter === idx ? '#6366f1' : '#f1f5f9',
+                                            background: selectedChapter === idx ? '#eef2ff' : '#f8fafc',
+                                            color: selectedChapter === idx ? '#4f46e5' : '#334155',
                                             fontSize: '12px',
                                             fontWeight: selectedChapter === idx ? 700 : 500,
                                             cursor: 'pointer',
@@ -269,7 +324,7 @@ export default function Reader() {
                         </div>
 
                         <div style={{ marginTop: 'auto', borderTop: '1px solid #f1f5f9', paddingTop: 16 }}>
-                            <h4 style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
+                            <h4 style={{ fontSize: 12, fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
                                 <FileText size={14} color="#6366f1" /> คลังชีทสรุปของฉัน
                             </h4>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -329,7 +384,7 @@ export default function Reader() {
                             padding: '40px',
                             textAlign: 'center'
                         }}>
-                            <div style={{ background: '#ecfdf5', color: '#047857', padding: 20, borderRadius: '50%', marginBottom: 16 }}>
+                            <div style={{ background: '#eef2ff', color: '#4f46e5', padding: 20, borderRadius: '50%', marginBottom: 16 }}>
                                 <Lock size={48} />
                             </div>
                             <h2 style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginBottom: 8 }}>
@@ -342,7 +397,7 @@ export default function Reader() {
                                 <button
                                     onClick={() => openAuthModal('กรุณาสมัครสมาชิกหรือเข้าสู่ระบบเพื่ออ่านไฟล์สรุป')}
                                     style={{
-                                        background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                        background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
                                         color: 'white',
                                         border: 'none',
                                         padding: '12px 24px',
@@ -350,7 +405,7 @@ export default function Reader() {
                                         fontWeight: 700,
                                         fontSize: 14,
                                         cursor: 'pointer',
-                                        boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)'
+                                        boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
                                     }}
                                 >
                                     🔑 สมัครสมาชิก / เข้าสู่ระบบ
@@ -359,13 +414,13 @@ export default function Reader() {
                         </div>
                     )}
 
-                    {/* Paper Document Container (Light Theme) */}
+                    {/* Paper Document Container (Light Theme Matching Homepage Accent) */}
                     <div 
                         style={{
                             width: '100%',
                             maxWidth: `${780 * (zoom / 100)}px`,
                             background: '#ffffff',
-                            borderRadius: '12px',
+                            borderRadius: '16px',
                             boxShadow: '0 10px 30px -5px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.05)',
                             padding: '50px 60px',
                             minHeight: `${1050 * (zoom / 100)}px`,
@@ -394,16 +449,16 @@ export default function Reader() {
                             }}
                         >
                             {Array.from({ length: 12 }).map((_, i) => (
-                                <div key={i} style={{ fontSize: 18, fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', letterSpacing: 2 }}>
+                                <div key={i} style={{ fontSize: 18, fontWeight: 800, color: '#4f46e5', textTransform: 'uppercase', letterSpacing: 2 }}>
                                     STUDYROAD PROTECTED • LICENSED COPY
                                 </div>
                             ))}
                         </div>
 
                         {/* Document Header */}
-                        <div style={{ borderBottom: '2px solid #059669', paddingBottom: 16, marginBottom: 30, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                        <div style={{ borderBottom: '2px solid #4f46e5', paddingBottom: 16, marginBottom: 30, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                             <div>
-                                <span style={{ background: '#ecfdf5', color: '#047857', padding: '4px 10px', borderRadius: 4, fontSize: 11, fontWeight: 700 }}>
+                                <span style={{ background: '#eef2ff', color: '#4f46e5', padding: '4px 10px', borderRadius: 4, fontSize: 11, fontWeight: 700 }}>
                                     {chapters[selectedChapter]?.title || 'บทเรียนชีววิทยา'}
                                 </span>
                                 <h1 style={{ fontSize: 22, fontWeight: 800, color: '#0f172a', margin: '8px 0 0 0' }}>
@@ -418,22 +473,22 @@ export default function Reader() {
 
                         {/* Document Body Content */}
                         <div style={{ color: '#1e293b', lineHeight: 1.8, fontSize: 14 }}>
-                            <div style={{ background: '#f8fafc', padding: 16, borderRadius: 8, borderLeft: '4px solid #059669', marginBottom: 24 }}>
-                                <strong style={{ color: '#047857', display: 'block', marginBottom: 4 }}>💡 ภาพรวมสรุปประเด็นสำคัญในบทนี้:</strong>
+                            <div style={{ background: '#f8fafc', padding: 16, borderRadius: 8, borderLeft: '4px solid #4f46e5', marginBottom: 24 }}>
+                                <strong style={{ color: '#4f46e5', display: 'block', marginBottom: 4 }}>💡 ภาพรวมสรุปประเด็นสำคัญในบทนี้:</strong>
                                 <p style={{ margin: 0, fontSize: 13, color: '#334155' }}>
                                     {chapters[selectedChapter]?.summary}
                                 </p>
                             </div>
 
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#047857', marginTop: 24, marginBottom: 12 }}>
+                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#4f46e5', marginTop: 24, marginBottom: 12 }}>
                                 1.1 สรุปโครงสร้างและหน้าที่ของออร์แกเนลล์สำคัญ (Organelle Functions)
                             </h3>
                             <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 24, fontSize: 13 }}>
                                 <thead>
-                                    <tr style={{ background: '#ecfdf5', borderBottom: '2px solid #a7f3d0' }}>
-                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#064e3b' }}>ออร์แกเนลล์</th>
-                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#064e3b' }}>เยื่อหุ้ม</th>
-                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#064e3b' }}>หน้าที่สำคัญออกสอบ A-Level</th>
+                                    <tr style={{ background: '#eef2ff', borderBottom: '2px solid #c7d2fe' }}>
+                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#312e81' }}>ออร์แกเนลล์</th>
+                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#312e81' }}>เยื่อหุ้ม</th>
+                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#312e81' }}>หน้าที่สำคัญออกสอบ A-Level</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -460,7 +515,7 @@ export default function Reader() {
                                 </tbody>
                             </table>
 
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#047857', marginTop: 24, marginBottom: 12 }}>
+                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#4f46e5', marginTop: 24, marginBottom: 12 }}>
                                 1.2 การลำเลียงสารผ่านเยื่อหุ้มเซลล์ (Membrane Transport Mechanisms)
                             </h3>
                             <ul style={{ paddingLeft: 20, margin: 0 }}>
@@ -498,7 +553,7 @@ export default function Reader() {
                         <button 
                             onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                             disabled={currentPage === totalPages}
-                            style={{ padding: '8px 20px', borderRadius: 8, background: '#059669', color: 'white', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
+                            style={{ padding: '8px 20px', borderRadius: 8, background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: 'white', border: 'none', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
                         >
                             หน้าถัดไป ▶
                         </button>
