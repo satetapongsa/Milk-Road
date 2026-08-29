@@ -19,7 +19,7 @@ export default function Reader() {
     const [isScreenObscured, setIsScreenObscured] = useState(false);
     const [bookmarkedPages, setBookmarkedPages] = useState([]);
 
-    // Chapter outline for Online Textbooks
+    // Chapter outline for Online Textbooks (20 Pages total)
     const chapters = [
         {
             title: "บทที่ 1: เซลล์และการลำเลียงสาร (Cell Biology & Membrane Transport)",
@@ -28,22 +28,22 @@ export default function Reader() {
         },
         {
             title: "บทที่ 2: การหายใจระดับเซลล์ & สังเคราะห์แสง (Cellular Respiration & Photosynthesis)",
-            page: 25,
+            page: 5,
             summary: "กระบวนการ Glycolysis, Krebs Cycle, ETC (ได้ 30-32 ATP) และการสังเคราะห์ด้วยแสง Light Reaction vs Calvin Cycle"
         },
         {
             title: "บทที่ 3: พันธุศาสตร์ & เทคโนโลยี DNA (Genetics & Molecular Biology)",
-            page: 55,
+            page: 9,
             summary: "กฎของเมนเดล, Central Dogma (Replication, Transcription, Translation), การผ่าเหล่า Mutation และเทคโนโลยี PCR & Gel Electrophoresis"
         },
         {
             title: "บทที่ 4: กายวิภาคและสรีรวิทยาของมนุษย์ (Human Anatomy & Physiology)",
-            page: 85,
+            page: 13,
             summary: "ระบบย่อยอาหาร (Enzymes & pH), ระบบประสาท (Action Potential Na+/K+), และระบบภูมิคุ้มกัน B-cell & T-cell"
         },
         {
             title: "บทที่ 5: นิเวศวิทยา & วิวัฒนาการ (Ecology & Evolution)",
-            page: 120,
+            page: 17,
             summary: "ห่วงโซ่อาหาร กฎ 10%, การทดแทนทางนิเวศวิทยา และกฎสมดุลฮาร์ดี-ไวน์เบิร์ก (Hardy-Weinberg Equation: p² + 2pq + q² = 1)"
         }
     ];
@@ -81,7 +81,7 @@ export default function Reader() {
         };
     }, []);
 
-    const totalPages = 150;
+    const totalPages = 20;
 
     if (product?.is_ccna_reader || String(id) === '7') {
         return <CCNAInteractiveReader product={product} />;
@@ -439,11 +439,11 @@ export default function Reader() {
                             <div style={{ background: theme.cardBg, padding: 18, borderRadius: 12, borderLeft: `4px solid ${theme.accent}`, marginBottom: 28 }}>
                                 <strong style={{ color: theme.accent, display: 'block', marginBottom: 4 }}>💡 สรุปเนื้อหาสำคัญประจำหน้า {currentPage}:</strong>
                                 <p style={{ margin: 0, fontSize: 14, fontWeight: 600 }}>
-                                    {currentPage <= 24 && "บทที่ 1: เซลล์และการลำเลียงสาร (Cell Biology & Membrane Transport)"}
-                                    {currentPage >= 25 && currentPage <= 54 && "บทที่ 2: การหายใจระดับเซลล์ & สังเคราะห์แสง (Cellular Respiration & Photosynthesis)"}
-                                    {currentPage >= 55 && currentPage <= 84 && "บทที่ 3: พันธุศาสตร์ & เทคโนโลยี DNA (Genetics & Molecular Biology)"}
-                                    {currentPage >= 85 && currentPage <= 119 && "บทที่ 4: กายวิภาคและสรีรวิทยาของมนุษย์ (Human Anatomy & Physiology)"}
-                                    {currentPage >= 120 && "บทที่ 5: นิเวศวิทยา & วิวัฒนาการ (Ecology & Evolution)"}
+                                    {currentPage <= 4 && "บทที่ 1: เซลล์และการลำเลียงสาร (Cell Biology & Membrane Transport)"}
+                                    {currentPage >= 5 && currentPage <= 8 && "บทที่ 2: การหายใจระดับเซลล์ & สังเคราะห์แสง (Cellular Respiration & Photosynthesis)"}
+                                    {currentPage >= 9 && currentPage <= 12 && "บทที่ 3: พันธุศาสตร์ & เทคโนโลยี DNA (Genetics & Molecular Biology)"}
+                                    {currentPage >= 13 && currentPage <= 16 && "บทที่ 4: กายวิภาคและสรีรวิทยาของมนุษย์ (Human Anatomy & Physiology)"}
+                                    {currentPage >= 17 && "บทที่ 5: นิเวศวิทยา & วิวัฒนาการ (Ecology & Evolution)"}
                                 </p>
                             </div>
 
