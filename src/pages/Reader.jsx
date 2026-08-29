@@ -477,63 +477,117 @@ export default function Reader() {
                         </div>
 
                         {/* Document Body Content */}
-                        <div style={{ color: '#1e293b', lineHeight: 1.8, fontSize: 14 }}>
-                            <div style={{ background: '#f8fafc', padding: 16, borderRadius: 8, borderLeft: '4px solid #4f46e5', marginBottom: 24 }}>
-                                <strong style={{ color: '#4f46e5', display: 'block', marginBottom: 4 }}>💡 ภาพรวมสรุปประเด็นสำคัญในบทนี้:</strong>
-                                <p style={{ margin: 0, fontSize: 13, color: '#334155' }}>
-                                    {chapters[selectedChapter]?.summary}
+                        <div style={{ color: '#1e293b', lineHeight: 1.8, fontSize: 14, minHeight: 650 }}>
+                            <div style={{ background: '#f8fafc', padding: 16, borderRadius: 10, borderLeft: '4px solid #4f46e5', marginBottom: 24 }}>
+                                <strong style={{ color: '#4f46e5', display: 'block', marginBottom: 4 }}>💡 หัวข้อประจำหน้า {currentPage}:</strong>
+                                <p style={{ margin: 0, fontSize: 13, color: '#334155', fontWeight: 600 }}>
+                                    {currentPage <= 24 && "บทที่ 1: เซลล์และการลำเลียงสาร (Cell Biology & Membrane Transport)"}
+                                    {currentPage >= 25 && currentPage <= 54 && "บทที่ 2: การหายใจระดับเซลล์ & สังเคราะห์แสง (Cellular Respiration & Photosynthesis)"}
+                                    {currentPage >= 55 && currentPage <= 84 && "บทที่ 3: พันธุศาสตร์ & เทคโนโลยี DNA (Genetics & Molecular Biology)"}
+                                    {currentPage >= 85 && currentPage <= 119 && "บทที่ 4: กายวิภาคและสรีรวิทยาของมนุษย์ (Human Anatomy & Physiology)"}
+                                    {currentPage >= 120 && "บทที่ 5: นิเวศวิทยา & วิวัฒนาการ (Ecology & Evolution)"}
                                 </p>
                             </div>
 
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#4f46e5', marginTop: 24, marginBottom: 12 }}>
-                                1.1 สรุปโครงสร้างและหน้าที่ของออร์แกเนลล์สำคัญ (Organelle Functions)
-                            </h3>
-                            <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 24, fontSize: 13 }}>
-                                <thead>
-                                    <tr style={{ background: '#eef2ff', borderBottom: '2px solid #c7d2fe' }}>
-                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#312e81' }}>ออร์แกเนลล์</th>
-                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#312e81' }}>เยื่อหุ้ม</th>
-                                        <th style={{ padding: '8px 12px', textAlign: 'left', color: '#312e81' }}>หน้าที่สำคัญออกสอบ A-Level</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                        <td style={{ padding: '8px 12px', fontWeight: 600 }}>Nucleus</td>
-                                        <td style={{ padding: '8px 12px' }}>2 ชั้น (Double)</td>
-                                        <td style={{ padding: '8px 12px' }}>ศูนย์กลางควบคุมการทำงานและเก็บบันทึกรหัสพันธุกรรม DNA/RNA</td>
-                                    </tr>
-                                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                        <td style={{ padding: '8px 12px', fontWeight: 600 }}>Mitochondria</td>
-                                        <td style={{ padding: '8px 12px' }}>2 ชั้น (Double)</td>
-                                        <td style={{ padding: '8px 12px' }}>สร้างพลังงาน ATP ผ่าน Krebs Cycle (Matrix) และ ETC (Cristae)</td>
-                                    </tr>
-                                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                        <td style={{ padding: '8px 12px', fontWeight: 600 }}>Chloroplast</td>
-                                        <td style={{ padding: '8px 12px' }}>2 ชั้น (Double)</td>
-                                        <td style={{ padding: '8px 12px' }}>สังเคราะห์ด้วยแสง: Thylakoid (Light Rxn) & Stroma (Calvin Cycle)</td>
-                                    </tr>
-                                    <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                        <td style={{ padding: '8px 12px', fontWeight: 600 }}>Smooth ER (SER)</td>
-                                        <td style={{ padding: '8px 12px' }}>1 ชั้น (Single)</td>
-                                        <td style={{ padding: '8px 12px' }}>สังเคราะห์ไขมัน สเตียรอยด์ กำจัดสารพิษ (Liver) และสะสม Ca²⁺</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            {/* Dynamic Content Switcher per Page */}
+                            {currentPage % 4 === 1 && (
+                                <div>
+                                    <h3 style={{ fontSize: 17, fontWeight: 700, color: '#4f46e5', marginBottom: 12 }}>
+                                        หัวข้อย่อยที่ {Math.ceil(currentPage / 5)}.1: สรุปหลักการสำคัญและคีย์เวิร์ดออกสอบบ่อย (High-Yield Core Concepts)
+                                    </h3>
+                                    <p style={{ marginBottom: 16 }}>
+                                        ในหมวดนี้ ข้อสอบเตรียมสอบมักจะเน้นวัดความเข้าใจเชิงลึกเกี่ยวกับกลไกสำคัญ และเปรียบเทียบข้อแตกต่างระหว่างระบบต่างๆ ผู้เรียนควรจำโครงสร้างและหน้าที่หลักให้แม่นยำก่อนทำโจทย์
+                                    </p>
+                                    <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 24, fontSize: 13 }}>
+                                        <thead>
+                                            <tr style={{ background: '#eef2ff', borderBottom: '2px solid #c7d2fe' }}>
+                                                <th style={{ padding: '10px 12px', textAlign: 'left', color: '#312e81' }}>หัวข้อ (Topic)</th>
+                                                <th style={{ padding: '10px 12px', textAlign: 'left', color: '#312e81' }}>ประเภท / คุณลักษณะ</th>
+                                                <th style={{ padding: '10px 12px', textAlign: 'left', color: '#312e81' }}>จุดเน้นออกสอบ (Exam Key Point)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                                <td style={{ padding: '10px 12px', fontWeight: 600 }}>โครงสร้างหลัก (Core Structure)</td>
+                                                <td style={{ padding: '10px 12px' }}>Double Membrane / Single Membrane</td>
+                                                <td style={{ padding: '10px 12px' }}>ออกสอบบ่อยในพาร์ทเปรียบเทียบเซลล์พืช vs เซลล์สัตว์</td>
+                                            </tr>
+                                            <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                                <td style={{ padding: '10px 12px', fontWeight: 600 }}>กระบวนการพลังงาน (Energy Transport)</td>
+                                                <td style={{ padding: '10px 12px' }}>ATP Synthesis / Proton Gradient</td>
+                                                <td style={{ padding: '10px 12px' }}>ใช้ปฏิกิริยา Redox และ Chemiosmosis ในการสร้าง ATP</td>
+                                            </tr>
+                                            <tr style={{ borderBottom: '1px solid #f1f5f9' }}>
+                                                <td style={{ padding: '10px 12px', fontWeight: 600 }}>การควบคุมยีน (Gene Expression)</td>
+                                                <td style={{ padding: '10px 12px' }}>Transcription & Translation</td>
+                                                <td style={{ padding: '10px 12px' }}>เน้นลำดับเบส mRNA (5' ➔ 3') และ Codon Table</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
 
-                            <h3 style={{ fontSize: 16, fontWeight: 700, color: '#4f46e5', marginTop: 24, marginBottom: 12 }}>
-                                1.2 การลำเลียงสารผ่านเยื่อหุ้มเซลล์ (Membrane Transport Mechanisms)
-                            </h3>
-                            <ul style={{ paddingLeft: 20, margin: 0 }}>
-                                <li style={{ marginBottom: 8 }}>
-                                    <strong>Simple Diffusion:</strong> เคลื่อนที่จากความเข้มข้นสูง ➔ ต่ำ ผ่านชั้น Phospholipid โดยไม่ใช้ ATP (เช่น O₂, CO₂, สารละลายในไขมัน)
-                                </li>
-                                <li style={{ marginBottom: 8 }}>
-                                    <strong>Facilitated Diffusion:</strong> อาศัยโปรตีนตัวพา (Carrier/Channel Protein) เคลื่อนที่จากสูง ➔ ต่ำ ไม่ใช้ ATP (เช่น Glucose ในเซลล์เม็ดเลือดแดง, H₂O ผ่าน Aquaporin)
-                                </li>
-                                <li style={{ marginBottom: 8 }}>
-                                    <strong>Active Transport:</strong> เคลื่อนที่สวนทางจากความเข้มข้นต่ำ ➔ สูง ต้องใช้ ATP และโปรตีนตัวพา (เช่น Na⁺/K⁺ Pump ในเซลล์ประสาท)
-                                </li>
-                            </ul>
+                            {currentPage % 4 === 2 && (
+                                <div>
+                                    <h3 style={{ fontSize: 17, fontWeight: 700, color: '#4f46e5', marginBottom: 12 }}>
+                                        หัวข้อย่อยที่ {Math.ceil(currentPage / 5)}.2: แผนผังกลไกและการคำนวณสูตรสำคัญ (Mechanisms & Formula Cheatsheet)
+                                    </h3>
+                                    <div style={{ background: '#f1f5f9', padding: 20, borderRadius: 12, marginBottom: 20, border: '1px solid #cbd5e1' }}>
+                                        <div style={{ fontSize: 14, fontWeight: 700, color: '#1e1b4b', marginBottom: 8 }}>📌 สูตรคำนวณและสมการสำคัญประจำบท (Key Equation):</div>
+                                        <div style={{ fontFamily: 'monospace', fontSize: 16, color: '#4f46e5', fontWeight: 700, background: '#ffffff', padding: '12px 16px', borderRadius: 8, border: '1px solid #c7d2fe' }}>
+                                            {currentPage < 50 ? "Glucose + 6O₂ ➔ 6CO₂ + 6H₂O + 30-32 ATP (Cellular Respiration)" : "p² + 2pq + q² = 1  (Hardy-Weinberg Equilibrium)"}
+                                        </div>
+                                    </div>
+                                    <ul style={{ paddingLeft: 20, margin: 0 }}>
+                                        <li style={{ marginBottom: 10 }}>
+                                            <strong>ขั้นตอนที่ 1:</strong> เริ่มต้นด้วยการสลายโมเลกุลในไซโทพลาซึม โดยไม่ต้องใช้ออกซิเจน ได้รับสุทธิ 2 ATP + 2 NADH
+                                        </li>
+                                        <li style={{ marginBottom: 10 }}>
+                                            <strong>ขั้นตอนที่ 2:</strong> ลำเลียงเข้าสู่ Matrix ของไมโทคอนเดรีย เปลี่ยน Pyruvate เป็น Acetyl-CoA เพื่อเข้าสู่ Krebs Cycle
+                                        </li>
+                                        <li style={{ marginBottom: 10 }}>
+                                            <strong>ขั้นตอนที่ 3:</strong> ถ่ายทอดอิเล็กตรอนที่ Cristae ปั๊ม H⁺ สร้างแรงดัน Chemiosmotic Gradient ผลิต ATP จำนวนมากที่สุด
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
+
+                            {currentPage % 4 === 3 && (
+                                <div>
+                                    <h3 style={{ fontSize: 17, fontWeight: 700, color: '#4f46e5', marginBottom: 12 }}>
+                                        หัวข้อย่อยที่ {Math.ceil(currentPage / 5)}.3: ตัวอย่างตะลุยโจทย์จริงพร้อมวิธีคิดลัด (Real Exam Practice & Step-by-Step Solution)
+                                    </h3>
+                                    <div style={{ background: '#eef2ff', padding: 20, borderRadius: 12, border: '1px solid #c7d2fe', marginBottom: 20 }}>
+                                        <div style={{ fontSize: 14, fontWeight: 700, color: '#312e81', marginBottom: 6 }}>
+                                            📝 ตัวอย่างข้อสอบจริง (Exam Problem #{currentPage}):
+                                        </div>
+                                        <p style={{ fontSize: 13, color: '#1e293b', marginBottom: 12, lineHeight: 1.6 }}>
+                                            ถ้านำเซลล์เม็ดเลือดแดงไปแช่ในสารละลายที่มีความเข้มข้นสูงกว่าภายในเซลล์ (Hypertonic Solution) จะเกิดปรากฏการณ์ใดขึ้น และส่งผลต่อรูปร่างเซลล์อย่างไร?
+                                        </p>
+                                        <div style={{ background: '#ffffff', padding: 14, borderRadius: 8, fontSize: 13, color: '#15803d', fontWeight: 600, border: '1px solid #bbf7d0' }}>
+                                            ✅ เฉลยละเอียด: น้ำภายในเซลล์จะออสโมซิส (Osmosis) ออกสู่ภายนอก ทำให้เซลล์เหี่ยว (Crenation) เนื่องจากความกดดันออสโมติกภายนอกสูงกว่า!
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {currentPage % 4 === 0 && (
+                                <div>
+                                    <h3 style={{ fontSize: 17, fontWeight: 700, color: '#4f46e5', marginBottom: 12 }}>
+                                        หัวข้อย่อยที่ {Math.ceil(currentPage / 5)}.4: สรุปข้อควรระวัง & ช้อยหลอกในห้องสอบ (Exam Pitfalls & Summary)
+                                    </h3>
+                                    <div style={{ background: '#fef2f2', padding: 18, borderRadius: 12, border: '1px solid #fecaca', marginBottom: 20 }}>
+                                        <div style={{ fontSize: 14, fontWeight: 700, color: '#991b1b', marginBottom: 6 }}>
+                                            ⚠️ 3 ช้อยหลอกยอดฮิตที่เด็กหลงผิดบ่อย:
+                                        </div>
+                                        <ol style={{ paddingLeft: 20, margin: 0, fontSize: 13, color: '#7f1d1d' }}>
+                                            <li style={{ marginBottom: 6 }}>อย่าสับสนระหว่าง Facilitated Diffusion กับ Active Transport (Facilitated ไม่ใช้ ATP!)</li>
+                                            <li style={{ marginBottom: 6 }}>เซลล์พืชมีไมโทคอนเดรียในการสลายอาหารเพื่อสร้าง ATP เช่นเดียวกับเซลล์สัตว์</li>
+                                            <li style={{ marginBottom: 6 }}>ในระยะ Meiosis I จะเกิด Crossing Over ที่ระยะ Prophase I เท่านั้น</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Page Footer */}
