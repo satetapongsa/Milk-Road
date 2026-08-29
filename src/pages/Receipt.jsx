@@ -494,6 +494,33 @@ export default function Receipt() {
                         </tfoot>
                     </table>
 
+                    {/* Attached Bank Slip Display */}
+                    {payment?.slipImage && (
+                        <div style={{
+                            marginTop: 32,
+                            padding: 20,
+                            background: '#f8fafc',
+                            borderRadius: 12,
+                            border: '1px solid #e2e8f0',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: '#334155', marginBottom: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                                📄 หลักฐานสลิปการโอนเงิน (Attached Bank Slip)
+                            </div>
+                            <img 
+                                src={payment.slipImage} 
+                                alt="Bank Transfer Slip" 
+                                style={{
+                                    maxWidth: '100%',
+                                    maxHeight: 280,
+                                    borderRadius: 8,
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                                    border: '1px solid #cbd5e1'
+                                }} 
+                            />
+                        </div>
+                    )}
+
                     {/* Thank You / Custom Note Area */}
                     {customNote && (
                         <div style={{

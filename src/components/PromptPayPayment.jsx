@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import QRCode from 'qrcode';
-import { CheckCircle, Clock, Zap, QrCode, Smartphone, Radio } from 'lucide-react';
+import { CheckCircle, Clock, Zap, Smartphone, UploadCloud, FileImage, Trash2, ShieldCheck, Check } from 'lucide-react';
 import { formatPrice } from '../data/products';
 
 // PromptPay QR Code Generator (EMV Format)
@@ -54,20 +54,59 @@ export default function PromptPayPayment({
   total, 
   phoneNumber = '0815018272',
   onPaymentComplete,
+  onSlipUpload,
   loading 
 }) {
-  const [verificationStep, setVerificationStep] = useState('qr'); // qr, verifying, confirmed
+  const [verificationStep, setVerificationStep] = useState('qr'); // qr, upload, verifying, confirmed
   const [countdown, setCountdown] = useState(0);
   const [referenceNo, setReferenceNo] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState('');
+  const [slipImage, setSlipImage] = useState(null);
+  const [slipName, setSlipName] = useState('');
+  const [dragOver, setDragOver] = useState(false);
 
+  const qrValue = generatePromptPayQR(phoneNumber, Math.round(total));
 
   useEffect(() => {
-    if (verificationStep === 'verifying' && countdown === 0) {
-      setCountdown(8);
+    let isMounted = true;
+    QRCode.toDataURL(qrValue, { width: 220, margin: 2, errorCorrectionLevel: 'H' })
+      .then((url) => {
+        if (isMounted) setQrDataUrl(url);
+      })
+      .catch((error) => {
+        console.error('Failed to generate QR image:', error);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [qrValue]);
+
+  const handleFileUpload = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('กรุณาแนบไฟล์รูปภาพสลิปเท่านั้น (JPEG, PNG, WEBP)');
+      return;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [verificationStep]);
+    setSlipName(file.name);
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setSlipImage(e.target.result);
+      if (onSlipUpload) onSlipUpload(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileUpload(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleProceedToUpload = () => {
+    setVerificationStep('upload');
+  };
 
   const completePayment = useCallback(() => {
     setVerificationStep('confirmed');
@@ -75,10 +114,11 @@ export default function PromptPayPayment({
       method: 'promptpay',
       phoneNumber,
       referenceNo,
+      slipImage,
       timestamp: new Date().toISOString(),
       amount: total
     });
-  }, [phoneNumber, referenceNo, total, onPaymentComplete]);
+  }, [phoneNumber, referenceNo, slipImage, total, onPaymentComplete]);
 
   useEffect(() => {
     if (countdown > 0) {
@@ -93,275 +133,237 @@ export default function PromptPayPayment({
     }
   }, [countdown, completePayment]);
 
-  const handleScanConfirm = () => {
+  const handleConfirmSlip = () => {
+    if (!slipImage) {
+      alert('กรุณาแนบสลิปหลักฐานการโอนเงินก่อนยืนยัน');
+      return;
+    }
     setReferenceNo('REF-' + Date.now().toString().slice(-8).toUpperCase());
     setVerificationStep('verifying');
-    setCountdown(8);
+    setCountdown(3);
   };
 
-  const qrValue = generatePromptPayQR(phoneNumber, Math.round(total));
-
-  useEffect(() => {
-    let isMounted = true;
-    QRCode.toDataURL(qrValue, { width: 240, margin: 2, errorCorrectionLevel: 'H' })
-      .then((url) => {
-        if (isMounted) setQrDataUrl(url);
-      })
-      .catch((error) => {
-        console.error('Failed to generate QR image:', error);
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, [qrValue]);
-
   return (
-    <div className="promptpay-payment">
-      <style>{`
-        .promptpay-payment {
-          padding: 24px;
-          background: white;
-          border-radius: 12px;
-          color: #333;
-          border: 2px solid #e0e0e0;
-        }
-
-        .payment-step {
-          text-align: center;
-        }
-
-        .qr-container {
-          background: white;
-          padding: 20px;
-          border-radius: 12px;
-          margin: 24px 0;
-          display: inline-block;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-          animation: popIn 0.5s ease-out;
-          border: 3px solid #4CAF50;
-        }
-
-        @keyframes popIn {
-          from {
-            transform: scale(0.8);
-            opacity: 0;
-          }
-          to {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-
-        .qr-container canvas {
-          width: 240px !important;
-          height: 240px !important;
-        }
-
-        .payment-info {
-          margin: 20px 0;
-          font-size: 16px;
-          line-height: 1.6;
-          color: #333;
-        }
-
-        .payment-info strong {
-          display: block;
-          font-size: 20px;
-          margin: 10px 0;
-          color: #4CAF50;
-          font-weight: 700;
-        }
-
-        .countdown-timer {
-          font-size: 48px;
-          font-weight: bold;
-          color: #4CAF50;
-          margin: 20px 0;
-          animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.7; transform: scale(1.1); }
-        }
-
-        .verification-status {
-          padding: 20px;
-          border-radius: 8px;
-          margin: 20px 0;
-        }
-
-        .status-pending {
-          background: #f5f5f5;
-          border: 2px solid #ddd;
-        }
-
-        .status-confirmed {
-          background: #e8f5e9;
-          border: 2px solid #4CAF50;
-          box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
-        }
-
-        .payment-confirm-btn {
-          background: #4CAF50;
-          color: white;
-          border: none;
-          padding: 14px 36px;
-          border-radius: 6px;
-          font-weight: 600;
-          cursor: pointer;
-          margin-top: 16px;
-          transition: all 0.3s;
-          font-size: 16px;
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .payment-confirm-btn:hover {
-          background: #45a049;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
-        }
-
-        .payment-confirm-btn:disabled {
-          background: #ccc;
-          opacity: 0.6;
-          cursor: not-allowed;
-          transform: none;
-        }
-
-        .reference-text {
-          font-size: 14px;
-          margin-top: 12px;
-          font-family: monospace;
-          background: #f5f5f5;
-          padding: 8px 12px;
-          border-radius: 4px;
-          word-break: break-all;
-          color: #333;
-          border-left: 4px solid #4CAF50;
-        }
-
-        .success-icon {
-          animation: bounce 0.6s ease-out;
-        }
-
-        @keyframes bounce {
-          0% {
-            transform: scale(0);
-          }
-          50% {
-            transform: scale(1.2);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-
-        h3 {
-          color: #333;
-          margin: 0 0 8px 0;
-          font-size: 20px;
-          font-weight: 600;
-        }
-
-        p {
-          color: #666;
-        }
-
-        @keyframes spin {
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
-
+    <div style={{ background: '#ffffff', borderRadius: 16, padding: '24px 20px', border: '1px solid #e2e8f0' }}>
+      
+      {/* STEP 1: SCAN QR CODE */}
       {verificationStep === 'qr' && (
-        <div className="payment-step">
-          <h3 style={{ marginBottom: 8, fontSize: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-            <Smartphone size={20} color="var(--primary)" /> PromptPay
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#eef2ff', color: '#4f46e5', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 700, marginBottom: 12 }}>
+            <Smartphone size={16} /> สแกน QR Code พร้อมเพย์
+          </div>
+
+          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0' }}>
+            พร้อมเพย์ (PromptPay QR)
           </h3>
-          <p style={{ marginBottom: 20, fontSize: 14 }}>สแกน QR Code เพื่อชำระเงิน</p>
+          <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 16px 0' }}>
+            เปิดแอปธนาคารของท่าน แล้วสแกนเพื่อโอนเงินตามยอดที่ระบุ
+          </p>
           
-          <div className="qr-container">
+          <div style={{
+            background: 'white',
+            padding: 16,
+            borderRadius: 16,
+            display: 'inline-block',
+            boxShadow: '0 4px 16px rgba(79, 70, 229, 0.12)',
+            border: '2px solid #6366f1',
+            marginBottom: 16
+          }}>
             {qrDataUrl ? (
               <img
                 src={qrDataUrl}
                 alt="PromptPay QR"
-                style={{ width: 240, height: 240, display: 'block' }}
+                style={{ width: 220, height: 220, display: 'block', borderRadius: 8 }}
               />
             ) : (
-              <div style={{ width: 240, height: 240, display: 'grid', placeItems: 'center', color: '#666' }}>
+              <div style={{ width: 220, height: 220, display: 'grid', placeItems: 'center', color: '#64748b' }}>
                 กำลังสร้าง QR...
               </div>
             )}
           </div>
 
-          <div className="payment-info">
-            <span>เบอร์โทรศัพท์:</span>
-            <strong>{phoneNumber}</strong>
-            <span style={{ marginTop: 16, display: 'block' }}>จำนวนเงิน:</span>
-            <strong>{formatPrice(total)}</strong>
+          <div style={{ background: '#f8fafc', padding: 14, borderRadius: 12, border: '1px solid #e2e8f0', maxWidth: 360, margin: '0 auto 20px auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
+              <span style={{ color: '#64748b' }}>เบอร์พร้อมเพย์:</span>
+              <strong style={{ color: '#0f172a', fontFamily: 'monospace', fontSize: 14 }}>{phoneNumber}</strong>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
+              <span style={{ color: '#64748b' }}>ยอดชำระสุทธิ:</span>
+              <strong style={{ color: '#4f46e5', fontSize: 16 }}>{formatPrice(total)}</strong>
+            </div>
           </div>
 
           <button 
-            className="payment-confirm-btn"
-            onClick={handleScanConfirm}
+            type="button"
+            onClick={handleProceedToUpload}
             disabled={loading}
+            style={{
+              background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+              color: 'white',
+              border: 'none',
+              padding: '12px 32px',
+              borderRadius: 12,
+              fontWeight: 700,
+              fontSize: 15,
+              cursor: 'pointer',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              boxShadow: '0 4px 14px rgba(79, 70, 229, 0.35)',
+              transition: 'transform 0.2s'
+            }}
           >
-            <Zap size={18} />
-            ชำระเงินแล้ว
+            <Zap size={18} /> โอนเงินแล้ว ➔ ไปแนบสลิป
           </button>
-          
-          <p style={{ fontSize: 12, marginTop: 16 }}>
-            กดปุ่มหลังจากทำการชำระเงินผ่าน PromptPay แล้ว
-          </p>
         </div>
       )}
 
+      {/* STEP 2: UPLOAD BANK SLIP */}
+      {verificationStep === 'upload' && (
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#fef3c7', color: '#b45309', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 700, marginBottom: 12 }}>
+            <UploadCloud size={16} /> ขั้นตอนแนบสลิปธนาคาร
+          </div>
+
+          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0f172a', margin: '0 0 6px 0' }}>
+            แนบหลักฐานการโอนเงิน (สลิปธนาคาร)
+          </h3>
+          <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 20px 0' }}>
+            กรุณาอัปโหลดรูปภาพสลิปที่โอนเงิน {formatPrice(total)} เข้าเบอร์ {phoneNumber}
+          </p>
+
+          {/* Slip Drag & Drop Area */}
+          <div 
+            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={handleDrop}
+            onClick={() => document.getElementById('slip-file-input').click()}
+            style={{
+              border: dragOver ? '2px dashed #4f46e5' : slipImage ? '2px solid #22c55e' : '2px dashed #cbd5e1',
+              background: dragOver ? '#eef2ff' : slipImage ? '#f0fdf4' : '#f8fafc',
+              borderRadius: 16,
+              padding: '24px 16px',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              marginBottom: 20,
+              position: 'relative'
+            }}
+          >
+            <input 
+              id="slip-file-input"
+              type="file" 
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handleFileUpload(e.target.files[0]);
+                }
+              }}
+            />
+
+            {slipImage ? (
+              <div>
+                <img 
+                  src={slipImage} 
+                  alt="Bank Slip Preview" 
+                  style={{ maxHeight: 180, maxWidth: '100%', borderRadius: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', marginBottom: 10 }}
+                />
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                  <Check size={16} /> แนบสลิปเรียบร้อย: {slipName}
+                </div>
+                <div style={{ fontSize: 11, color: '#64748b', marginTop: 4 }}>
+                  (คลิกเพื่อเปลี่ยนรูปสลิปใหม่)
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div style={{ width: 48, height: 48, background: '#eef2ff', color: '#4f46e5', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px auto' }}>
+                  <UploadCloud size={24} />
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: '#1e293b', marginBottom: 4 }}>
+                  คลิกเพื่อเลือกไฟล์สลิป หรือลากไฟล์มาวางที่นี่
+                </div>
+                <div style={{ fontSize: 12, color: '#94a3b8' }}>
+                  รองรับไฟล์รูปภาพ JPG, PNG, WEBP จากแอปธนาคาร
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
+            <button
+              type="button"
+              onClick={() => setVerificationStep('qr')}
+              style={{
+                background: '#ffffff',
+                border: '1px solid #cbd5e1',
+                color: '#475569',
+                padding: '10px 20px',
+                borderRadius: 10,
+                fontSize: 14,
+                fontWeight: 600,
+                cursor: 'pointer'
+              }}
+            >
+              ◀ กลับไปดู QR
+            </button>
+
+            <button
+              type="button"
+              onClick={handleConfirmSlip}
+              disabled={!slipImage}
+              style={{
+                background: slipImage ? 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)' : '#cbd5e1',
+                color: 'white',
+                border: 'none',
+                padding: '10px 24px',
+                borderRadius: 10,
+                fontSize: 14,
+                fontWeight: 700,
+                cursor: slipImage ? 'pointer' : 'not-allowed',
+                boxShadow: slipImage ? '0 4px 12px rgba(22, 163, 74, 0.3)' : 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 6
+              }}
+            >
+              <CheckCircle size={16} /> ยืนยันสลิปโอนเงิน
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3: VERIFYING SLIP */}
       {verificationStep === 'verifying' && (
-        <div className="payment-step">
-          <div style={{ marginBottom: 20 }}>
-            <Clock size={48} style={{ margin: '0 auto', display: 'block', animation: 'spin 2s linear infinite', color: '#4CAF50' }} />
-          </div>
-          <h3 style={{ fontSize: 20 }}>กำลังตรวจสอบการชำระเงิน</h3>
-          <p style={{ marginBottom: 20 }}>รอสักครู่...</p>
-          
-          <div className="verification-status status-pending">
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, fontSize: 16 }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><Radio size={16} /> ตรวจสอบการชำระ</span>
-            </div>
-          </div>
-
-          <div className="countdown-timer">{countdown}s</div>
-
-          <div className="reference-text">
-            หมายเลขอ้างอิง: {referenceNo}
+        <div style={{ textAlign: 'center', padding: '20px 0' }}>
+          <Clock size={48} style={{ margin: '0 auto 16px auto', display: 'block', color: '#4f46e5', animation: 'spin 2s linear infinite' }} />
+          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#0f172a', marginBottom: 6 }}>
+            กำลังตรวจสอบสลิปและยืนยันยอดเงิน
+          </h3>
+          <p style={{ fontSize: 13, color: '#64748b', marginBottom: 16 }}>
+            ระบบกำลังประมวลผลความถูกต้อง กรุณารอสักครู่ ({countdown}s)...
+          </p>
+          <div style={{ fontSize: 12, fontFamily: 'monospace', background: '#f8fafc', padding: '6px 12px', borderRadius: 8, border: '1px solid #e2e8f0', display: 'inline-block', color: '#475569' }}>
+            รหัสอ้างอิง: {referenceNo}
           </div>
         </div>
       )}
 
+      {/* STEP 4: CONFIRMED */}
       {verificationStep === 'confirmed' && (
-        <div className="payment-step">
-          <div style={{ marginBottom: 20 }} className="success-icon">
-            <CheckCircle size={56} style={{ margin: '0 auto', display: 'block', color: '#4CAF50' }} />
+        <div style={{ textAlign: 'center', padding: '16px 0' }}>
+          <div style={{ width: 56, height: 56, background: '#dcfce7', color: '#16a34a', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px auto' }}>
+            <CheckCircle size={32} />
           </div>
-          <h3 style={{ fontSize: 20, color: '#4CAF50', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}><CheckCircle size={22} /> ชำระเงินสำเร็จ</h3>
-          
-          <div className="verification-status status-confirmed">
-            <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 12, color: '#2e7d32', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-              <CheckCircle size={20} /> ได้รับชำระเงิน {formatPrice(total)}
-            </div>
-            <div style={{ fontSize: 14, marginBottom: 8, color: '#333' }}>
-              เบอร์โทร: {phoneNumber}
-            </div>
-            <div style={{ fontSize: 14, fontFamily: 'monospace', color: '#333' }}>
-              อ้างอิง: {referenceNo}
-            </div>
-          </div>
-
-          <p style={{ fontSize: 13, marginTop: 16, color: '#4CAF50', fontWeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-            <CheckCircle size={14} /> การสั่งซื้อของคุณได้รับการยืนยันแล้ว
+          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#15803d', marginBottom: 4 }}>
+            ตรวจสอบสลิปและชำระเงินสำเร็จแล้ว!
+          </h3>
+          <p style={{ fontSize: 13, color: '#64748b', margin: '0 0 16px 0' }}>
+            แนบสลิปเรียบร้อยแล้ว กดปุ่ม "ยืนยันสั่งซื้อและรับสิทธิ์เข้าอ่าน" เพื่อเสร็จสิ้น
           </p>
+          <div style={{ fontSize: 12, background: '#f0fdf4', color: '#166534', padding: '8px 14px', borderRadius: 8, border: '1px solid #bbf7d0', display: 'inline-block', fontWeight: 600 }}>
+            ได้รับยอดเงิน {formatPrice(total)} ครบถ้วน
+          </div>
         </div>
       )}
 

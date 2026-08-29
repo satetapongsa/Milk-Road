@@ -30,8 +30,7 @@ export default function Checkout() {
     const [custProvince, setCustProvince] = useState('');
     const [custZipcode, setCustZipcode] = useState('');
 
-    // Payment Simulation States
-    const [simulationStep, setSimulationStep] = useState('none'); // none, processing, success
+    const [slipImage, setSlipImage] = useState(null);
 
     useEffect(() => {
         if (cart.length === 0 && !isSubmitted) {
@@ -115,6 +114,7 @@ export default function Checkout() {
                 payment: {
                     method: finalPaymentMethod,
                     timestamp,
+                    slipImage: slipImage || null,
                     referenceNo: paymentMethod === 'credit' ? 'TXN-' + Date.now().toString().slice(-8).toUpperCase() : 'REF-' + Date.now().toString().slice(-8).toUpperCase()
                 },
                 status: paymentMethod === 'cod' ? 'Pending' : 'Completed',
@@ -371,8 +371,12 @@ export default function Checkout() {
                             <PromptPayPayment 
                                 total={total}
                                 phoneNumber="0815018272"
+                                onSlipUpload={(uploadedSlip) => {
+                                    setSlipImage(uploadedSlip);
+                                }}
                                 onPaymentComplete={(data) => {
                                     setPaymentMethod('promptpay');
+                                    if (data?.slipImage) setSlipImage(data.slipImage);
                                 }}
                             />
                         </div>
