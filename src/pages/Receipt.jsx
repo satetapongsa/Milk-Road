@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { formatPrice, CONFIG } from '../data/products';
 import { CheckCircle, Printer, ArrowLeft, Download, Truck, Star, Edit3, Palette, Lightbulb, BookOpen, ArrowRight } from 'lucide-react';
 import { getOrderById, listOrders } from '../lib/ordersApi';
 import { submitReview } from '../lib/reviewsApi';
-
-import { useParams } from 'react-router-dom';
 
 export default function Receipt() {
     const navigate = useNavigate();
