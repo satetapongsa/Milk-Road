@@ -168,16 +168,19 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
 .logo {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--secondary);
   display: flex;
   align-items: center;
   gap: 8px;
   letter-spacing: -0.5px;
+  flex-shrink: 0;
+  margin-right: auto;
 }
 
 .logo-icon {
@@ -198,12 +201,14 @@ p {
 
 .nav-menu {
   display: flex;
-  gap: 32px;
+  gap: 18px;
   background: white;
-  padding: 8px 24px;
+  padding: 6px 18px;
   border-radius: var(--radius-full);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-link {

@@ -79,9 +79,9 @@ export default function Header({ onOpenCart }) {
     return (
         <header className="header">
             <div className="container header-container">
-                <Link to="/" className="logo" onClick={() => { setSearchParams({}); setSearchTerm(''); }}>
-                    <img src="/images/logo.png" alt="StudyRoad Logo" style={{ height: '40px', borderRadius: '8px' }} />
-                    <span style={{ marginLeft: '8px', fontWeight: 800, background: 'linear-gradient(135deg, #6366f1, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>StudyRoad</span>
+                <Link to="/" className="logo" onClick={() => { setSearchParams({}); setSearchTerm(''); }} style={{ flexShrink: 0, marginRight: '12px' }}>
+                    <img src="/images/logo.png" alt="StudyRoad Logo" style={{ height: '38px', borderRadius: '8px' }} />
+                    <span style={{ marginLeft: '8px', fontWeight: 800, fontSize: '20px', background: 'linear-gradient(135deg, #6366f1, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>StudyRoad</span>
                 </Link>
 
                 <div className="search-bar" ref={searchRef}>
