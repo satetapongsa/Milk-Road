@@ -101,9 +101,9 @@ app.post('/api/auth/login', async (req, res) => {
 
     if (!pool) {
       // Local fallback auth
-      if (email === 'admin@studyroad.com' && password === 'admin123') {
+      if (email === 'satetapongs@gmail.com' && password === '887624@W') {
         return res.json({
-          user: { id: 'admin-id', email, full_name: 'Super Admin (StudyRoad)', role: 'admin' }
+          user: { id: 'admin-id', email, full_name: 'เศรษฐพงศ์ สงวนสุข (Super Admin)', role: 'admin' }
         });
       }
       return res.json({

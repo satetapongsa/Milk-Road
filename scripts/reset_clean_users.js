@@ -29,19 +29,19 @@ async function resetCleanUsers() {
 
         // 1. Wipe all non-admin sample users
         console.log('🧹 Purging all sample users, keeping ONLY Super Admin account...');
-        await client.query(`DELETE FROM users WHERE email != 'admin@studyroad.com';`);
+        await client.query(`DELETE FROM users WHERE email != 'satetapongs@gmail.com';`);
 
         // 2. Ensure Super Admin account exists cleanly
         await client.query(`
             INSERT INTO users (email, password, full_name, role)
-            VALUES ('admin@studyroad.com', 'admin123', 'Super Admin (StudyRoad Official)', 'admin')
+            VALUES ('satetapongs@gmail.com', '887624@W', 'เศรษฐพงศ์ สงวนสุข (Super Admin)', 'admin')
             ON CONFLICT (email) DO UPDATE 
-            SET full_name = 'Super Admin (StudyRoad Official)', password = 'admin123', role = 'admin';
+            SET full_name = 'เศรษฐพงศ์ สงวนสุข (Super Admin)', password = '887624@W', role = 'admin';
         `);
 
         // 3. Count remaining users
         const countRes = await client.query(`SELECT COUNT(*) FROM users;`);
-        console.log(`✅ Clean Users Reset Complete! Remaining users in DB: ${countRes.rows[0].count} user (admin@studyroad.com)`);
+        console.log(`✅ Clean Users Reset Complete! Remaining users in DB: ${countRes.rows[0].count} user (satetapongs@gmail.com)`);
 
         client.release();
         process.exit(0);
