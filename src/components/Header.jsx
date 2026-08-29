@@ -161,9 +161,9 @@ export default function Header({ onOpenCart }) {
                     {isLoggedIn ? (
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f8fafc', padding: '4px 10px', borderRadius: 20, border: '1px solid #e2e8f0' }}>
                             <span style={{ fontSize: 12, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 4 }}>
-                                {isAdmin && <ShieldCheck size={14} color="#059669" />}
+                                {isAdmin && <ShieldCheck size={14} color="#4f46e5" />}
                                 {currentUser.full_name}
-                                {isAdmin && <span style={{ background: '#dcfce7', color: '#15803d', fontSize: 10, padding: '1px 6px', borderRadius: 10 }}>Admin</span>}
+                                {isAdmin && <span style={{ background: '#eef2ff', color: '#4f46e5', fontSize: 10, padding: '1px 6px', borderRadius: 10 }}>Admin</span>}
                             </span>
                             <button
                                 onClick={logout}
@@ -177,7 +177,7 @@ export default function Header({ onOpenCart }) {
                         <button
                             onClick={() => openAuthModal('กรุณาเข้าสู่ระบบหรือสมัครสมาชิกก่อนเข้าชม/สั่งซื้อไฟล์สรุป')}
                             style={{
-                                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
                                 color: 'white',
                                 border: 'none',
                                 padding: '8px 16px',

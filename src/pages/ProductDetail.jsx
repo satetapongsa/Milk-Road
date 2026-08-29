@@ -190,7 +190,7 @@ export default function ProductDetail() {
                                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, borderTop: '1px dashed var(--border)', paddingTop: 12 }}>
                                         {product.mfg_date && (
                                             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                                                <div style={{ background: '#dcfce7', color: '#16a34a', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                <div style={{ background: '#eef2ff', color: '#4f46e5', padding: 8, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                     <CalendarDays size={18} />
                                                 </div>
                                                 <div>
@@ -243,7 +243,7 @@ export default function ProductDetail() {
                                         <button
                                             className={`btn btn-block ${isAdded ? 'btn-success' : 'btn-primary'}`}
                                             onClick={handleAddToCart}
-                                            style={{ flexGrow: 1, backgroundColor: isAdded ? '#10b981' : undefined, border: isAdded ? 'none' : undefined }}
+                                            style={{ flexGrow: 1, backgroundColor: isAdded ? '#4f46e5' : undefined, border: isAdded ? 'none' : undefined }}
                                         >
                                             {isAdded ? (
                                                 <>
@@ -267,9 +267,9 @@ export default function ProductDetail() {
                                                  display: 'inline-flex', 
                                                  alignItems: 'center', 
                                                  gap: 8, 
-                                                 color: '#047857', 
-                                                 borderColor: '#10b981', 
-                                                 background: '#ecfdf5',
+                                                 color: '#4f46e5', 
+                                                 borderColor: '#6366f1', 
+                                                 background: '#eef2ff',
                                                  fontSize: 13,
                                                  fontWeight: 700,
                                                  padding: '8px 16px',
