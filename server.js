@@ -158,6 +158,21 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
+app.get('/api/admin/users', async (req, res) => {
+  try {
+    if (!pool) {
+      return res.json([
+        { id: '1', email: 'admin@studyroad.com', full_name: 'Super Admin', role: 'admin' },
+        { id: '2', email: 'somchai.j@gmail.com', full_name: 'สมชาย ใจดี', role: 'user' }
+      ]);
+    }
+    const { rows } = await pool.query('SELECT id, email, full_name, role, created_at FROM users ORDER BY created_at DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/admin/products', async (req, res) => {
   try {
     if (!pool) return res.json(getLocalProducts());
