@@ -15,6 +15,7 @@ import About from './pages/About';
 import Team from './pages/Team';
 import JoinUs from './pages/JoinUs';
 import Reader from './pages/Reader';
+import MyLibrary from './pages/MyLibrary';
 import AuthModal from './components/AuthModal';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
@@ -33,6 +34,7 @@ function App() {
             <Route path="quotation-request" element={<QuotationRequest />} />
             <Route path="quotation" element={<Quotation />} />
             <Route path="account" element={<Account />} />
+            <Route path="my-library" element={<MyLibrary />} />
             <Route path="orders" element={<OrderHistory />} />
             <Route path="order/:id" element={<Receipt />} />
             <Route path="product/:id" element={<ProductDetail />} />

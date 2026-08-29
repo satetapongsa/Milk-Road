@@ -302,8 +302,163 @@ export default function ProductDetail() {
                     </div>
                 </div>
 
-                {/* In-App PDF Reader Section */}
-                <PDFReaderViewer product={product} pdfUrl={product.download_url || "/downloads/biology_summary_m46.pdf"} />
+                {/* Blurred Sample Teaser Card Section (Rounded & Styled matching site theme) */}
+                <div style={{
+                    background: '#ffffff',
+                    borderRadius: '24px',
+                    border: '1px solid #e2e8f0',
+                    boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.08)',
+                    marginTop: '48px',
+                    padding: '32px',
+                    overflow: 'hidden'
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: 12 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                            <div style={{ background: '#ecfdf5', color: '#047857', padding: '10px', borderRadius: '12px', display: 'flex' }}>
+                                <FlaskConical size={22} />
+                            </div>
+                            <div>
+                                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                    📖 ตัวอย่างหน้าปกและสารบัญชีทสรุป (Sample Teaser Preview)
+                                    <span style={{ background: '#059669', color: 'white', fontSize: 11, padding: '2px 10px', borderRadius: 12, fontWeight: 600 }}>
+                                        ดูฟรี 3 หน้าแรก
+                                    </span>
+                                </h3>
+                                <p style={{ margin: '4px 0 0 0', fontSize: 13, color: '#64748b' }}>
+                                    เห็นตัวอย่างหน้าปก สารบัญ และเค้าโครงบทเรียนก่อนตัดสินใจสั่งซื้อ
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 3 Pages Grid (Page 1 Crisp, Pages 2 & 3 Blurred with Lock Overlay) */}
+                    <div style={{ position: 'relative', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
+                        
+                        {/* Page 1: Cover (Crisp Preview) */}
+                        <div style={{
+                            background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+                            borderRadius: '16px',
+                            border: '1px solid #cbd5e1',
+                            padding: '24px',
+                            minHeight: '340px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                            position: 'relative'
+                        }}>
+                            <span style={{ position: 'absolute', top: 12, right: 12, background: '#059669', color: 'white', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10 }}>
+                                หน้า 1 (หน้าปก)
+                            </span>
+                            <div style={{ borderBottom: '2px solid #059669', paddingBottom: 12 }}>
+                                <img src="/images/logo.png" alt="Logo" style={{ height: 28, borderRadius: 4, marginBottom: 8 }} />
+                                <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', textTransform: 'uppercase' }}>STUDYROAD HIGH-YIELD NOTES</div>
+                                <div style={{ fontSize: 15, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
+                                    {product?.name}
+                                </div>
+                            </div>
+                            <div style={{ margin: '16px 0', fontSize: 12, color: '#334155', lineHeight: 1.6 }}>
+                                📌 สรุปเข้ม 5 บทใหญ่ อัปแน่นเตรียมสอบ A-Level<br />
+                                📌 แผนภาพกระบวนการ & ตารางเปรียบเทียบ<br />
+                                📌 เก็งจุดเน้นออกสอบย้อนหลัง 5 ปี
+                            </div>
+                            <div style={{ fontSize: 10, color: '#94a3b8', borderTop: '1px solid #e2e8f0', paddingTop: 8, textAlign: 'center' }}>
+                                © บริษัท สตั๊ดดี้ โรด จำกัด • สงวนลิขสิทธิ์
+                            </div>
+                        </div>
+
+                        {/* Page 2: Table of Contents (Blurred Preview) */}
+                        <div style={{
+                            background: '#ffffff',
+                            borderRadius: '16px',
+                            border: '1px solid #e2e8f0',
+                            padding: '24px',
+                            minHeight: '340px',
+                            filter: 'blur(5px)',
+                            userSelect: 'none',
+                            opacity: 0.6
+                        }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#059669' }}>หน้า 2 (สารบัญ)</span>
+                            <h4 style={{ fontSize: 14, fontWeight: 800, marginTop: 8 }}>สารบัญเนื้อหาบทเรียนชีววิทยา</h4>
+                            <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 12 }}>
+                                <div style={{ background: '#f1f5f9', padding: 8, borderRadius: 6 }}>1. เซลล์และการลำเลียงสาร ......... หน้า 1</div>
+                                <div style={{ background: '#f1f5f9', padding: 8, borderRadius: 6 }}>2. การหายใจระดับเซลล์ .......... หน้า 25</div>
+                                <div style={{ background: '#f1f5f9', padding: 8, borderRadius: 6 }}>3. พันธุศาสตร์ & เทคโนโลยี DNA .. หน้า 55</div>
+                                <div style={{ background: '#f1f5f9', padding: 8, borderRadius: 6 }}>4. สรีรวิทยาของมนุษย์ ............ หน้า 85</div>
+                                <div style={{ background: '#f1f5f9', padding: 8, borderRadius: 6 }}>5. นิเวศวิทยา & วิวัฒนาการ ......... หน้า 120</div>
+                            </div>
+                        </div>
+
+                        {/* Page 3: Sample Content (Blurred Preview) */}
+                        <div style={{
+                            background: '#ffffff',
+                            borderRadius: '16px',
+                            border: '1px solid #e2e8f0',
+                            padding: '24px',
+                            minHeight: '340px',
+                            filter: 'blur(6px)',
+                            userSelect: 'none',
+                            opacity: 0.6
+                        }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#059669' }}>หน้า 3 (ตัวอย่างบทที่ 1)</span>
+                            <h4 style={{ fontSize: 14, fontWeight: 800, marginTop: 8 }}>1.1 โครงสร้างเซลล์และหน้าที่ของออร์แกเนลล์</h4>
+                            <p style={{ fontSize: 11, color: '#475569', marginTop: 8 }}>
+                                นิวเคลียส มีเยื่อหุ้ม 2 ชั้น เก็บรหัสพันธุกรรม ไมโตคอนเดรีย สร้าง ATP ผ่านกระบวนการ Krebs cycle...
+                            </p>
+                            <div style={{ height: 80, background: '#e2e8f0', borderRadius: 8, marginTop: 12 }}></div>
+                        </div>
+
+                        {/* Glassmorphism Lock Overlay across Blurred Pages */}
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            width: 'calc(66.6% + 10px)',
+                            height: '100%',
+                            background: 'rgba(15, 23, 42, 0.82)',
+                            backdropFilter: 'blur(6px)',
+                            borderRadius: '16px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '30px',
+                            textAlign: 'center',
+                            color: 'white',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                            zIndex: 10
+                        }}>
+                            <div style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: 14, borderRadius: '50%', marginBottom: 12, border: '1px solid rgba(16, 185, 129, 0.4)' }}>
+                                <ShieldCheck size={36} />
+                            </div>
+                            <h3 style={{ fontSize: 18, fontWeight: 800, margin: '0 0 6px 0', color: '#f8fafc' }}>
+                                🔒 ต้องซื้อสินค้าก่อนเท่านั้นถึงจะเปิดอ่านได้
+                            </h3>
+                            <p style={{ fontSize: 13, color: '#cbd5e1', maxWidth: 380, margin: '0 0 18px 0', lineHeight: 1.5 }}>
+                                ปลดล็อคเนื้อหาฉบับเต็ม 150 หน้า พร้อมเข้าอ่านผ่านคลังหนังสือส่วนตัวได้ตลอดชีพ
+                            </p>
+                            <button
+                                onClick={handleAddToCart}
+                                style={{
+                                    background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                    color: 'white',
+                                    border: 'none',
+                                    padding: '12px 28px',
+                                    borderRadius: '12px',
+                                    fontWeight: 800,
+                                    fontSize: 14,
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 14px rgba(5, 150, 105, 0.4)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 8
+                                }}
+                            >
+                                <ShoppingCart size={18} /> สั่งซื้อเพื่อปลดล็อคทันที (฿{product?.price})
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <style>{`
                 @media (max-width: 900px) {

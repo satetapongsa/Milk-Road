@@ -144,7 +144,8 @@ export default function Header({ onOpenCart }) {
 
                 <nav className="nav-menu">
                     <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>หน้าแรก</NavLink>
-                    <a href="/#products" className="nav-link">สินค้า</a>
+                    <a href="/#products" className="nav-link">ชีทสรุป & คอร์สเรียน</a>
+                    <NavLink to="/my-library" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>📚 คลังหนังสือส่วนตัว</NavLink>
                     <NavLink to="/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>รายการสั่งซื้อ</NavLink>
                     <NavLink to="/account" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>บัญชีผู้ใช้</NavLink>
                 </nav>
