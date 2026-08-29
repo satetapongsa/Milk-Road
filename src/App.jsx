@@ -15,6 +15,7 @@ import About from './pages/About';
 import Team from './pages/Team';
 import JoinUs from './pages/JoinUs';
 import Reader from './pages/Reader';
+import AuthModal from './components/AuthModal';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
 
@@ -23,6 +24,7 @@ function App() {
     <ProductProvider>
       <CartProvider>
         <BrowserRouter>
+        <AuthModal />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

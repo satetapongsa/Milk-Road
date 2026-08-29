@@ -28,6 +28,7 @@ async function runSeed() {
 
   try {
     console.log('🧹 Cleaning existing tables and types...');
+    await client.query('DROP TABLE IF EXISTS users CASCADE;');
     await client.query('DROP TABLE IF EXISTS product_reviews CASCADE;');
     await client.query('DROP TABLE IF EXISTS admin_logs CASCADE;');
     await client.query('DROP TABLE IF EXISTS payments CASCADE;');
@@ -45,6 +46,29 @@ async function runSeed() {
 
     console.log('🛠️ Creating tables...');
     
+    // Users (Auth & Roles)
+    await client.query(`
+      CREATE TABLE users (
+        id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        full_name TEXT NOT NULL,
+        role TEXT DEFAULT 'user',
+        created_at TIMESTAMPTZ DEFAULT NOW(),
+        updated_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `);
+
+    // Seed Admin Account into Neon PostgreSQL
+    console.log('🔑 Seeding Admin & User accounts...');
+    await client.query(`
+      INSERT INTO users (email, password, full_name, role)
+      VALUES 
+        ('admin@studyroad.com', 'admin123', 'Super Admin (StudyRoad)', 'admin'),
+        ('user@studyroad.com', 'user123', 'สมชาย ใจดี (นิสิตนักศึกษา)', 'user')
+      ON CONFLICT (email) DO NOTHING;
+    `);
+
     // Customers
     await client.query(`
       CREATE TABLE customers (

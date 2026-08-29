@@ -89,6 +89,75 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+// ==========================================
+// AUTHENTICATION API (LOGIN & REGISTER)
+// ==========================================
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: 'กรุณากรอกอีเมลและรหัสผ่าน' });
+    }
+
+    if (!pool) {
+      // Local fallback auth
+      if (email === 'admin@studyroad.com' && password === 'admin123') {
+        return res.json({
+          user: { id: 'admin-id', email, full_name: 'Super Admin (StudyRoad)', role: 'admin' }
+        });
+      }
+      return res.json({
+        user: { id: 'user-id', email, full_name: 'สมาชิก StudyRoad', role: 'user' }
+      });
+    }
+
+    const { rows } = await pool.query('SELECT id, email, full_name, role, password FROM users WHERE email = $1', [email.trim().toLowerCase()]);
+    if (rows.length === 0) {
+      return res.status(401).json({ error: 'ไม่พบบัญชีผู้ใช้นี้ในระบบ กรุณาสมัครสมาชิก' });
+    }
+
+    const user = rows[0];
+    if (user.password !== password) {
+      return res.status(401).json({ error: 'รหัสผ่านไม่ถูกต้อง' });
+    }
+
+    delete user.password;
+    res.json({ user });
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+  try {
+    const { email, password, full_name } = req.body;
+    if (!email || !password || !full_name) {
+      return res.status(400).json({ error: 'กรุณากรอกข้อมูลให้ครบถ้วน' });
+    }
+
+    if (!pool) {
+      return res.json({
+        user: { id: 'new-user-id', email, full_name, role: 'user' }
+      });
+    }
+
+    const { rows } = await pool.query(
+      `INSERT INTO users (email, password, full_name, role)
+       VALUES ($1, $2, $3, 'user')
+       RETURNING id, email, full_name, role`,
+      [email.trim().toLowerCase(), password, full_name]
+    );
+
+    res.json({ user: rows[0] });
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(400).json({ error: 'อีเมลนี้ถูกใช้งานไปแล้วในระบบ' });
+    }
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/admin/products', async (req, res) => {
   try {
     if (!pool) return res.json(getLocalProducts());

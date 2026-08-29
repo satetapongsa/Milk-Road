@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useSearchParams, useNavigate } from 'react-router-dom';
-import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight, Filter, ChevronDown } from 'lucide-react';
+import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight, Filter, ChevronDown, LogIn, LogOut, ShieldCheck } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Header({ onOpenCart }) {
     const { totalItems } = useCart();
     const { products } = useProducts();
+    const { currentUser, isLoggedIn, isAdmin, logout, openAuthModal } = useAuth();
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
     const [suggestions, setSuggestions] = useState([]);
@@ -147,16 +149,50 @@ export default function Header({ onOpenCart }) {
                     <NavLink to="/account" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>บัญชีผู้ใช้</NavLink>
                 </nav>
 
-                <div className="header-actions">
+                <div className="header-actions" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                     <button className="icon-btn" id="cart-btn" onClick={onOpenCart}>
                         <ShoppingCart size={20} />
                         <span className={`badge ${totalItems > 0 ? 'bump' : ''}`} id="cart-count" key={totalItems}>
                             {totalItems}
                         </span>
                     </button>
-                    <Link to="/account" className="icon-btn">
-                        <User size={20} />
-                    </Link>
+
+                    {isLoggedIn ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f8fafc', padding: '4px 10px', borderRadius: 20, border: '1px solid #e2e8f0' }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 4 }}>
+                                {isAdmin && <ShieldCheck size={14} color="#059669" />}
+                                {currentUser.full_name}
+                                {isAdmin && <span style={{ background: '#dcfce7', color: '#15803d', fontSize: 10, padding: '1px 6px', borderRadius: 10 }}>Admin</span>}
+                            </span>
+                            <button
+                                onClick={logout}
+                                title="ออกจากระบบ"
+                                style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', padding: 2 }}
+                            >
+                                <LogOut size={15} />
+                            </button>
+                        </div>
+                    ) : (
+                        <button
+                            onClick={() => openAuthModal('กรุณาเข้าสู่ระบบหรือสมัครสมาชิกก่อนเข้าชม/สั่งซื้อไฟล์สรุป')}
+                            style={{
+                                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                color: 'white',
+                                border: 'none',
+                                padding: '8px 16px',
+                                borderRadius: 20,
+                                fontSize: 12,
+                                fontWeight: 700,
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 6,
+                                boxShadow: '0 2px 8px rgba(5, 150, 105, 0.25)'
+                            }}
+                        >
+                            <LogIn size={15} /> เข้าสู่ระบบ / สมัครสมาชิก
+                        </button>
+                    )}
                 </div>
             </div>
 

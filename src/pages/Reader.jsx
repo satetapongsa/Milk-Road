@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, BookOpen, Lock, ShieldCheck, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize, Minimize, AlertCircle, Layers, CheckCircle2, FileText, Sparkles } from 'lucide-react';
 import { useProducts } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
 import { formatPrice } from '../data/products';
 
 export default function Reader() {
@@ -9,12 +10,12 @@ export default function Reader() {
     const navigate = useNavigate();
     const { products, getProductById } = useProducts();
     const product = getProductById(id) || products[0];
+    const { currentUser, isLoggedIn, isAdmin, openAuthModal } = useAuth();
 
     const [currentPage, setCurrentPage] = useState(1);
     const [zoom, setZoom] = useState(100);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [selectedChapter, setSelectedChapter] = useState(0);
-    const [isPurchased, setIsPurchased] = useState(true); // Default active user session
     const [activeTab, setActiveTab] = useState('reader'); // reader | contents | info
 
     // Chapter outline with rich high-yield study content
@@ -310,6 +311,54 @@ export default function Reader() {
                     position: 'relative'
                 }} className="no-copy">
                     
+                    {/* Mandatory Auth Guard Overlay */}
+                    {!isLoggedIn && (
+                        <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(255, 255, 255, 0.96)',
+                            backdropFilter: 'blur(10px)',
+                            zIndex: 100,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '40px',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{ background: '#ecfdf5', color: '#047857', padding: 20, borderRadius: '50%', marginBottom: 16 }}>
+                                <Lock size={48} />
+                            </div>
+                            <h2 style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginBottom: 8 }}>
+                                🔒 จำเป็นต้องเข้าสู่ระบบก่อนเข้าอ่านไฟล์สรุป
+                            </h2>
+                            <p style={{ fontSize: 14, color: '#64748b', maxWidth: 460, marginBottom: 24, lineHeight: 1.6 }}>
+                                ทุกคนจำเป็นต้องมีบัญชีสมาชิกก่อนเข้าชมหรืออ่านไฟล์สรุปในระบบ กรุณาสมัครสมาชิกหรือเข้าสู่ระบบ หรือใช้บัญชีแอดมินเพื่อสิทธิ์การเข้าถึงทุกไฟล์ถาวร
+                            </p>
+                            <div style={{ display: 'flex', gap: 12 }}>
+                                <button
+                                    onClick={() => openAuthModal('กรุณาสมัครสมาชิกหรือเข้าสู่ระบบเพื่ออ่านไฟล์สรุป')}
+                                    style={{
+                                        background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                        color: 'white',
+                                        border: 'none',
+                                        padding: '12px 24px',
+                                        borderRadius: 10,
+                                        fontWeight: 700,
+                                        fontSize: 14,
+                                        cursor: 'pointer',
+                                        boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)'
+                                    }}
+                                >
+                                    🔑 สมัครสมาชิก / เข้าสู่ระบบ
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     {/* Paper Document Container (Light Theme) */}
                     <div 
                         style={{

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
+import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw, FlaskConical, Factory, CalendarDays, CalendarX, ClipboardList, XCircle, AlertTriangle } from 'lucide-react';
 import PDFReaderViewer from '../components/PDFReaderViewer';
 
@@ -12,6 +13,7 @@ export default function ProductDetail() {
     const product = getProductById(id);
     const [quantity, setQuantity] = useState(1);
     const { addToCart } = useCart();
+    const { isLoggedIn, openAuthModal } = useAuth();
     const [isAdded, setIsAdded] = useState(false);
 
     useEffect(() => {
@@ -19,6 +21,10 @@ export default function ProductDetail() {
     }, [id]);
 
     const handleAddToCart = () => {
+        if (!isLoggedIn) {
+            openAuthModal('กรุณาสมัครสมาชิกหรือเข้าสู่ระบบก่อนสั่งซื้อชีทสรุปในระบบ');
+            return;
+        }
         addToCart({ ...product, quantity });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 2000);
