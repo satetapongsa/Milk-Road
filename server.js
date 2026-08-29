@@ -857,22 +857,26 @@ if (fs.existsSync(distDir)) {
   });
 }
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`\n🚀 Milk Road Unified App & Server running on http://localhost:${PORT}`);
-  console.log(`📝 Database connected: ${pool ? 'Neon PostgreSQL' : 'Local File JSON'}\n`);
-  console.log('Available endpoints:');
-  console.log(`  🌐 Website UI         - http://localhost:${PORT}`);
-  console.log(`  GET    /api/products         - List active products`);
-  console.log(`  POST   /api/products         - Add a new product (Admin)`);
-  console.log(`  PUT    /api/products/:id     - Edit a product (Admin)`);
-  console.log(`  DELETE /api/products/:id     - Remove a product (Admin)`);
-  console.log(`  GET    /api/orders           - List all orders with details (Admin)`);
-  console.log(`  POST   /api/orders           - Create new e-commerce order`);
-  console.log(`  PUT    /api/orders/:id       - Edit order (Admin)`);
-  console.log(`  DELETE /api/orders/:id       - Cancel and delete order (Admin)`);
-  console.log(`  POST   /api/orders/reset     - Wipe all orders`);
-  console.log(`  POST   /api/payment          - Create PromptPay payment request`);
-  console.log(`  GET    /api/payment/:orderId - Check payment status`);
-  console.log(`  GET    /health               - Health check\n`);
-});
+// Start server (Only when not running in Vercel Serverless mode)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Milk Road Unified App & Server running on http://localhost:${PORT}`);
+    console.log(`📝 Database connected: ${pool ? 'Neon PostgreSQL' : 'Local File JSON'}\n`);
+    console.log('Available endpoints:');
+    console.log(`  🌐 Website UI         - http://localhost:${PORT}`);
+    console.log(`  GET    /api/products         - List active products`);
+    console.log(`  POST   /api/products         - Add a new product (Admin)`);
+    console.log(`  PUT    /api/products/:id     - Edit a product (Admin)`);
+    console.log(`  DELETE /api/products/:id     - Remove a product (Admin)`);
+    console.log(`  GET    /api/orders           - List all orders with details (Admin)`);
+    console.log(`  POST   /api/orders           - Create new e-commerce order`);
+    console.log(`  PUT    /api/orders/:id       - Edit order (Admin)`);
+    console.log(`  DELETE /api/orders/:id       - Cancel and delete order (Admin)`);
+    console.log(`  POST   /api/orders/reset     - Wipe all orders`);
+    console.log(`  POST   /api/payment          - Create PromptPay payment request`);
+    console.log(`  GET    /api/payment/:orderId - Check payment status`);
+    console.log(`  GET    /health               - Health check\n`);
+  });
+}
+
+export default app;
