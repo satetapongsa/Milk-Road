@@ -24,20 +24,20 @@ export default function Home() {
             <section className="hero" style={{ background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)', color: '#ffffff', padding: '60px 0' }}>
                 <div className="container hero-content" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', alignItems: 'center' }}>
                     <div>
-                        <span style={{ background: 'rgba(255,255,255,0.15)', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, color: '#93c5fd', display: 'inline-block', marginBottom: '16px' }}>
-                            🎓 StudyRoad Digital Learning Hub
+                        <span style={{ background: 'rgba(255,255,255,0.15)', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 700, color: '#93c5fd', display: 'inline-block', marginBottom: '16px' }}>
+                            🎓 StudyRoad Interactive Textbook Platform
                         </span>
-                        <h1 style={{ fontSize: '2.5rem', lineHeight: 1.2, fontWeight: 800, marginBottom: '16px' }}>
-                            เรียนอย่างมั่นใจ สรุปชีทตรงประเด็น<br />
-                            <span style={{ background: 'linear-gradient(135deg, #a5b4fc, #f472b6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                                แคลคูลัส ฟิสิกส์ เคมี ชีวะ
+                        <h1 style={{ fontSize: '2.5rem', lineHeight: 1.2, fontWeight: 900, marginBottom: '16px' }}>
+                            ตำราเรียนออนไลน์ฉบับสมบูรณ์<br />
+                            <span style={{ background: 'linear-gradient(135deg, #93c5fd, #60a5fa, #a5b4fc)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                                A-Level แคลคูลัส ฟิสิกส์ เคมี ชีวะ
                             </span>
                         </h1>
                         <p style={{ fontSize: '1.05rem', color: '#e0e7ff', marginBottom: '24px', lineHeight: 1.6 }}>
-                            สรุปชีท PDF ความละเอียดสูงอ่านง่าย พร้อมคอร์สเรียนวิดีโอความคมชัด HD จากทีมอาจารย์สาย STEM ดาวน์โหลดอ่านได้ทันที เข้าเรียนได้ตลอดชีพ
+                            ตำราเรียนออนไลน์ (Techbooks) ความคมชัดสูง อ่านลื่นไหลแบบสไลด์แนวตั้งต่อเนื่อง 20 หน้าจบ พร้อมระบบ DRM ป้องกันลิขสิทธิ์ เข้าอ่านทบทวนได้ตลอดชีพ
                         </p>
-                        <a href="#products" className="btn btn-primary" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', padding: '12px 28px', fontSize: '1rem' }}>
-                            เลือกคอร์ส & ชีทสรุป <ArrowRight size={18} />
+                        <a href="#products" className="btn btn-primary" style={{ background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)', border: 'none', padding: '12px 28px', fontSize: '1rem', fontWeight: 800, boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)' }}>
+                            เลือกดูตำราเรียนทั้งหมด <ArrowRight size={18} />
                         </a>
                     </div>
                     <div style={{ textAlign: 'center' }}>
