@@ -1,0 +1,48 @@
+[
+  {
+    "id": "INV-110300",
+    "date": "29/8/2569",
+    "customer": {
+      "name": "ลูกค้าทั่วไป (จำลอง)",
+      "phone": "081-234-5678",
+      "email": "customer@example.com",
+      "address": "กรุงเทพมหานคร (ชำระเงินจำลอง)"
+    },
+    "items": [
+      {
+        "id": 1,
+        "name": "Milk Road Pure Fresh Milk (นมสดพาสเจอร์ไรส์รสออริจินัล)",
+        "price": 55,
+        "category": "Milk & Dairy",
+        "image": "/images/milk-road-products/pure_fresh_milk.png",
+        "description": "นมสดพาสเจอร์ไรส์เข้มข้น 100% จากฟาร์มโคนมธรรมชาติ ไม่ผสมนมผง หอมมัน อุดมด้วยแคลเซียมและโปรตีนสูง",
+        "specs": [
+          "ขวดแก้ว 450 ml",
+          "นมโคแท้ 100%",
+          "แคลเซียมและโปรตีนสูง"
+        ],
+        "stock_quantity": 100,
+        "ingredients": "นมโคสดแท้พาสเจอร์ไรส์ 100%",
+        "origin": "มิลค์โรด ออร์แกนิคฟาร์ม (เชียงใหม่)",
+        "mfg_date": "2026-08-06",
+        "exp_date": "2026-08-16",
+        "quantity": 1
+      }
+    ],
+    "totals": {
+      "subtotal": 55,
+      "shipping": 50,
+      "total": 105
+    },
+    "payment": {
+      "method": "บัตรเครดิต/เดบิต",
+      "timestamp": "2026-08-29T12:21:50.300Z",
+      "referenceNo": "TXN-06110313"
+    },
+    "status": "Completed",
+    "admin": {
+      "note": "สั่งซื้อจำลองแบบไม่ต้องกรอกข้อมูลครบถ้วน",
+      "trackingNo": ""
+    }
+  }
+]

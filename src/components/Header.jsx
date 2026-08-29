@@ -78,8 +78,8 @@ export default function Header({ onOpenCart }) {
         <header className="header">
             <div className="container header-container">
                 <Link to="/" className="logo" onClick={() => { setSearchParams({}); setSearchTerm(''); }}>
-                    <img src="/images/logo.png" alt="Pharm Road Logo" style={{ height: '40px' }} />
-                    <span style={{ marginLeft: '8px' }}>Pharm Road</span>
+                    <img src="/images/logo.png" alt="StudyRoad Logo" style={{ height: '40px', borderRadius: '8px' }} />
+                    <span style={{ marginLeft: '8px', fontWeight: 800, background: 'linear-gradient(135deg, #6366f1, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>StudyRoad</span>
                 </Link>
 
                 <div className="search-bar" ref={searchRef}>
@@ -87,7 +87,7 @@ export default function Header({ onOpenCart }) {
                         <Search className="search-icon" size={18} />
                         <input
                             type="text"
-                            placeholder="ค้นหาสินค้า..."
+                            placeholder="ค้นหาคอร์สเรียน / สรุปชีทเรียน (แคลคูลัส, ฟิสิกส์, เคมี, ชีวะ)..."
                             value={searchTerm}
                             onChange={handleSearchChange}
                             onFocus={() => { if (searchTerm) setShowSuggestions(true); }}

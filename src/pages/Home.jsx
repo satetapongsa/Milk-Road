@@ -21,18 +21,39 @@ export default function Home() {
 
     return (
         <>
-            <section className="hero">
-                <div className="container hero-content">
-                    <h1>ยกระดับประสบการณ์<br />การช้อปปิ้งออนไลน์</h1>
-                    <p>ระบบจัดการร้านค้ามาตรฐานสากล ตอบโจทย์ทุกความต้องการของธุรกิจคุณ ด้วยดีไซน์ที่ทันสมัยและใช้งานง่าย</p>
-                    <a href="#products" className="btn btn-primary">ช้อปเลย <ArrowRight size={18} /></a>
+            <section className="hero" style={{ background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)', color: '#ffffff', padding: '60px 0' }}>
+                <div className="container hero-content" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', alignItems: 'center' }}>
+                    <div>
+                        <span style={{ background: 'rgba(255,255,255,0.15)', padding: '6px 16px', borderRadius: '20px', fontSize: '13px', fontWeight: 600, color: '#93c5fd', display: 'inline-block', marginBottom: '16px' }}>
+                            🎓 StudyRoad Digital Learning Hub
+                        </span>
+                        <h1 style={{ fontSize: '2.5rem', lineHeight: 1.2, fontWeight: 800, marginBottom: '16px' }}>
+                            เรียนอย่างมั่นใจ สรุปชีทตรงประเด็น<br />
+                            <span style={{ background: 'linear-gradient(135deg, #a5b4fc, #f472b6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                                แคลคูลัส ฟิสิกส์ เคมี ชีวะ
+                            </span>
+                        </h1>
+                        <p style={{ fontSize: '1.05rem', color: '#e0e7ff', marginBottom: '24px', lineHeight: 1.6 }}>
+                            สรุปชีท PDF ความละเอียดสูงอ่านง่าย พร้อมคอร์สเรียนวิดีโอความคมชัด HD จากทีมอาจารย์สาย STEM ดาวน์โหลดอ่านได้ทันที เข้าเรียนได้ตลอดชีพ
+                        </p>
+                        <a href="#products" className="btn btn-primary" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', border: 'none', padding: '12px 28px', fontSize: '1rem' }}>
+                            เลือกคอร์ส & ชีทสรุป <ArrowRight size={18} />
+                        </a>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                        <img 
+                            src="/images/hero_banner.jpg" 
+                            alt="StudyRoad Learning Platform" 
+                            style={{ width: '100%', borderRadius: '16px', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.2)' }} 
+                        />
+                    </div>
                 </div>
             </section>
 
             <section className="section" id="products">
                 <div className="container">
                     <div className="section-header">
-                        <h2>สินค้าทั้งหมด</h2>
+                        <h2>คอร์สเรียน & สรุปชีทบทเรียนทั้งหมด</h2>
                     </div>
 
                     <div className="products-grid" id="products-container">

@@ -1,6 +1,6 @@
 export const CONFIG = {
     vatRate: 0.07,
-    shippingCost: 50,
+    shippingCost: 0, // Instant digital file delivery
     currency: '฿'
 };
 
@@ -15,362 +15,117 @@ export const formatPrice = (price) => {
 export const products = [
     {
         "id": 1,
-        "name": "Milk Road Pure Fresh Milk (นมสดพาสเจอร์ไรส์รสออริจินัล)",
-        "price": 55,
-        "category": "Milk & Dairy",
-        "image": "/images/milk-road-products/pure_fresh_milk.png",
-        "description": "นมสดพาสเจอร์ไรส์เข้มข้น 100% จากฟาร์มโคนมธรรมชาติ ไม่ผสมนมผง หอมมัน อุดมด้วยแคลเซียมและโปรตีนสูง",
+        "name": "[PDF File] สรุปชีววิทยา ม.4-6 ฉบับอัปแน่นเตรียมสอบมหาลัย (A-Level Bio High-Yield Master Summary)",
+        "price": 199,
+        "category": "ชีววิทยา (Biology)",
+        "image": "/images/hero_banner.jpg",
+        "description": "สรุปชีววิทยา ม.4 - ม.6 ครบถ้วนทุกบท 5 หมวดใหญ่ (เซลล์ & การแบ่งเซลล์, การหายใจระดับเซลล์ & สังเคราะห์แสง, พันธุศาสตร์ & เทคโนโลยี DNA, กายวิภาคศาสตร์มนุษย์, นิเวศวิทยา & วิวัฒนาการ) เน้นจุดออกสอบบ่อย จับผิดช้อยหลอก A-Level และข้อสอบเข้ามหาวิทยาลัยปีล่าสุด พร้อมไฟล์ PDF คุณภาพสูงดาวน์โหลดได้ทันทีหลังชำระเงิน!",
         "specs": [
-            "ขวดแก้ว 450 ml",
-            "นมโคแท้ 100%",
-            "แคลเซียมและโปรตีนสูง"
+            "ไฟล์ PDF ฉบับเต็ม ดาวน์โหลดเปิดอ่านได้ทันที",
+            "สรุปเนื้อหาอัปแน่น 5 หมวดใหญ่ ม.4 - ม.6 (150 หน้า)",
+            "มีคีย์เวิร์ดภาษาอังกฤษ + แผนผัง Mind Map ประกอบ",
+            "เก็งจุดออกสอบบ่อยและช้อยหลอกในห้องสอบ A-Level"
         ],
-        "stock_quantity": 100,
-        "ingredients": "นมโคสดแท้พาสเจอร์ไรส์ 100%",
-        "origin": "มิลค์โรด ออร์แกนิคฟาร์ม (เชียงใหม่)",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-16"
+        "download_url": "/downloads/biology_summary_m46.pdf",
+        "stock_quantity": 999,
+        "ingredients": "จัดทำโดย: อ.ดร.จิราพร (ภาควิชาชีววิทยา) & ทีมเกียรตินิยม StudyRoad Bio",
+        "origin": "Digital Instant Download (ไฟล์ PDF 150 หน้า)",
+        "mfg_date": "2026-08-29",
+        "exp_date": "ฉบับอัปเดตเตรียมสอบ A-Level ปี 2026"
     },
     {
         "id": 2,
-        "name": "Hokkaido Strawberry Milk (นมสดสตรอเบอร์รี่ฮอกไกโด)",
-        "price": 65,
-        "category": "Milk & Dairy",
-        "image": "/images/milk-road-products/hokkaido_strawberry_milk.png",
-        "description": "นมสดฮอกไกโดเข้มข้นผสมซอสสตรอเบอร์รี่สดลูกโต รสชาติหวานอมเปรี้ยวกลมกล่อม หอมกลิ่นสตรอเบอร์รี่แท้",
+        "name": "[PDF + Video] แคลคูลัส 1 สรุปเนื้อหา + ตะลุยโจทย์มหาวิทยาลัย (Calculus I Masterclass)",
+        "price": 290,
+        "category": "แคลคูลัส (Calculus)",
+        "image": "/images/calculus_cover.jpg",
+        "description": "สรุปชีท PDF พิมพ์สีทั้งเล่ม 120 หน้า พร้อมคอร์สวิดีโอ 18 ชั่วโมง ครอบคลุมเรื่อง ลิมิต, อนุพันธ์, การประยุกต์อนุพันธ์, อินทิกรัล และการหาพื้นที่ เหมาะสำหรับนิสิตนักศึกษาสายวิศวะฯ และวิทยาศาสตร์",
         "specs": [
-            "ขวด 450 ml",
-            "มีเนื้อสตรอเบอร์รี่แท้",
-            "หวานกำลังดี"
+            "ไฟล์ PDF 120 หน้า พิมพ์สีสวยงาม",
+            "คอร์สวิดีโอ 18 ชม. ดูได้ตลอดชีพ",
+            "โจทย์พร้อมเฉลยละเอียด 300 ข้อ"
         ],
-        "stock_quantity": 80,
-        "ingredients": "นมสด 85%, สตรอเบอร์รี่สด 12%, น้ำตาลอ้อย 3%",
-        "origin": "มิลค์โรด ออร์แกนิคฟาร์ม (เชียงใหม่)",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-14"
+        "download_url": "/downloads/biology_summary_m46.pdf",
+        "stock_quantity": 999,
+        "ingredients": "ผู้สอน: ดร.กิตติศักดิ์ (ทีมอาจารย์ StudyRoad Math)",
+        "origin": "Digital Instant Download (ไฟล์ PDF + วิดีโอ)",
+        "mfg_date": "2026-08-01",
+        "exp_date": "อัปเดตเวอร์ชันปี 2026"
     },
     {
         "id": 3,
-        "name": "Belgian Chocolate Fresh Milk (นมสดช็อกโกแลตเข้มข้นเบลเยียม)",
-        "price": 70,
-        "category": "Milk & Dairy",
-        "image": "/images/milk-road-products/belgian_chocolate_milk.png",
-        "description": "นมสดแท้ผสมผสานกับโกโก้เข้มข้นส่งตรงจากเบลเยียม ให้ความหอมนุ่ม กลมกล่อมสำหรับสาวกช็อกโกแลต",
+        "name": "[PDF Note] สรุปสูตรและเทคนิคคิดลัด แคลคูลัส 2 (Calculus II Cheat Sheet PDF)",
+        "price": 150,
+        "category": "แคลคูลัส (Calculus)",
+        "image": "/images/calculus_cover.jpg",
+        "description": "สรุปชีทสรุปสูตร แคลคูลัส 2 เรื่องลำดับ อนุกรม อนุกรมเทย์เลอร์ พิกัดเชิงขั้ว และอินทิกรัลหลายชั้น สรุปสั้น กระชับ แม่นยำ อ่านจบใน 45 หน้า",
         "specs": [
-            "ขวด 450 ml",
-            "โกโก้เบลเยียมแท้ 100%",
-            "ไม่ใส่วัตถุกันเสีย"
+            "ไฟล์ PDF 45 หน้า",
+            "Mind Map สรุปสูตรสำคัญทุกบท",
+            "ดาวน์โหลดอ่านได้ทันทีหลังชำระเงิน"
         ],
-        "stock_quantity": 90,
-        "ingredients": "นมสด 88%, ผงโกโก้เบลเยียม 8%, น้ำตาล 4%",
-        "origin": "มิลค์โรด ออร์แกนิคฟาร์ม (เชียงใหม่)",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-16"
+        "download_url": "/downloads/biology_summary_m46.pdf",
+        "stock_quantity": 999,
+        "ingredients": "จัดทำโดย: ทีมเกียรตินิยมแคลคูลัส StudyRoad",
+        "origin": "Digital Instant Download",
+        "mfg_date": "2026-07-15",
+        "exp_date": "อัปเดตเวอร์ชันปี 2026"
     },
     {
         "id": 4,
-        "name": "Uji Matcha Fresh Milk (นมสดมัจฉะเข้มข้นอุจิ)",
-        "price": 75,
-        "category": "Milk & Dairy",
-        "image": "/images/milk-road-products/uji_matcha_milk.png",
-        "description": "ชาเขียวมัจฉะเกรดพรีเมียมจากเมืองอุจิ ประเทศญี่ปุ่น ผสมผสานกับนมสดพาสเจอร์ไรส์ หอมละมุน หวานน้อย",
+        "name": "[PDF + Video] ฟิสิกส์ ม.ปลาย & มหาวิทยาลัย: กลศาสตร์และแรง (Physics Mechanics)",
+        "price": 350,
+        "category": "ฟิสิกส์ (Physics)",
+        "image": "/images/hero_banner.jpg",
+        "description": "สรุปชีทฟิสิกส์เรื่อง การเคลื่อนที่, กฎของนิวตัน, งานและพลังงาน, โมเมนตัม และการหมุน พร้อมคลิปวิดีโออธิบายการคำนวณทีละขั้นตอนอย่างละเอียด",
         "specs": [
-            "ขวด 450 ml",
-            "มัจฉะอุจิเกรดพิธีการ",
-            "หวานน้อย 50%"
+            "ไฟล์ PDF 150 หน้า สีสันสดใส",
+            "วิดีโอเฉลยโจทย์ 24 ชั่วโมง",
+            "แจกสูตรลัดและข้อควรระวังในห้องสอบ"
         ],
-        "stock_quantity": 70,
-        "ingredients": "นมสด 90%, ผงมัจฉะอุจิแท้ 7%, น้ำตาล 3%",
-        "origin": "เมืองอุจิ เกียวโต & มิลค์โรดฟาร์ม",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-15"
+        "download_url": "/downloads/biology_summary_m46.pdf",
+        "stock_quantity": 999,
+        "ingredients": "ผู้สอน: อาจารย์ชินวุฒิ (สถาบันฟิสิกส์ StudyRoad)",
+        "origin": "Digital Instant Download + Streaming",
+        "mfg_date": "2026-08-05",
+        "exp_date": "อัปเดตเวอร์ชันปี 2026"
     },
     {
         "id": 5,
-        "name": "Caramel Butter Fresh Milk (นมสดคาราเมลเนยสด)",
-        "price": 65,
-        "category": "Milk & Dairy",
-        "image": "/images/milk-road-products/caramel_butter_milk.png",
-        "description": "นมสดแท้เคี่ยวพร้อมซอสคาราเมลโฮมเมดและเนยสดแท้ ให้ความหอมหวานกลมกล่อมและกลิ่นหอมเนยเตะจมูก",
+        "name": "[PDF + Video] สรุปเคมีอินทรีย์ Visual Mind Map & กลไกปฏิกิริยา (Organic Chemistry Notes)",
+        "price": 290,
+        "category": "เคมี (Chemistry)",
+        "image": "/images/hero_banner.jpg",
+        "description": "สรุปสารประกอบไฮโดรคาร์บอน หมู่ฟังก์ชัน กลไกปฏิกิริยา (Reaction Mechanisms) สรุปเป็นแผนภาพสีวาดมือ 80 หน้า สวยงาม อ่านสนุก ไม่น่าเบื่อ",
         "specs": [
-            "ขวด 450 ml",
-            "ซอสคาราเมลทำเอง",
-            "หอมกลิ่นเนยแท้"
+            "ไฟล์ PDF 80 หน้า วาดมือสีสันสวยงาม",
+            "วิดีโอสรุปกลไกปฏิกิริยา 10 ชม.",
+            "สรุปชื่อ IUPAC และปฏิกิริยาสำคัญ"
         ],
-        "stock_quantity": 85,
-        "ingredients": "นมสด 87%, ซอสคาราเมลเนย 10%, น้ำตาล 3%",
-        "origin": "มิลค์โรด ออร์แกนิคฟาร์ม",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-16"
+        "download_url": "/downloads/biology_summary_m46.pdf",
+        "stock_quantity": 999,
+        "ingredients": "จัดทำโดย: ดร.จิราพร (ภาควิชาเคมี)",
+        "origin": "Digital Instant Download + Streaming",
+        "mfg_date": "2026-08-12",
+        "exp_date": "อัปเดตเวอร์ชันปี 2026"
     },
     {
         "id": 6,
-        "name": "Sweet Condensed Milk Butter Toast (ปังปิ้งเนยนมสดราดนมข้น)",
-        "price": 49,
-        "category": "Bakery & Toast",
-        "image": "/images/milk-road-products/condensed_milk_toast.png",
-        "description": "ขนมปังชิ้นหนานุ่ม ทาเนยสดแท้ปิ้งจนกรอบนอกนุ่มใน ราดด้วยนมข้นหวานสูตรพิเศษของมิลค์โรด",
+        "name": "[PDF Pack] รวมชุดข้อสอบพร้อมเฉลยละเอียด A-Level STEM (Calculus, Physics, Chem, Bio)",
+        "price": 320,
+        "category": "รวมข้อสอบ & ตะลุยโจทย์ (Exam Prep)",
+        "image": "/images/hero_banner.jpg",
+        "description": "คลังไฟล์ข้อสอบเก่า 4 วิชาหลัก (แคลคูลัส ฟิสิกส์ เคมี ชีววิทยา) ย้อนหลัง 7 ปี พร้อมเฉลยวิธีทำอย่างละเอียดทีละข้อ เข้าใจที่มาที่ไปของคำตอบ",
         "specs": [
-            "1 จาน (2 ชิ้นใหญ่)",
-            "ขนมปังเนยสดแท้",
-            "เสิร์ฟไอร้อนพร้อมทาน"
+            "ไฟล์ PDF รวมมากกว่า 350 หน้า",
+            "เฉลยวิธีคิดละเอียดทุกข้อ",
+            "เก็งแนวข้อสอบปีล่าสุด"
         ],
-        "stock_quantity": 150,
-        "ingredients": "แป้งสาลี, เนยสดแท้, นมข้นหวานมิลค์โรด, น้ำตาล",
-        "origin": "มิลค์โรด เบเกอรี่เฮาส์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-08"
-    },
-    {
-        "id": 7,
-        "name": "Double Cheese Butter Toast (ปังปิ้งดับเบิ้ลชีสเนยสด)",
-        "price": 69,
-        "category": "Bakery & Toast",
-        "image": "/images/milk-road-products/double_cheese_toast.png",
-        "description": "ขนมปังเนยสดท็อปด้วยมอสซาเรลล่าชีสและเชดดาร์ชีส ปิ้งจนชีสเยิ้ม ยืด หอมมันเค็มกำลังดี",
-        "specs": [
-            "1 จาน",
-            "มอสซาเรลล่า + เชดดาร์ชีส",
-            "ชีสยืดกรอบนอกนุ่มใน"
-        ],
-        "stock_quantity": 120,
-        "ingredients": "แป้งสาลี, มอสซาเรลล่าชีส, เชดดาร์ชีส, เนยสด",
-        "origin": "มิลค์โรด เบเกอรี่เฮาส์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-08"
-    },
-    {
-        "id": 8,
-        "name": "Nutella Banana Toast (ปังปิ้งนูเทลล่ากล้วยหอมเนยสด)",
-        "price": 79,
-        "category": "Bakery & Toast",
-        "image": "/images/milk-road-products/nutella_banana_toast.png",
-        "description": "ขนมปังปิ้งเนยสดทาดิปนูเทลล่าเข้มข้น วางเรียงกล้วยหอมสุกหวานหอม อร่อยลงตัวสุดๆ",
-        "specs": [
-            "1 จาน",
-            "นูเทลล่าแท้ + กล้วยหอมสด",
-            "เสิร์ฟร้อน"
-        ],
-        "stock_quantity": 100,
-        "ingredients": "ขนมปังเนยสด, เฮเซลนัทสเปรด นูเทลล่า, กล้วยหอมทอง",
-        "origin": "มิลค์โรด เบเกอรี่เฮาส์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-07"
-    },
-    {
-        "id": 9,
-        "name": "Garlic Cream Cheese Bread (ขนมปังกระเทียมครีมชีสสไตล์เกาหลี)",
-        "price": 89,
-        "category": "Bakery & Toast",
-        "image": "/images/milk-road-products/garlic_cream_cheese_bread.png",
-        "description": "ขนมปังเนื้อนุ่มสอดไส้ครีมชีสเนื้อเนียน ชุบเนยกระเทียมและพาร์สลีย์ อบจนหอมฟุ้งทั่วร้าน",
-        "specs": [
-            "1 ก้อนใหญ่",
-            "ครีมชีสแท้จากนมสด",
-            "เนยกระเทียมโฮมเมด"
-        ],
-        "stock_quantity": 90,
-        "ingredients": "แป้งสาลี, ครีมชีสนมสด, กระเทียม, เนยสด, พาร์สลีย์",
-        "origin": "มิลค์โรด เบเกอรี่เฮาส์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-09"
-    },
-    {
-        "id": 10,
-        "name": "Fresh Milk Custard Bun (ซาลาเปาไส้ครีมนมสดลาวา)",
-        "price": 45,
-        "category": "Bakery & Toast",
-        "image": "/images/milk-road-products/custard_lava_bun.png",
-        "description": "ปังนึ่งไส้ครีมนมสดลาวาไหลเยิ้ม นุ่มฟู หอมหวานละมุนลิ้น ไส้ทะลักทุกคำ",
-        "specs": [
-            "แพ็ค 2 ชิ้น",
-            "ไส้ลาวานมสดแท้",
-            "แป้งนุ่มฟูพิเศษ"
-        ],
-        "stock_quantity": 200,
-        "ingredients": "แป้งนึ่ง, นมสด, ไข่ไก่, ครีมสด, น้ำตาล",
-        "origin": "มิลค์โรด เบเกอรี่เฮาส์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-09"
-    },
-    {
-        "id": 11,
-        "name": "Fresh Milk Ice Cream Soft Serve (ไอศกรีมนมสดซอฟต์เสิร์ฟ)",
-        "price": 40,
-        "category": "Ice Cream & Desserts",
-        "image": "/images/milk-road-products/fresh_milk_soft_serve.png",
-        "description": "ไอศกรีมซอฟต์เสิร์ฟทำจากนมสดแท้ 100% นุ่มเนียน ละลายในปาก ไม่หวานเกินไป",
-        "specs": [
-            "1 โคน / ถ้วย",
-            "นมสดแท้ 100%",
-            "เนื้อเนียนนุ่ม"
-        ],
-        "stock_quantity": 300,
-        "ingredients": "นมสดพาสเจอร์ไรส์, วิปปิ้งครีม, น้ำตาล",
-        "origin": "มิลค์โรด ออร์แกนิคฟาร์ม",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-20"
-    },
-    {
-        "id": 12,
-        "name": "Milk Road Signature Bingsoo (บิงซูนมสดถั่วแดงเกาหลี)",
-        "price": 159,
-        "category": "Ice Cream & Desserts",
-        "image": "/images/milk-road-products/red_bean_bingsoo.png",
-        "description": "น้ำแข็งไสนมสดเนื้อปุยหิมะ ราดด้วยซอสนมข้น ท็อปด้วยถั่วแดงกวนเกาหลีและอัลมอนด์สไลด์",
-        "specs": [
-            "1 ถ้วยใหญ่ (2-3 ท่าน)",
-            "เกล็ดหิมะนมสดแท้",
-            "เสิร์ฟพร้อมซอสนมข้น"
-        ],
-        "stock_quantity": 60,
-        "ingredients": "นมสดแช่แข็ง, ถั่วแดงกวน, นมข้นหวาน, อัลมอนด์",
-        "origin": "มิลค์โรด ดิสเสิร์ท คาเฟ่",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-10"
-    },
-    {
-        "id": 13,
-        "name": "Mango Fresh Milk Bingsoo (บิงซูนมสดมะม่วงน้ำดอกไม้)",
-        "price": 179,
-        "category": "Ice Cream & Desserts",
-        "image": "/images/milk-road-products/mango_milk_bingsoo.png",
-        "description": "บิงซูนมสดเกล็ดหิมะบางเบา ท็อปด้วยมะม่วงน้ำดอกไม้สุกหวานฉ่ำเต็มคำ และซอสมะม่วงเข้มข้น",
-        "specs": [
-            "1 ถ้วยใหญ่",
-            "มะม่วงน้ำดอกไม้สด 1 ลูก",
-            "ซอสมะม่วงทำเอง"
-        ],
-        "stock_quantity": 50,
-        "ingredients": "นมสด, มะม่วงน้ำดอกไม้สด, ซอสมะม่วง, นมข้น",
-        "origin": "มิลค์โรด ดิสเสิร์ท คาเฟ่",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-08"
-    },
-    {
-        "id": 14,
-        "name": "Fresh Milk Pudding with Caramel (พุดดิ้งนมสดคาราเมลลาวา)",
-        "price": 55,
-        "category": "Ice Cream & Desserts",
-        "image": "/images/milk-road-products/caramel_pudding.png",
-        "description": "พุดดิ้งนมสดเนื้อเด้งดึ๋ง ละมุนลิ้น เสิร์ฟพร้อมซอสคาราเมลหอมหวานเข้มข้น",
-        "specs": [
-            "1 ถ้วย 150g",
-            "เนื้อเด้งนุ่มละมุน",
-            "คาราเมลซอสพรีเมียม"
-        ],
-        "stock_quantity": 110,
-        "ingredients": "นมสด, ครีมสด, เจลาติน, ซอสคาราเมล",
-        "origin": "มิลค์โรด ดิสเสิร์ท คาเฟ่",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-13"
-    },
-    {
-        "id": 15,
-        "name": "Choco Brownie Sundae (ไอศกรีมนมสดช็อกบราวนี่ซันเดย์)",
-        "price": 99,
-        "category": "Ice Cream & Desserts",
-        "image": "/images/milk-road-products/choco_brownie_sundae.png",
-        "description": "ไอศกรีมนมสดท็อปด้วยบราวนี่ช็อกโกแลตเนื้อหนึบ ราดซอสช็อกโกแลตและอัลมอนด์อบกรอบ",
-        "specs": [
-            "1 ถ้วยซันเดย์",
-            "บราวนี่เนื้อหนึบ",
-            "ซอสช็อกโกแลตเข้มข้น"
-        ],
-        "stock_quantity": 75,
-        "ingredients": "ไอศกรีมนมสด, บราวนี่เข้มข้น, ซอสช็อกโกแลต, ถั่วอัลมอนด์",
-        "origin": "มิลค์โรด ดิสเสิร์ท คาเฟ่",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-12"
-    },
-    {
-        "id": 16,
-        "name": "Iced Milk Pink Sweet Shake (นมสดชมพูเย็น / นมเย็นนมสด)",
-        "price": 50,
-        "category": "Fresh Drinks",
-        "image": "/images/milk-road-products/pink_sweet_milk.png",
-        "description": "นมสดพาสเจอร์ไรส์ผสมเฮลบลูบอยสละ หวานหอม กลมกล่อม สดชื่นคลายร้อน",
-        "specs": [
-            "แก้ว 22 oz",
-            "สูตรโบราณหอมมัน",
-            "เลือกความหวานได้"
-        ],
-        "stock_quantity": 150,
-        "ingredients": "นมสด 80%, น้ำสละเข้มข้น 15%, นมข้นหวาน 5%",
-        "origin": "มิลค์โรด ดริ้งค์บาร์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-10"
-    },
-    {
-        "id": 17,
-        "name": "Iced Ceylon Milk Tea (ชาเย็นนมสดพรีเมียม)",
-        "price": 60,
-        "category": "Fresh Drinks",
-        "image": "/images/milk-road-products/ceylon_milk_tea.png",
-        "description": "ชาซีลอนบ่มพิเศษชงเข้มข้น ผสมผสานกับนมสดพาสเจอร์ไรส์ หอมชาเข้มข้น นุ่มนมสดแท้",
-        "specs": [
-            "แก้ว 22 oz",
-            "ใบชาซีลอน 100%",
-            "นุ่มนวลไม่กลบกลิ่นชา"
-        ],
-        "stock_quantity": 140,
-        "ingredients": "ชาซีลอนสกัด, นมสด, นมข้นหวาน",
-        "origin": "มิลค์โรด ดริ้งค์บาร์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-10"
-    },
-    {
-        "id": 18,
-        "name": "Fresh Milk Coffee Latte (กาแฟนมสดลาเต้เย็น)",
-        "price": 65,
-        "category": "Fresh Drinks",
-        "image": "/images/milk-road-products/coffee_latte.png",
-        "description": "เอสเปรสโซ่ช็อตจากเมล็ดกาแฟอาราบิก้าคั่วกลาง ผสมกับนมสดแท้ นุ่มลึก ละมุนลิ้น",
-        "specs": [
-            "แก้ว 22 oz",
-            "กาแฟอาราบิก้า 100%",
-            "นมสดนุ่มละมุน"
-        ],
-        "stock_quantity": 130,
-        "ingredients": "ช็อตกาแฟอาราบิก้า, นมสด 85%, น้ำเชื่อม",
-        "origin": "มิลค์โรด ดริ้งค์บาร์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-10"
-    },
-    {
-        "id": 19,
-        "name": "Fresh Milk Cocoa Volcano (นมสดโกโก้ภูเขาไฟ)",
-        "price": 75,
-        "category": "Fresh Drinks",
-        "image": "/images/milk-road-products/cocoa_volcano.png",
-        "description": "นมสดเย็นเข้มข้น ท็อปด้วยผงโกโก้ภูเขาไฟและซอสช็อกโกแลตล้นแก้ว สดชื่นสะใจ",
-        "specs": [
-            "แก้ว 22 oz",
-            "ผงโกโก้ภูเขาไฟล้นแก้ว",
-            "ช็อกโกแลตเข้มข้น"
-        ],
-        "stock_quantity": 120,
-        "ingredients": "นมสด, ผงโกโก้พรีเมียม, ซอสช็อกโกแลต, นมข้น",
-        "origin": "มิลค์โรด ดริ้งค์บาร์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-10"
-    },
-    {
-        "id": 20,
-        "name": "Whipped Butter Croissant (ครัวซองต์เนยสดฝรั่งเศส)",
-        "price": 65,
-        "category": "Bakery & Toast",
-        "image": "/images/milk-road-products/butter_croissant.png",
-        "description": "ครัวซองต์อบสดใหม่ทุกเช้า ใช้เนยสดแท้จากฝรั่งเศส แป้งกรอบเป็นชั้น สอดไส้หอมเนยฟุ้ง",
-        "specs": [
-            "1 ชิ้น (80g)",
-            "เนยสดฝรั่งเศส AOP",
-            "กรอบนอกนุ่มในเป็นชั้น"
-        ],
-        "stock_quantity": 100,
-        "ingredients": "แป้งแป้งสาลีฝรั่งเศส, เนยเนยสด AOP, นมสด, ยีสต์, น้ำตาล",
-        "origin": "มิลค์โรด เบเกอรี่เฮาส์",
-        "mfg_date": "2026-08-06",
-        "exp_date": "2026-08-09"
+        "download_url": "/downloads/biology_summary_m46.pdf",
+        "stock_quantity": 999,
+        "ingredients": "จัดทำโดย: คณะอาจารย์ผู้เก็งข้อสอบ StudyRoad",
+        "origin": "Digital Instant Download",
+        "mfg_date": "2026-08-14",
+        "exp_date": "อัปเดตเวอร์ชันปี 2026"
     }
 ];

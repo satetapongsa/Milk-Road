@@ -1040,8 +1040,8 @@ export default function AdminDashboard() {
         <div id="sales-report-pdf-template" style={{ width: '210mm', padding: '24px', background: 'white', color: '#0f172a', fontFamily: 'sans-serif' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '2px solid #4f46e5', paddingBottom: 16, marginBottom: 20 }}>
             <div>
-              <h1 style={{ margin: 0, color: '#4f46e5', fontSize: 24, fontWeight: 800 }}>PHARM ROAD</h1>
-              <p style={{ margin: 4, color: '#64748b', fontSize: 12 }}>รายงานสรุปผลการดำเนินงานและยอดขายผู้บริหาร</p>
+              <h1 style={{ margin: 0, color: '#4f46e5', fontSize: 24, fontWeight: 800 }}>STUDYROAD</h1>
+              <p style={{ margin: 4, color: '#64748b', fontSize: 12 }}>รายงานสรุปผลการดำเนินงานคอร์สเรียนและสรุปชีทผู้บริหาร</p>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 12, fontWeight: 600 }}>วันที่ออกเอกสาร: {new Date().toLocaleDateString('th-TH')}</div>
@@ -1123,7 +1123,7 @@ export default function AdminDashboard() {
 
           <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px dashed #cbd5e1', paddingTop: 20, fontSize: 12, marginTop: 40 }}>
             <div>
-              <p style={{ margin: 0, fontWeight: 700 }}>Pharm Road Analytics Suite</p>
+              <p style={{ margin: 0, fontWeight: 700 }}>StudyRoad Analytics Suite</p>
               <p style={{ margin: 2, color: '#64748b' }}>รายงานนี้สร้างขึ้นจากคลังข้อมูลจำลอง Neon PostgreSQL</p>
             </div>
             <div style={{ textAlign: 'center', width: 160 }}>

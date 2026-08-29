@@ -13,7 +13,7 @@ export default function Quotation() {
     const [showDetails, setShowDetails] = useState(true);
     const [showStamp, setShowStamp] = useState(true);
     const [stampText, setStampText] = useState('PROPOSAL'); // PROPOSAL, APPROVED, DRAFT, VERIFIED
-    const [customNote, setCustomNote] = useState('ใบเสนอราคานี้ออกโดยระบบอัตโนมัติของ Pharm Road มีผลใช้ได้ตามระยะเวลาที่กำหนดด้านบน');
+    const [customNote, setCustomNote] = useState('ใบเสนอราคานี้ออกโดยระบบอัตโนมัติของ StudyRoad มีผลใช้ได้ตามระยะเวลาที่กำหนดด้านบน');
 
     const themes = {
         indigo: { primary: '#4f46e5', light: '#eef2ff', text: '#312e81', border: '#c7d2fe', shadow: 'rgba(79, 70, 229, 0.1)' },
@@ -223,15 +223,15 @@ export default function Quotation() {
                                 ใบเสนอราคา / Quotation
                             </div>
                             {showLogo && (
-                                <img src="/images/logo.png" alt="Pharm Road" style={{ height: '50px', marginBottom: '16px' }} />
+                                <img src="/images/logo.png" alt="StudyRoad" style={{ height: '50px', marginBottom: '16px', borderRadius: '8px' }} />
                             )}
                             {showDetails && (
                                 <p style={{ margin: 0, fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.6 }}>
-                                    <strong>บริษัท ฟาร์ม โรด จำกัด (สำนักงานใหญ่)</strong><br />
-                                    123 Cyber Tower, Digital District<br />
+                                    <strong>บริษัท สตั๊ดดี้ โรด จำกัด (สำนักงานใหญ่)</strong><br />
+                                    123 EdTech Tower, Digital District<br />
                                     Bangkok, 10110<br />
                                     Tax ID: 0105551234567<br />
-                                    Tel: 02-123-4567 | Email: sales@pharmroad.com
+                                    Tel: 02-123-4567 | Email: sales@studyroad.com
                                 </p>
                             )}
                         </div>
@@ -357,7 +357,7 @@ export default function Quotation() {
                     )}
 
                     <div className="receipt-footer" style={{ marginTop: 40, textAlign: 'center', fontSize: 12, color: 'var(--text-light)' }}>
-                        <p style={{ margin: 0 }}>ขอบคุณที่ให้ความไว้วางใจเลือกซื้อยาสามัญและเวชภัณฑ์กับ Pharm Road</p>
+                        <p style={{ margin: 0 }}>ขอบคุณที่ให้ความไว้วางใจเลือกซื้อคอร์สเรียนและสรุปชีทเรียนออนไลน์กับ StudyRoad</p>
                     </div>
                 </div>
 

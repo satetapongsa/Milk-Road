@@ -9,7 +9,7 @@ export default function Team() {
                     ทีมงานของเรา / Our Team
                 </h1>
                 <p style={{ fontSize: '17px', color: 'var(--text-light)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
-                    ทำความรู้จักกับผู้ก่อตั้งและผู้พัฒนาเบื้องหลังแพลตฟอร์ม Pharm Road
+                    ทำความรู้จักกับผู้ก่อตั้งและผู้พัฒนาเบื้องหลังแพลตฟอร์ม StudyRoad
                 </p>
             </div>
 
@@ -49,7 +49,7 @@ export default function Team() {
                 <div style={{ width: '50px', height: '3px', background: 'var(--primary)', margin: '0 auto 24px auto', borderRadius: '2px' }}></div>
 
                 <p style={{ fontSize: '15px', color: 'var(--text-main)', lineHeight: '1.8', maxWidth: '650px', margin: '0 auto text-align-justify' }}>
-                    คุณ <strong>satetapong sanguansuk</strong> คือผู้ริเริ่มวิสัยทัศน์ของแพลตฟอร์ม <strong>Pharm Road</strong> ดิจิทัลฟาร์มาซีชั้นนำ ด้วยความตั้งใจที่จะรวมเอาความปลอดภัยในการเข้าถึงยาสามัญประจำบ้านและเทคโนโลยี E-commerce สมัยใหม่เข้าด้วยกัน เพื่อช่วยลดความยุ่งยากในการดูแลสุขภาพของทุกคน
+                    คุณ <strong>satetapong sanguansuk</strong> คือผู้ริเริ่มวิสัยทัศน์ของแพลตฟอร์ม <strong>StudyRoad</strong> ดิจิทัลการศึกษาชั้นนำ ด้วยความตั้งใจที่จะรวบรวมคอร์สเรียนคุณภาพสูง สรุปชีทเรียน PDF ชัดเจน ครอบคลุมวิชา แคลคูลัส ฟิสิกส์ เคมี ชีววิทยา เพื่อช่วยให้นักเรียนนักศึกษารู้สึกสนุกกับการเรียนและทำคะแนนได้ดีขึ้น
                 </p>
             </div>
 
@@ -57,7 +57,7 @@ export default function Team() {
             <div style={{ marginBottom: '40px' }}>
                 <h3 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--text-main)', marginBottom: '24px', textAlign: 'center' }}>
                     <Sparkles size={20} style={{ marginRight: '8px', display: 'inline-block', verticalAlign: 'middle' }} color="var(--primary)" /> 
-                    การสร้างแบรนด์ Pharm Road
+                    การสร้างแบรนด์ StudyRoad
                 </h3>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

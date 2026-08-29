@@ -12,7 +12,7 @@ export default function About() {
                     เกี่ยวกับเรา / About Us
                 </h1>
                 <p style={{ fontSize: '18px', color: 'var(--text-light)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
-                    ยินดีต้อนรับสู่ Pharm Road แพลตฟอร์มร้านขายยาดิจิทัลระดับพรีเมียมที่มุ่งมั่นส่งมอบสุขภาพที่ดีสู่คุณ
+                    ยินดีต้อนรับสู่ StudyRoad แพลตฟอร์มการศึกษาดิจิทัลที่มุ่งมั่นส่งมอบคอร์สเรียนและชีทสรุปคุณภาพสูงสู่คุณ
                 </p>
             </div>
 
@@ -36,8 +36,8 @@ export default function About() {
                     >
                         <img 
                             src="/images/logo.png" 
-                            alt="Pharm Road Logo Profile" 
-                            style={{ width: '100%', maxWidth: '380px', height: 'auto', display: 'block', backgroundColor: '#f8fafc' }}
+                            alt="StudyRoad Logo Profile" 
+                            style={{ width: '100%', maxWidth: '380px', height: 'auto', display: 'block', backgroundColor: '#f8fafc', borderRadius: '16px' }}
                         />
                         <div style={{ 
                             position: 'absolute', 
@@ -64,10 +64,10 @@ export default function About() {
                         ประวัติความเป็นมา
                     </h2>
                     <p style={{ fontSize: '15px', color: 'var(--text-main)', lineHeight: '1.8', marginBottom: '16px' }}>
-                        <strong>Pharm Road</strong> ก่อตั้งขึ้นจากวิสัยทัศน์ที่ต้องการทำให้การเข้าถึงเวชภัณฑ์ยาสามัญประจำบ้านและอาหารเสริมเป็นเรื่องที่ง่าย ปลอดภัย และสะดวกสบายที่สุดสำหรับคนไทยทุกคน เราได้นำเทคโนโลยี E-commerce ระดับ Enterprise เข้ามารวมกับมาตรฐานการบริการทางยาที่ถูกต้องเพื่อสร้างประสบการณ์ที่น่าเชื่อถือที่สุด
+                        <strong>StudyRoad</strong> ก่อตั้งขึ้นจากวิสัยทัศน์ที่ต้องการทำให้การเข้าถึงสรุปชีทบทเรียนคุณภาพและคอร์สเรียนออนไลน์วิชาสาย STEM (แคลคูลัส ฟิสิกส์ เคมี ชีววิทยา) เป็นเรื่องที่ง่าย เข้าใจเร็ว และสะดวกที่สุดสำหรับนักเรียนและนักศึกษากว่าแสนคนทั่วประเทศ
                     </p>
                     <p style={{ fontSize: '15px', color: 'var(--text-main)', lineHeight: '1.8', marginBottom: '24px' }}>
-                        ด้วยการใช้ฐานข้อมูลคลาวด์ยุคใหม่อย่าง Neon PostgreSQL ทำให้มั่นใจได้ว่าระบบคำสั่งซื้อ การออกใบเสร็จรับเงิน และใบเสนอราคาทำงานได้รวดเร็วทันใจ พร้อมรองรับระบบการควบคุมและจัดส่งยาที่ได้มาตรฐานสาธารณสุข
+                        ด้วยการใช้เทคโนโลยีฐานข้อมูล Neon PostgreSQL ทำให้การเข้าถึงไฟล์ PDF สรุปชีทเรียน การดาวน์โหลด และคอร์สวิดีโอทำงานได้อย่างรวดเร็ว ไร้รอยต่อ และปลอดภัยสูงสุด
                     </p>
 
                     {/* Key Stats / Grid */}

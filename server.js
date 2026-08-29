@@ -19,6 +19,7 @@ const ordersFile = path.join(__dirname, 'orders.json');
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Neon Database Connection Pool
 const { Pool } = pg;

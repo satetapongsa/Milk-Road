@@ -4,6 +4,7 @@ import { formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
 import { ArrowLeft, Plus, Minus, ShoppingCart, Check, ShieldCheck, Truck, RotateCcw, FlaskConical, Factory, CalendarDays, CalendarX, ClipboardList, XCircle, AlertTriangle } from 'lucide-react';
+import PDFReaderViewer from '../components/PDFReaderViewer';
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -161,7 +162,7 @@ export default function ProductDetail() {
                                             <FlaskConical size={18} />
                                         </div>
                                         <div>
-                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>ส่วนผสมหลัก (Ingredients)</div>
+                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>ผู้สอน / ผู้จัดทำ (Instructor / Author)</div>
                                             <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.ingredients}</div>
                                         </div>
                                     </div>
@@ -173,7 +174,7 @@ export default function ProductDetail() {
                                             <Factory size={18} />
                                         </div>
                                         <div>
-                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>แหล่งผลิต/ผู้ผลิต (Origin)</div>
+                                            <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>รูปแบบการส่งมอบ (Delivery Format)</div>
                                             <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.origin}</div>
                                         </div>
                                     </div>
@@ -187,7 +188,7 @@ export default function ProductDetail() {
                                                     <CalendarDays size={18} />
                                                 </div>
                                                 <div>
-                                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>วันที่ผลิต (MFG)</div>
+                                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>วันที่อัปเดต (Last Updated)</div>
                                                     <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.mfg_date}</div>
                                                 </div>
                                             </div>
@@ -198,7 +199,7 @@ export default function ProductDetail() {
                                                     <CalendarX size={18} />
                                                 </div>
                                                 <div>
-                                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>วันที่หมดอายุ (EXP)</div>
+                                                    <div style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 500 }}>สิทธิ์การเข้าถึง (Access Level)</div>
                                                     <div style={{ fontSize: 13, color: '#1e293b', fontWeight: 600 }}>{product.exp_date}</div>
                                                 </div>
                                             </div>
@@ -219,10 +220,10 @@ export default function ProductDetail() {
                             {product.stock_quantity <= 0 ? (
                                 <div style={{ textAlign: 'center', padding: '8px 0' }}>
                                     <div style={{ color: '#dc2626', fontWeight: 700, fontSize: 16, marginBottom: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-                                        <XCircle size={20} /> ขออภัย สินค้าชิ้นนี้หมดสต็อกชั่วคราว
+                                        <XCircle size={20} /> ขออภัย รายการนี้ปิดรับสมัครชั่วคราว
                                     </div>
                                     <p style={{ color: '#64748b', fontSize: 13, margin: 0 }}>
-                                        คุณสามารถติดต่อแอดมินหรือกลับมาตรวจสอบสต็อกอีกครั้งในภายหลัง
+                                        คุณสามารถติดต่อแอดมินเพื่อสอบถามการเปิดรอบเรียนถัดไปได้ครับ
                                     </p>
                                 </div>
                             ) : (
@@ -240,18 +241,39 @@ export default function ProductDetail() {
                                         >
                                             {isAdded ? (
                                                 <>
-                                                    <Check size={20} /> เพิ่มเรียบร้อยแล้ว
+                                                    <Check size={20} /> เพิ่มใส่ตะกร้าเรียบร้อย
                                                 </>
                                             ) : (
                                                 <>
-                                                    <ShoppingCart size={20} /> เพิ่มใส่ตะกร้า
+                                                    <ShoppingCart size={20} /> สั่งซื้อคอร์ส / ดาวน์โหลด PDF
                                                 </>
                                             )}
                                         </button>
                                     </div>
-                                    <div style={{ fontSize: 13, color: 'var(--text-light)', textAlign: 'center' }}>
-                                        จัดส่งฟรีทั่วประเทศ เมื่อมียอดสั่งซื้อครบ 5,000 บาท
+                                    <div style={{ fontSize: 13, color: 'var(--text-light)', textAlign: 'center', marginBottom: 12 }}>
+                                        ⚡ รับสิทธิ์เข้าถึงไฟล์ PDF & วิดีโอบทเรียนทันทีหลังชำระเงินสำเร็จ
                                     </div>
+                                     <div style={{ textAlign: 'center', paddingTop: 8, borderTop: '1px dashed #cbd5e1' }}>
+                                         <Link 
+                                             to={`/reader/${product.id}`} 
+                                             className="btn btn-outline"
+                                             style={{ 
+                                                 display: 'inline-flex', 
+                                                 alignItems: 'center', 
+                                                 gap: 8, 
+                                                 color: '#047857', 
+                                                 borderColor: '#10b981', 
+                                                 background: '#ecfdf5',
+                                                 fontSize: 13,
+                                                 fontWeight: 700,
+                                                 padding: '8px 16px',
+                                                 textDecoration: 'none',
+                                                 borderRadius: 8
+                                             }}
+                                         >
+                                             📖 เปิดอ่านชีทเรียนในระบบ (DRM Light Reader)
+                                         </Link>
+                                     </div>
                                 </>
                             )}
                         </div>
@@ -260,19 +282,22 @@ export default function ProductDetail() {
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, textAlign: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                                 <ShieldCheck size={24} color="var(--primary)" />
-                                <span style={{ fontSize: 12, fontWeight: 500 }}>รับประกันศูนย์ 1 ปี</span>
+                                <span style={{ fontSize: 12, fontWeight: 500 }}>เนื้อหาตรงหลักสูตร 100%</span>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                                 <Truck size={24} color="var(--primary)" />
-                                <span style={{ fontSize: 12, fontWeight: 500 }}>ส่งด่วน 1-3 วัน</span>
+                                <span style={{ fontSize: 12, fontWeight: 500 }}>ส่งมอบไฟล์ดิจิทัลทันที</span>
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                                 <RotateCcw size={24} color="var(--primary)" />
-                                <span style={{ fontSize: 12, fontWeight: 500 }}>เปลี่ยนคืนใน 7 วัน</span>
+                                <span style={{ fontSize: 12, fontWeight: 500 }}>เข้าเรียนได้ตลอดชีพ</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                {/* In-App PDF Reader Section */}
+                <PDFReaderViewer product={product} pdfUrl={product.download_url || "/downloads/biology_summary_m46.pdf"} />
             </div>
             <style>{`
                 @media (max-width: 900px) {

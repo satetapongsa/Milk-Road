@@ -20,6 +20,7 @@
     "html2pdf.js": "^0.14.0",
     "lucide-react": "^0.563.0",
     "papaparse": "^5.5.3",
+    "pdfkit": "^0.20.1",
     "pg": "^8.21.0",
     "qrcode": "^1.5.4",
     "react": "^19.2.0",

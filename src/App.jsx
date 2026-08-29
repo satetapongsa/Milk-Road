@@ -14,6 +14,7 @@ import AdminLogin from './pages/AdminLogin';
 import About from './pages/About';
 import Team from './pages/Team';
 import JoinUs from './pages/JoinUs';
+import Reader from './pages/Reader';
 import { CartProvider } from './context/CartContext';
 import { ProductProvider } from './context/ProductContext';
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="team" element={<Team />} />
             <Route path="join-us" element={<JoinUs />} />
           </Route>
+          <Route path="reader/:id" element={<Reader />} />
           <Route path="admin-login" element={<AdminLogin />} />
         </Routes>
       </BrowserRouter>

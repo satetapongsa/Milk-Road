@@ -3,7 +3,7 @@ import { Briefcase, Send, Gift, MapPin } from 'lucide-react';
 export default function JoinUs() {
     const handleApply = (e) => {
         e.preventDefault();
-        alert('ส่งข้อมูลการสมัครสำเร็จ! ขอบคุณที่สนใจร่วมงานกับ Pharm Road');
+        alert('ส่งข้อมูลการสมัครสำเร็จ! ขอบคุณที่สนใจร่วมงานกับ StudyRoad');
     };
 
     return (
@@ -14,7 +14,7 @@ export default function JoinUs() {
                     ร่วมงานกับเรา / Join Our Team
                 </h1>
                 <p style={{ fontSize: '17px', color: 'var(--text-light)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
-                    มาร่วมสร้างสรรค์และปฏิวัติวงการร้านขายยาดิจิทัลพรีเมียมไปด้วยกัน
+                    มาร่วมสร้างสรรค์และปฏิวัติวงการการศึกษาและสรุปชีทดิจิทัลไปด้วยกัน
                 </p>
             </div>
 
@@ -26,7 +26,7 @@ export default function JoinUs() {
                         <strong style={{ fontSize: '16px' }}>สวัสดิการสุดพิเศษ</strong>
                     </div>
                     <span style={{ fontSize: '14px', color: 'var(--text-light)', lineHeight: '1.5' }}>
-                        ประกันสุขภาพกลุ่ม, วันหยุดพักร้อนประจำปี, ส่วนลดเวชภัณฑ์และอาหารเสริมราคาพนักงาน
+                        สิทธิ์เข้าเรียนฟรีทุกคอร์สบนแพลตฟอร์ม, ประกันสุขภาพกลุ่ม, โบนัสผลงานผู้สร้างคอร์ส
                     </span>
                 </div>
 
@@ -61,7 +61,9 @@ export default function JoinUs() {
                         <div>
                             <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', marginBottom: '8px' }}>ตำแหน่งที่สนใจ</label>
                             <select style={{ width: '100%', padding: '12px', border: '1px solid var(--border)', borderRadius: '8px', fontSize: '14px', background: 'white' }}>
-                                <option>Pharmacist (เภสัชกรประจำร้าน)</option>
+                                <option>STEM Educator / ผู้เรียบเรียงสรุปชีทเรียน</option>
+                                <option>Tutor / ผู้สอนวิชาแคลคูลัส-ฟิสิกส์-เคมี-ชีวะ</option>
+                                <option>EdTech Content Creator & Graphic Designer</option>
                                 <option>Frontend Developer (React/Vite)</option>
                                 <option>Backend Developer (Node.js/PostgreSQL)</option>
                                 <option>Digital Marketing</option>
