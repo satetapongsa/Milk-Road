@@ -157,39 +157,54 @@ export default function Header({ onOpenCart }) {
                     </button>
 
                     {isLoggedIn ? (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#f8fafc', padding: '4px 12px', borderRadius: 20, border: '1px solid #e2e8f0' }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 4 }}>
-                                {isAdmin && <ShieldCheck size={14} color="#4f46e5" />}
-                                {currentUser?.full_name || currentUser?.email || 'สมาชิก StudyRoad'}
-                                {isAdmin && <span style={{ background: '#eef2ff', color: '#4f46e5', fontSize: 10, padding: '1px 6px', borderRadius: 10 }}>Admin</span>}
-                            </span>
-
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            {/* Profile Avatar Icon Button (Navigates to /account) */}
                             <Link 
-                                to="/my-library"
-                                title="เปิดคลังหนังสือส่วนตัว"
+                                to="/account"
+                                title={`โปรไฟล์: ${currentUser?.full_name || currentUser?.email || 'สมาชิก'} (คลิกเพื่อตั้งค่า/แก้ไขข้อมูล)`}
                                 style={{
-                                    fontSize: 11,
-                                    fontWeight: 700,
-                                    color: '#4f46e5',
-                                    background: '#eef2ff',
-                                    padding: '4px 10px',
-                                    borderRadius: 14,
-                                    textDecoration: 'none',
-                                    display: 'inline-flex',
+                                    width: 36,
+                                    height: 36,
+                                    borderRadius: '50%',
+                                    background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                                    color: 'white',
+                                    display: 'flex',
                                     alignItems: 'center',
-                                    gap: 4,
-                                    border: '1px solid #c7d2fe'
+                                    justifyContent: 'center',
+                                    textDecoration: 'none',
+                                    fontWeight: 700,
+                                    fontSize: 14,
+                                    boxShadow: '0 2px 8px rgba(79, 70, 229, 0.3)',
+                                    transition: 'transform 0.2s',
+                                    border: '2px solid #ffffff'
                                 }}
+                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.06)'}
+                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                             >
-                                <BookOpen size={13} /> คลังหนังสือส่วนตัว
+                                <User size={18} />
                             </Link>
 
+                            {/* Logout Button */}
                             <button
                                 onClick={logout}
                                 title="ออกจากระบบ"
-                                style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', display: 'flex', padding: 2 }}
+                                style={{
+                                    background: '#fef2f2',
+                                    border: '1px solid #fee2e2',
+                                    color: '#ef4444',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    width: 36,
+                                    height: 36,
+                                    borderRadius: '50%',
+                                    transition: 'all 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.background = '#fee2e2'}
+                                onMouseLeave={(e) => e.currentTarget.style.background = '#fef2f2'}
                             >
-                                <LogOut size={15} />
+                                <LogOut size={16} />
                             </button>
                         </div>
                     ) : (
