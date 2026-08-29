@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useSearchParams, useNavigate } from 'react-router-dom';
-import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight, Filter, ChevronDown, LogIn, LogOut, ShieldCheck } from 'lucide-react';
+import { Store, Search, ShoppingCart, User, Clock, ArrowUpRight, Filter, ChevronDown, LogIn, LogOut, ShieldCheck, BookOpen } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
