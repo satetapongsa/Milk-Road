@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, Mail, MapPin, Phone, Edit, Save, LogOut, Camera } from 'lucide-react';
+import { User, Mail, MapPin, Phone, Edit, Save, LogOut, Camera, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Account() {
@@ -76,6 +76,12 @@ export default function Account() {
                         <div style={{ borderTop: '1px solid var(--border)', paddingTop: 24, textAlign: 'left' }}>
                             <div style={{ fontSize: 12, textTransform: 'uppercase', color: 'var(--text-light)', marginBottom: 16, fontWeight: 600, letterSpacing: 1 }}>Menu</div>
                             <ul style={{ display: 'grid', gap: 8 }}>
+                                <li>
+                                    <Link to="/my-library" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px', borderRadius: 8, color: '#4f46e5', transition: '0.2s', background: '#eef2ff', fontWeight: 700 }}>
+                                        <BookOpen size={16} color="#4f46e5" />
+                                        คลังหนังสือส่วนตัว (My Library)
+                                    </Link>
+                                </li>
                                 <li>
                                     <Link to="/orders" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px', borderRadius: 8, color: 'var(--text-main)', transition: '0.2s', background: '#f8fafc' }}>
                                         <div style={{ width: 8, height: 8, background: 'var(--primary)', borderRadius: '50%' }}></div>

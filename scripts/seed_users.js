@@ -23,6 +23,7 @@ const pool = new Pool({
 });
 
 const sampleUsers = [
+    // Original 10 accounts
     { email: 'admin@studyroad.com', password: 'admin123', full_name: 'Super Admin (StudyRoad Official)', role: 'admin' },
     { email: 'tutor.physics@studyroad.com', password: 'tutor123', full_name: 'ดร.อนันต์ วิทยาศิริ (ติวเตอร์ฟิสิกส์ & แคลคูลัส)', role: 'admin' },
     { email: 'somchai.j@gmail.com', password: 'pass1234', full_name: 'สมชาย ใจดี (นิสิตคณะวิศวกรรมศาสตร์ จุฬาฯ)', role: 'user' },
@@ -32,7 +33,29 @@ const sampleUsers = [
     { email: 'nattapong.t@gmail.com', password: 'pass1234', full_name: 'ณัฐพงษ์ ตั้งเจริญ (นักเรียนเตรียมสอบ A-Level Bio)', role: 'user' },
     { email: 'pattama.w@chula.ac.th', password: 'pass1234', full_name: 'พัทธมน วงศ์สุวรรณ (นิสิตคณะวิทยาศาสตร์ จุฬาฯ)', role: 'user' },
     { email: 'chanyanuch.m@gmail.com', password: 'pass1234', full_name: 'ชัญญานุช มีสุข (นักเรียนเตรียมสอบ กสพท 69)', role: 'user' },
-    { email: 'varut.p@kmitl.ac.th', password: 'pass1234', full_name: 'วรุฒิ ปัญญาวิวัฒน์ (นักศึกษาวิศวฯ สจล.)', role: 'user' }
+    { email: 'varut.p@kmitl.ac.th', password: 'pass1234', full_name: 'วรุฒิ ปัญญาวิวัฒน์ (นักศึกษาวิศวฯ สจล.)', role: 'user' },
+
+    // Additional 20 accounts requested by user
+    { email: 'nutthawat.k@gmail.com', password: 'pass1234', full_name: 'ณัฐวัฒน์ เกษมสุข (ม.6 โรงเรียนสวนกุหลาบวิทยาลัย)', role: 'user' },
+    { email: 'prapaporn.s@hotmail.com', password: 'pass1234', full_name: 'ประภาพร ศรีสว่าง (นักศึกษาทันตแพทยศาสตร์ จุฬาฯ)', role: 'user' },
+    { email: 'korakot.t@yahoo.com', password: 'pass1234', full_name: 'กรกช ตั้งมุ่งมั่น (ม.5 โรงเรียนมหิดลวิทยานุสรณ์)', role: 'user' },
+    { email: 'pitchaya.m@gmail.com', password: 'pass1234', full_name: 'พิชญา มีชัย (นักศึกษาเภสัชศาสตร์ มหิดล)', role: 'user' },
+    { email: 'thanakorn.p@ku.th', password: 'pass1234', full_name: 'ธนกร ประเสริฐแท้ (นิสิตคณะเกษตร Kasetsart University)', role: 'user' },
+    { email: 'savitree.r@gmail.com', password: 'pass1234', full_name: 'สาวิตรี รัตนกุล (ม.6 โรงเรียนมหิดลวิทยานุสรณ์)', role: 'user' },
+    { email: 'phakin.w@hotmail.com', password: 'pass1234', full_name: 'ภาคิน วงศ์วิจิตร (นักศึกษาสัตวแพทยศาสตร์ มก.)', role: 'user' },
+    { email: 'araya.c@gmail.com', password: 'pass1234', full_name: 'อารยา เจริญผล (ม.4 เตรียมสอบ A-Level Physics)', role: 'user' },
+    { email: 'surasak.n@gmail.com', password: 'pass1234', full_name: 'สุรศักดิ์ นามวงศ์ (ติวเตอร์คณิตศาสตร์ A-Level)', role: 'admin' },
+    { email: 'nichapa.k@hotmail.com', password: 'pass1234', full_name: 'ณิชาภา กิจเจริญ (นักเรียน ม.6 โรงเรียนเตรียมอุดมศึกษา)', role: 'user' },
+    { email: 'chanatip.p@gmail.com', password: 'pass1234', full_name: 'ชนาธิป เพชรดี (นักศึกษาวิศวฯ ธรรมศาสตร์)', role: 'user' },
+    { email: 'kamonchanok.s@yahoo.com', password: 'pass1234', full_name: 'กมลชนก สุวรรณโชติ (ม.5 โรงเรียนบดินทรเดชา)', role: 'user' },
+    { email: 'panupong.t@gmail.com', password: 'pass1234', full_name: 'ภานุพงศ์ ทรงเกียรติ (นิสิตคณะวิทยาศาสตร์ มศว)', role: 'user' },
+    { email: 'wanida.b@hotmail.com', password: 'pass1234', full_name: 'วนิดา บุญส่ง (นักศึกษาพยาบาลศาสตร์ มหิดล)', role: 'user' },
+    { email: 'teerapat.m@chula.ac.th', password: 'pass1234', full_name: 'ธีรภัทร มีทรัพย์ (นิสิตวิศวะ จุฬาฯ)', role: 'user' },
+    { email: 'jutasri.k@gmail.com', password: 'pass1234', full_name: 'จุฑาศรี กาญจนา (นักเรียน ม.6 เตรียมสอบ กสพท)', role: 'user' },
+    { email: 'suppachai.v@gmail.com', password: 'pass1234', full_name: 'ศุภชัย วิเศษศิลป์ (ม.4 เตรียมสอบ A-Level Chem)', role: 'user' },
+    { email: 'jiraporn.d@gmail.com', password: 'pass1234', full_name: 'จิราพร ดีเยี่ยม (นักศึกษาเทคนิคการแพทย์ มช.)', role: 'user' },
+    { email: 'chaiwat.s@hotmail.com', password: 'pass1234', full_name: 'ชัยวัฒน์ สมคิด (ม.6 โรงเรียนอัสสัมชัญ)', role: 'user' },
+    { email: 'patcharapa.t@gmail.com', password: 'pass1234', full_name: 'พัชราภา ทองแท้ (ม.5 เตรียมสอบ A-Level Bio)', role: 'user' }
 ];
 
 const sampleOrders = [
@@ -95,7 +118,7 @@ async function seedData() {
         console.log('✅ Connected successfully!');
 
         // Insert Users
-        console.log('🌱 Inserting 10 Sample Users into Neon DB...');
+        console.log(`🌱 Inserting ${sampleUsers.length} Sample Users into Neon DB...`);
         for (const u of sampleUsers) {
             await client.query(`
                 INSERT INTO users (email, password, full_name, role)
@@ -103,7 +126,7 @@ async function seedData() {
                 ON CONFLICT (email) DO UPDATE 
                 SET full_name = EXCLUDED.full_name, password = EXCLUDED.password, role = EXCLUDED.role;
             `, [u.email, u.password, u.full_name, u.role]);
-            console.log(`  👤 User added: ${u.full_name} (${u.email}) [Role: ${u.role}]`);
+            console.log(`  👤 User synced: ${u.full_name} (${u.email}) [Role: ${u.role}]`);
         }
 
         // Insert Sample Orders
@@ -141,7 +164,7 @@ async function seedData() {
         }
 
         client.release();
-        console.log('🎉 Seeding completed successfully!');
+        console.log('🎉 Seeding 30 user accounts completed successfully!');
         process.exit(0);
     } catch (err) {
         console.error('❌ Error seeding data:', err);
