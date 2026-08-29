@@ -195,18 +195,14 @@ export default function Checkout() {
                                 width: 84,
                                 height: 84,
                                 borderRadius: '50%',
-                                background: '#10b981',
+                                background: '#4f46e5',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 margin: '0 auto 24px auto',
-                                boxShadow: '0 0 30px rgba(16, 185, 129, 0.4)'
+                                boxShadow: '0 0 30px rgba(79, 70, 229, 0.4)'
                             }}>
-                                <svg viewBox="0 0 24 24" width="48" height="48" stroke="white" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                </svg>
-                            </div>
-                            <h2 style={{ fontSize: 28, fontWeight: 800, color: '#10b981', marginBottom: 12 }}>
+                            <h2 style={{ fontSize: 28, fontWeight: 800, color: '#6366f1', marginBottom: 12 }}>
                                 ชำระเงินสำเร็จเสร็จสิ้น!
                             </h2>
                             <p style={{ color: '#e2e8f0', fontSize: 16, marginBottom: 8 }}>
