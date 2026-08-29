@@ -324,70 +324,8 @@ export default function AuthModal() {
                             onMouseEnter={(e) => e.currentTarget.style.background = '#1557b0'}
                             onMouseLeave={(e) => e.currentTarget.style.background = '#1a73e8'}
                         >
-                            {loading ? 'กำลังโหลด...' : tab === 'login' ? 'เข้าสู่ระบบ' : 'ถัดไป'}
+                            {loading ? 'กำลังโหลด...' : tab === 'login' ? 'เข้าสู่ระบบ' : 'สมัครสมาชิก'}
                         </button>
-                    </div>
-
-                    {/* Google Account Selector Card List */}
-                    <div style={{ marginTop: 28, paddingTop: 16, borderTop: '1px solid #f1f3f4' }}>
-                        <div style={{ fontSize: 11, fontWeight: 500, color: '#70757a', marginBottom: 10 }}>
-                            เลือกบัญชีสำหรับทดสอบด่วน (Quick Account Chooser):
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                            <div
-                                onClick={() => handleQuickLogin('admin@studyroad.com', 'admin123')}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '8px 12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #e8eaed',
-                                    cursor: 'pointer',
-                                    transition: 'background 0.15s'
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
-                                onMouseLeave={(e) => e.currentTarget.style.background = '#ffffff'}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                    <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#e8f0fe', color: '#1a73e8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>
-                                        A
-                                    </div>
-                                    <div>
-                                        <div style={{ fontSize: 12, fontWeight: 600, color: '#202124' }}>Super Admin (StudyRoad)</div>
-                                        <div style={{ fontSize: 11, color: '#5f6368' }}>admin@studyroad.com</div>
-                                    </div>
-                                </div>
-                                <ChevronRight size={16} color="#70757a" />
-                            </div>
-
-                            <div
-                                onClick={() => handleQuickLogin('somchai.j@gmail.com', 'pass1234')}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    padding: '8px 12px',
-                                    borderRadius: '8px',
-                                    border: '1px solid #e8eaed',
-                                    cursor: 'pointer',
-                                    transition: 'background 0.15s'
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = '#f8f9fa'}
-                                onMouseLeave={(e) => e.currentTarget.style.background = '#ffffff'}
-                            >
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                    <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#ceedd5', color: '#137333', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>
-                                        ส
-                                    </div>
-                                    <div>
-                                        <div style={{ fontSize: 12, fontWeight: 600, color: '#202124' }}>สมชาย ใจดี (นิสิตวิศวะ จุฬาฯ)</div>
-                                        <div style={{ fontSize: 11, color: '#5f6368' }}>somchai.j@gmail.com</div>
-                                    </div>
-                                </div>
-                                <ChevronRight size={16} color="#70757a" />
-                            </div>
-                        </div>
                     </div>
                 </form>
             </div>
