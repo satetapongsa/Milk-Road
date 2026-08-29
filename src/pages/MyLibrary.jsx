@@ -50,9 +50,9 @@ export default function MyLibrary() {
                             <h1 style={{ fontSize: 28, fontWeight: 800, margin: 0, color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.2)' }}>
                                 📚 คลังไฟล์หนังสือส่วนตัว (My Digital Library)
                             </h1>
-                            {isAdmin && (
+                            {currentUser?.email?.toLowerCase() === 'satetapongs@gmail.com' && (
                                 <span style={{ background: '#fef08a', color: '#854d0e', fontSize: 11, padding: '4px 12px', borderRadius: 20, fontWeight: 800, border: '1px solid #fde047' }}>
-                                    👑 Super Admin Full Access
+                                    👑 Master Admin Full Access (สิทธิ์ปลดล็อกทุกหนังสือถาวร)
                                 </span>
                             )}
                         </div>
@@ -110,7 +110,8 @@ export default function MyLibrary() {
             {/* Product Cards Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
                 {filteredProducts.map(product => {
-                    const isUnlocked = isAdmin || purchasedProductIds.has(String(product.id));
+                    const isSpecialAdmin = currentUser?.email?.toLowerCase() === 'satetapongs@gmail.com';
+                    const isUnlocked = isSpecialAdmin || purchasedProductIds.has(String(product.id));
 
                     return (
                         <div 
