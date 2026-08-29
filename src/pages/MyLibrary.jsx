@@ -29,12 +29,12 @@ export default function MyLibrary() {
         <div className="container" style={{ padding: '40px 24px 80px 24px' }}>
             {/* Page Title Header */}
             <div style={{
-                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%)',
                 borderRadius: '24px',
                 padding: '36px 40px',
                 color: 'white',
                 marginBottom: '40px',
-                boxShadow: '0 15px 35px -5px rgba(5, 150, 105, 0.3)',
+                boxShadow: '0 15px 35px -5px rgba(79, 70, 229, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
@@ -42,8 +42,8 @@ export default function MyLibrary() {
                 gap: 20
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-                    <div style={{ background: 'rgba(255,255,255,0.2)', padding: '16px', borderRadius: '20px', display: 'flex' }}>
-                        <BookOpen size={40} />
+                    <div style={{ background: 'rgba(255,255,255,0.15)', padding: '16px', borderRadius: '20px', display: 'flex' }}>
+                        <BookOpen size={40} color="#a5b4fc" />
                     </div>
                     <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
@@ -56,7 +56,7 @@ export default function MyLibrary() {
                                 </span>
                             )}
                         </div>
-                        <p style={{ margin: 0, fontSize: 14, opacity: 0.9 }}>
+                        <p style={{ margin: 0, fontSize: 14, color: '#e0e7ff', opacity: 0.95 }}>
                             รวบรวมไฟล์สรุปและคอร์สเรียนทั้งหมดที่คุณครอบครองสิทธิ์เข้าอ่านถาวร อ่านในระบบเว็บได้ตลอด 24 ชั่วโมง
                         </p>
                     </div>
@@ -66,8 +66,8 @@ export default function MyLibrary() {
                     <button
                         onClick={() => openAuthModal('กรุณาสมัครสมาชิกหรือเข้าสู่ระบบเพื่อดูคลังหนังสือส่วนตัว')}
                         style={{
-                            background: 'white',
-                            color: '#047857',
+                            background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+                            color: 'white',
                             border: 'none',
                             padding: '12px 24px',
                             borderRadius: '12px',
@@ -89,10 +89,10 @@ export default function MyLibrary() {
                         key={cat}
                         onClick={() => setFilterCategory(cat)}
                         style={{
-                            background: filterCategory === cat ? '#047857' : '#ffffff',
+                            background: filterCategory === cat ? 'linear-gradient(135deg, #6366f1, #4f46e5)' : '#ffffff',
                             color: filterCategory === cat ? 'white' : '#475569',
                             border: '1px solid',
-                            borderColor: filterCategory === cat ? '#047857' : '#cbd5e1',
+                            borderColor: filterCategory === cat ? '#4f46e5' : '#cbd5e1',
                             padding: '8px 20px',
                             borderRadius: '20px',
                             fontSize: '13px',
@@ -137,7 +137,7 @@ export default function MyLibrary() {
                                     position: 'absolute',
                                     top: 12,
                                     left: 12,
-                                    background: isUnlocked ? '#059669' : 'rgba(15, 23, 42, 0.8)',
+                                    background: isUnlocked ? 'linear-gradient(135deg, #6366f1, #4f46e5)' : 'rgba(15, 23, 42, 0.8)',
                                     color: 'white',
                                     fontSize: 11,
                                     fontWeight: 700,
@@ -154,7 +154,7 @@ export default function MyLibrary() {
 
                             {/* Card Details Body */}
                             <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                                <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', textTransform: 'uppercase', marginBottom: 4 }}>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: '#4f46e5', textTransform: 'uppercase', marginBottom: 4 }}>
                                     {product.category}
                                 </div>
                                 <h3 style={{ fontSize: 16, fontWeight: 800, color: '#0f172a', margin: '0 0 10px 0', lineHeight: 1.4 }}>
@@ -170,7 +170,7 @@ export default function MyLibrary() {
                                         <Link
                                             to={`/reader/${product.id}`}
                                             style={{
-                                                background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                                background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)',
                                                 color: 'white',
                                                 padding: '12px 18px',
                                                 borderRadius: '12px',
@@ -181,7 +181,7 @@ export default function MyLibrary() {
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
                                                 gap: 8,
-                                                boxShadow: '0 4px 12px rgba(5, 150, 105, 0.25)'
+                                                boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)'
                                             }}
                                         >
                                             📖 เปิดอ่านชีทสรุปในระบบ <ArrowRight size={16} />

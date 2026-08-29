@@ -314,13 +314,13 @@ export default function ProductDetail() {
                 }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: 12 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                            <div style={{ background: '#ecfdf5', color: '#047857', padding: '10px', borderRadius: '12px', display: 'flex' }}>
+                            <div style={{ background: '#eef2ff', color: '#4f46e5', padding: '10px', borderRadius: '12px', display: 'flex' }}>
                                 <FlaskConical size={22} />
                             </div>
                             <div>
                                 <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: 8 }}>
                                     📖 ตัวอย่างหน้าปกและสารบัญชีทสรุป (Sample Teaser Preview)
-                                    <span style={{ background: '#059669', color: 'white', fontSize: 11, padding: '2px 10px', borderRadius: 12, fontWeight: 600 }}>
+                                    <span style={{ background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: 'white', fontSize: 11, padding: '2px 10px', borderRadius: 12, fontWeight: 600 }}>
                                         ดูฟรี 3 หน้าแรก
                                     </span>
                                 </h3>
@@ -347,12 +347,12 @@ export default function ProductDetail() {
                             boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
                             position: 'relative'
                         }}>
-                            <span style={{ position: 'absolute', top: 12, right: 12, background: '#059669', color: 'white', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10 }}>
+                            <span style={{ position: 'absolute', top: 12, right: 12, background: 'linear-gradient(135deg, #6366f1, #4f46e5)', color: 'white', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 10 }}>
                                 หน้า 1 (หน้าปก)
                             </span>
-                            <div style={{ borderBottom: '2px solid #059669', paddingBottom: 12 }}>
+                            <div style={{ borderBottom: '2px solid #6366f1', paddingBottom: 12 }}>
                                 <img src="/images/logo.png" alt="Logo" style={{ height: 28, borderRadius: 4, marginBottom: 8 }} />
-                                <div style={{ fontSize: 11, fontWeight: 700, color: '#059669', textTransform: 'uppercase' }}>STUDYROAD HIGH-YIELD NOTES</div>
+                                <div style={{ fontSize: 11, fontWeight: 700, color: '#6366f1', textTransform: 'uppercase' }}>STUDYROAD HIGH-YIELD NOTES</div>
                                 <div style={{ fontSize: 15, fontWeight: 800, color: '#0f172a', marginTop: 4 }}>
                                     {product?.name}
                                 </div>
@@ -378,7 +378,7 @@ export default function ProductDetail() {
                             userSelect: 'none',
                             opacity: 0.6
                         }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: '#059669' }}>หน้า 2 (สารบัญ)</span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#4f46e5' }}>หน้า 2 (สารบัญ)</span>
                             <h4 style={{ fontSize: 14, fontWeight: 800, marginTop: 8 }}>สารบัญเนื้อหาบทเรียนชีววิทยา</h4>
                             <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 12 }}>
                                 <div style={{ background: '#f1f5f9', padding: 8, borderRadius: 6 }}>1. เซลล์และการลำเลียงสาร ......... หน้า 1</div>
@@ -400,7 +400,7 @@ export default function ProductDetail() {
                             userSelect: 'none',
                             opacity: 0.6
                         }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: '#059669' }}>หน้า 3 (ตัวอย่างบทที่ 1)</span>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: '#4f46e5' }}>หน้า 3 (ตัวอย่างบทที่ 1)</span>
                             <h4 style={{ fontSize: 14, fontWeight: 800, marginTop: 8 }}>1.1 โครงสร้างเซลล์และหน้าที่ของออร์แกเนลล์</h4>
                             <p style={{ fontSize: 11, color: '#475569', marginTop: 8 }}>
                                 นิวเคลียส มีเยื่อหุ้ม 2 ชั้น เก็บรหัสพันธุกรรม ไมโตคอนเดรีย สร้าง ATP ผ่านกระบวนการ Krebs cycle...
@@ -415,7 +415,7 @@ export default function ProductDetail() {
                             right: 0,
                             width: 'calc(66.6% + 10px)',
                             height: '100%',
-                            background: 'rgba(15, 23, 42, 0.82)',
+                            background: 'rgba(15, 23, 42, 0.85)',
                             backdropFilter: 'blur(6px)',
                             borderRadius: '16px',
                             display: 'flex',
@@ -428,7 +428,7 @@ export default function ProductDetail() {
                             boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
                             zIndex: 10
                         }}>
-                            <div style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#10b981', padding: 14, borderRadius: '50%', marginBottom: 12, border: '1px solid rgba(16, 185, 129, 0.4)' }}>
+                            <div style={{ background: 'rgba(99, 102, 241, 0.2)', color: '#818cf8', padding: 14, borderRadius: '50%', marginBottom: 12, border: '1px solid rgba(99, 102, 241, 0.4)' }}>
                                 <ShieldCheck size={36} />
                             </div>
                             <h3 style={{ fontSize: 18, fontWeight: 800, margin: '0 0 6px 0', color: '#f8fafc' }}>
@@ -440,7 +440,7 @@ export default function ProductDetail() {
                             <button
                                 onClick={handleAddToCart}
                                 style={{
-                                    background: 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+                                    background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
                                     color: 'white',
                                     border: 'none',
                                     padding: '12px 28px',
@@ -448,7 +448,7 @@ export default function ProductDetail() {
                                     fontWeight: 800,
                                     fontSize: 14,
                                     cursor: 'pointer',
-                                    boxShadow: '0 4px 14px rgba(5, 150, 105, 0.4)',
+                                    boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: 8
