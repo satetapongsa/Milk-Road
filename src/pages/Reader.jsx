@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, BookOpen, Lock, ShieldCheck, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize, Minimize, AlertTriangle, Layers, FileText, EyeOff } from 'lucide-react';
 import { useProducts } from '../context/ProductContext';
 import { useAuth } from '../context/AuthContext';
+import CCNAInteractiveReader from '../components/CCNAInteractiveReader';
 
 export default function Reader() {
     const { id } = useParams();
@@ -106,6 +107,10 @@ export default function Reader() {
     }, []);
 
     const totalPages = 150;
+
+    if (product?.is_ccna_reader || String(id) === '7') {
+        return <CCNAInteractiveReader product={product} />;
+    }
 
     return (
         <div style={{ background: '#f8fafc', minHeight: '100vh', userSelect: 'none', WebkitUserSelect: 'none' }}>

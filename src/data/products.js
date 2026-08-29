@@ -128,5 +128,26 @@ export const products = [
         "origin": "Digital Instant Download",
         "mfg_date": "2026-08-14",
         "exp_date": "อัปเดตเวอร์ชันปี 2026"
+    },
+    {
+        "id": 7,
+        "name": "[Interactive E-Reader] CCNA 200-301 Network Master Guide & Interactive Blueprint (Network Fundamentals, Switching & CLI Lab)",
+        "price": 390,
+        "category": "เครือข่าย & ไอที (CCNA Network)",
+        "image": "/images/ccna_cover.svg",
+        "is_ccna_reader": true,
+        "description": "ระบบอ่านบทเรียนเครือข่ายแบบโต้ตอบ (CCNA 200-301 Interactive Dark-Mode Reader) สรุปเข้ม OSI 7 Layers vs TCP/IP, IP Subnetting, VLAN, Trunking 802.1Q, STP, OSPF, และ CLI Labs คำสั่ง Cisco IOS สำหรับเตรียมสอบสอบใบเซอร์ Cisco CCNA 200-301 v1.2 อัปเดตล่าสุด!",
+        "specs": [
+            "ระบบอ่าน Interactive Dark Reader แบบสไลด์ + โน้ต + CLI Simulator",
+            "ครอบคลุมเนื้อหา OSI 7 Layers, IP Addressing, VLAN, STP, OSPF, Automation",
+            "มีแบบทดสอบ Quiz วัดผลในตัวระบบหลังเรียนจบแต่ละบท",
+            "เข้าอ่านในระบบได้ตลอดชีพ 24 ชั่วโมง"
+        ],
+        "download_url": "/downloads/ccna_200_301.pdf",
+        "stock_quantity": 999,
+        "ingredients": "ผู้จัดทำ: Senior Network Engineer (CCNP/CCIE Certified) & StudyRoad Tech",
+        "origin": "Interactive E-Learning Platform (StudyRoad Reader)",
+        "mfg_date": "2026-08-30",
+        "exp_date": "CCNA 200-301 v1.2 Latest Blueprint"
     }
 ];
